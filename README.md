@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <img src="https://cdn.idntimes.com/content-images/community/2022/12/fij3jneaaaaghbr-bc4bbc58a86ec1f7a7589db4ab7cbdff-6b36bc8b7008f94d26d0f017b3fcd34f.jpg" alt="banner" style="width: 100%; min-height:400px">
+  <img src="https://cdn.idntimes.com/content-images/community/2022/12/fij3jneaaaaghbr-bc4bbc58a86ec1f7a7589db4ab7cbdff-6b36bc8b7008f94d26d0f017b3fcd34f.jpg" alt="banner" style="width: 100%; height:400px">
 </div>
 
 ## Getting Started
