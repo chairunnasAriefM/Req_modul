@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <img src="https://i.pinimg.com/736x/72/75/3a/72753aff901c724607d0553625eca867.jpg" alt="banner" style="width: 100%; max-width: 800px;">
+  <img src="https://i.pinimg.com/736x/72/75/3a/72753aff901c724607d0553625eca867.jpg" alt="banner" style="width: 100%; max-width: 800px; max-height:200px ">
 </div>
 
 ## Getting Started
