@@ -18,6 +18,8 @@
             background: #eee;
         }
 
+
+
         .h-custom {
             height: calc(100% - 73px);
         }
@@ -51,8 +53,8 @@
                     <form>
                         <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                             <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                            <button href="<?= $link; ?>" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
-                                <i class="bi bi-google"></i>
+                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-floating mx-1">
+                                <i class="bi bi-google"> <a href="<?= $link; ?>"></a></i>
                             </button>
 
                         </div>

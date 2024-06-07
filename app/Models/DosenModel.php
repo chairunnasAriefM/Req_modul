@@ -8,10 +8,10 @@ class DosenModel extends Model
 {
     protected $table            = 'dosen';
     protected $primaryKey       = 'id_dosen';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
+    protected $useAutoIncrement = false;
+    protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
+    protected $protectFields    = false;
     protected $allowedFields    = [];
 
     protected bool $allowEmptyInserts = false;
@@ -27,11 +27,11 @@ class DosenModel extends Model
     // protected $updatedField  = 'updated_at';
     // protected $deletedField  = 'deleted_at';
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    // // Validation
+    // protected $validationRules      = [];
+    // protected $validationMessages   = [];
+    // protected $skipValidation       = false;
+    // protected $cleanValidationRules = true;
 
     // Callbacks
     // protected $allowCallbacks = true;

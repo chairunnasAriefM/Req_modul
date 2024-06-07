@@ -50,23 +50,23 @@ class Login extends BaseController
                 $email = $data['email'];
                 if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
                     $row = [
-                        'id' => $data['id'],
-                        'nama_user' => $data['name'],
+                        'id_anggota' => $data['id'],
+                        'nama' => $data['name'],
                         'email' => $email,
-                        'profile' => $data['picture'],
+                        // 'profile' => $data['picture'],
                     ];
 
-                    $this->users->save($row);
+                    $this->mahasiswa->save($row);
                     session()->set($row);
                     session()->set('role', 'mahasiswa');
                     session()->regenerate(true);
                     return view('login/berhasil');
                 } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
                     $row = [
-                        'id' => $data['id'],
-                        'nama_user' => $data['name'],
+                        'id_dosen' => $data['id'],
+                        'nama' => $data['name'],
                         'email' => $email,
-                        'profile' => $data['picture'],
+                        // 'profile' => $data['picture'],
                     ];
 
                     $this->dosen->save($row);
