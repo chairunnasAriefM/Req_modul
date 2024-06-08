@@ -59,7 +59,8 @@ class Login extends BaseController
                     session()->set($row);
                     session()->set('role', 'mahasiswa');
                     session()->regenerate(true);
-                    return view('pages/regular/request_buku');
+                    // return view('pages/regular/request_buku');
+                    return redirect()->to('buku_request');
                 } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
                     $row = [
                         'id_dosen' => $data['id'],

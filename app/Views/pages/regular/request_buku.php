@@ -5,7 +5,7 @@
 
 <div class="form-container" style=" margin-top: 120px;">
     <form id="modern-form" method="post" action="/buku_request">
-        <h2>Sign Up</h2>
+        <h2>Requet Buku</h2>
 
 
         <?php
@@ -85,7 +85,16 @@
     });
 </script>
 
+<script type="text/javascript">
+    window.onload = function() {
+        // Cek apakah URL mengandung 'code' sebagai parameter
+        if (window.location.search.indexOf('code') > -1) {
 
-
+            var newUrl = window.location.href.split('?')[0];
+            window.history.replaceState(null, '', newUrl);
+            // window.location.reload();
+        }
+    };
+</script>
 
 <?= $this->endSection(); ?>
