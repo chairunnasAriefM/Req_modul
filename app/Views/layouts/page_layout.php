@@ -42,6 +42,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+    <script>
+        <?php if (session()->getFlashdata('error')) : ?>
+            Swal.fire({
+                title: "Error",
+                text: "<?= session()->getFlashdata('error'); ?>",
+                icon: "error"
+            });
+        <?php endif; ?>
+    </script>
+
     <?php if (session()->has('validation')) : ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {

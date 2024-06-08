@@ -22,3 +22,8 @@ $routes->group('/', ['filter' => 'auth'], function ($routes) {
 
     // $routes->post('/buku_request/store', 'BukuRequest::store');
 });
+
+$routes->group('', ['filter' => 'dosen'], function ($routes) {
+    $routes->get('/request_modul', 'ModulRequest::index');
+    // Tambahkan routes lain yang memerlukan akses dosen di sini
+});
