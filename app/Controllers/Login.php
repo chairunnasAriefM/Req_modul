@@ -53,27 +53,25 @@ class Login extends BaseController
                         'id_anggota' => $data['id'],
                         'nama' => $data['name'],
                         'email' => $email,
-                        // 'profile' => $data['picture'],
                     ];
 
                     $this->mahasiswa->save($row);
                     session()->set($row);
                     session()->set('role', 'mahasiswa');
                     session()->regenerate(true);
-                    return view('login/berhasil');
+                    return view('pages/regular/request_buku');
                 } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
                     $row = [
                         'id_dosen' => $data['id'],
                         'nama' => $data['name'],
                         'email' => $email,
-                        // 'profile' => $data['picture'],
                     ];
 
                     $this->dosen->save($row);
                     session()->set($row);
                     session()->set('role', 'dosen');
                     session()->regenerate(true);
-                    return view('login/berhasil_dosen');
+                    return view('pages/regular/request_buku');
                 } else {
                     session()->setFlashdata('error', 'Hanya email @mahasiswa.pcr.ac.id atau @dosen.pcr.ac.id yang diperbolehkan');
                     return redirect()->to('login');
