@@ -3,24 +3,21 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\UsersModel;
-use App\Models\DosenModel;
-use App\Models\MahasiswaModel;
+use App\Models\CivitasAkademikModel;
+use App\Models\StaffPerpustakaanModel;
 use Google_Client;
 
 class Login extends BaseController
 {
     protected $googleClient;
-    protected $users;
-    protected $mahasiswa;
-    protected $dosen;
+    protected $civitas;
+    protected $staff;
 
     public function __construct()
     {
         session();
-        $this->users = new UsersModel();
-        $this->mahasiswa = new MahasiswaModel();
-        $this->dosen = new DosenModel();
+        $this->civitas = new CivitasAkademikModel();
+        $this->staff = new StaffPerpustakaanModel();
         $this->googleClient = new Google_Client();
 
         $this->googleClient->setClientId('237280244422-8rj1bmnqubmp2oj4d3p6bcoqbrtf61dh.apps.googleusercontent.com');
@@ -33,7 +30,7 @@ class Login extends BaseController
     public function index()
     {
         $data['link'] = $this->googleClient->createAuthUrl();
-        return view('login/index', $data);
+        return view('auth/index', $data);
     }
 
     public function proses()
@@ -48,45 +45,198 @@ class Login extends BaseController
             $payload = $this->googleClient->verifyIdToken($token['id_token']);
             if ($payload) {
                 $email = $data['email'];
-                if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
+
+                // Cek apakah pengguna sudah ada di database
+                $existingUser = $this->civitas->where('email', $email)->first();
+
+                // Generate random password untuk pengguna baru
+                $randomPassword = bin2hex(random_bytes(16));
+                $hashedPassword = password_hash($randomPassword, PASSWORD_DEFAULT);
+
+                if (!$existingUser) {
+                    // Pengguna baru
                     $row = [
                         'id_anggota' => $data['id'],
                         'nama' => $data['name'],
                         'email' => $email,
+                        'password' => $hashedPassword,
+                        'role' => ''
                     ];
-
-                    $this->mahasiswa->save($row);
-                    session()->set($row);
-                    session()->set('role', 'mahasiswa');
-                    session()->regenerate(true);
-                    // return view('pages/regular/request_buku');
-                    return redirect()->to('buku_request');
-                } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
+                } else {
+                    // Pengguna sudah ada, ambil id dan perbarui informasi
                     $row = [
-                        'id_dosen' => $data['id'],
+                        'id_anggota' => $existingUser->id_anggota,
                         'nama' => $data['name'],
                         'email' => $email,
+                        'password' => $existingUser->password, // Jangan ubah password yang sudah ada
+                        'role' => $existingUser->role
                     ];
+                }
 
-                    $this->dosen->save($row);
-                    session()->set($row);
-                    session()->set('role', 'dosen');
-                    session()->regenerate(true);
-                    return view('pages/regular/request_buku');
+                if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
+                    $row['role'] = 'mahasiswa';
+                } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
+                    $row['role'] = 'dosen';
                 } else {
-                    session()->setFlashdata('error', 'Hanya email @mahasiswa.pcr.ac.id atau @dosen.pcr.ac.id yang diperbolehkan');
+                    session()->setFlashdata('msg', 'Anda bukan warga PCR tidak boleh login');
                     return redirect()->to('login');
                 }
+
+                // Simpan atau update user
+                $this->civitas->save($row);
+                session()->set($row);
+                session()->regenerate(true);
+
+                if ($row['role'] == 'mahasiswa') {
+                    return redirect()->to('buku_request');
+                } else {
+                    return view('pages/regular/request_buku');
+                }
             } else {
-                session()->setFlashdata('error', 'Token tidak valid');
+                session()->setFlashdata('msg', 'Token tidak valid');
                 return redirect()->to('login');
             }
         } else {
-            session()->setFlashdata('error', 'Gagal mendapatkan token');
+            session()->setFlashdata('msg', 'Gagal mendapatkan token');
             return redirect()->to('login');
         }
     }
 
+    public function registrasi()
+    {
+        return view('auth/registrasi');
+    }
+
+    public function registrasiProses()
+    {
+        $rules = [
+            'nama' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email',
+            'password' => 'required|min_length[6]|max_length[200]',
+        ];
+
+        if ($this->validate($rules)) {
+            $email = $this->request->getVar('email');
+
+            // validasi hunter key
+            $apiKey = '48f8f955515339e1f68fffa2bea9aec43254b16e';
+
+            $response = file_get_contents("https://api.hunter.io/v2/email-verifier?email={$email}&api_key={$apiKey}");
+            $result = json_decode($response, true);
+
+            if ($result['data']['status'] != 'valid') {
+                return redirect()->back()->with('msg', 'Email tidak valid.');
+            }
+
+            $role = $this->determineRole($email);
+
+            if ($role === false) {
+                return redirect()->back()->with('msg', 'Email bukan warga PCR');
+            }
+
+            $civitas = new CivitasAkademikModel();
+            $uuid = bin2hex(random_bytes(16));
+            $data = [
+                'id_anggota' => $uuid,
+                'nama' => $this->request->getVar('nama'),
+                'email' => $email,
+                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+                'role' => $role
+            ];
+
+            $civitas->save($data);
+            return redirect()->to('/');
+        } else {
+            $data['validation'] = $this->validator;
+            echo view('auth/registrasi', $data);
+        }
+    }
+
+    private function determineRole($email)
+    {
+        if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
+            return 'mahasiswa';
+        } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
+            return 'dosen';
+        } elseif (strpos($email, '@pcr.ac.id') !== false) {
+            return 'civitas';
+        } else {
+            return false;
+        }
+    }
+
+
+
+    public function loginBiasa()
+    {
+        $session = session();
+        $email = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
+
+        // Debugging: Check if email and password are received
+        if (!$email || !$password) {
+            $session->setFlashdata('msg', 'Email dan password wajib diisi');
+            return redirect()->to('/login');
+        }
+
+        // Cek di tabel civitas_akademik
+        $data = $this->civitas->where('email', $email)->first();
+
+        if ($data) {
+            $pass = $data->password;
+            $verify_pass = password_verify($password, $pass);
+            if ($verify_pass) {
+                $ses_data = [
+                    'id_anggota'   => $data->id_anggota,
+                    'nama'     => $data->nama,
+                    'email'    => $data->email,
+                    'role'     => $data->role,
+                    'logged_in' => TRUE
+                ];
+                $session->set($ses_data);
+
+                // Redirect berdasarkan role
+                if ($data->role == 'mahasiswa') {
+                    return redirect()->to('buku_request');
+                } elseif ($data->role == 'dosen') {
+                    return view('pages/regular/request_buku');
+                }
+            } else {
+                $session->setFlashdata('msg', 'Password salah');
+                return redirect()->to('/login');
+            }
+        }
+
+        // Cek di tabel staff_perpustakaan
+        $data = $this->staff->where('email', $email)->first();
+
+        if ($data) {
+            $pass = $data->password;
+            $verify_pass = password_verify($password, $pass);
+            if ($verify_pass) {
+                $ses_data = [
+                    'staff_id'       => $data->staff_id,
+                    'nama_staff'     => $data->nama_staff,
+                    'email'    => $data->email,
+                    'role'     => 'staff',
+                    'logged_in' => TRUE
+                ];
+                $session->set($ses_data);
+
+                // Redirect untuk staff
+                return view('pages/regular/request_buku');
+            } else {
+                $session->setFlashdata('msg', 'Password atau Email salah');
+                return redirect()->to('/login');
+            }
+        }
+
+        $session->setFlashdata('msg', 'Password atau Email salah');
+        return redirect()->to('/login');
+    }
+
+
+    // logout
     public function logout()
     {
         session()->destroy();

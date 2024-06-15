@@ -4,8 +4,14 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+    public function index()
     {
-        return view('welcome_message');
+        $isLoggedIn = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
+
+        return view('welcome_message', ['isLoggedIn' => $isLoggedIn]);
     }
+
+    public function tes(){
+        return view('auth/tes');
+        }
 }

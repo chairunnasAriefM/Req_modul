@@ -4,23 +4,23 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DosenModel extends Model
+class CivitasAkademikModel extends Model
 {
-    protected $table            = 'dosen';
-    protected $primaryKey       = 'id_dosen';
+    protected $table            = 'civitas_akademik';
+    protected $primaryKey       = 'id_anggota';
     protected $useAutoIncrement = false;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = false;
     protected $allowedFields    = [];
 
-    protected bool $allowEmptyInserts = false;
+    protected bool $allowEmptyInserts = true;
     protected bool $updateOnlyChanged = true;
 
     protected array $casts = [];
     protected array $castHandlers = [];
 
-    // Dates
+    // // Dates
     // protected $useTimestamps = false;
     // protected $dateFormat    = 'datetime';
     // protected $createdField  = 'created_at';
@@ -33,7 +33,7 @@ class DosenModel extends Model
     // protected $skipValidation       = false;
     // protected $cleanValidationRules = true;
 
-    // Callbacks
+    // // Callbacks
     // protected $allowCallbacks = true;
     // protected $beforeInsert   = [];
     // protected $afterInsert    = [];

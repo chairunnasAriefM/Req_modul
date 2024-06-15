@@ -4,6 +4,8 @@
 
 ## Getting Started
 
+PHP Ver : PHP 8.1.2
+
 1. Install the dependencies
 
 ```shell
@@ -13,7 +15,7 @@ composer install
 2. Copy `env to `.env`
 
 ```shell
-cp .env .env
+cp env .env
 ```
 
 or kalau di windows
@@ -37,7 +39,7 @@ php spark serve
 
 ```json
 {
-    "username": "admin",
+    "email": "admin@gmail.com",
     "password": "admin"
 }
 ```

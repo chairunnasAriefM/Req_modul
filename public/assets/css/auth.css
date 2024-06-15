@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+
+.flex-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.flex-item-left {
+    background-color: #1a1a1a;
+    flex: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.flex-item-right {
+    background-image: url('../images/pcr_night.jpg');
+    background-size: cover;
+    background-position: center;
+    flex: 70%;
+}
+
+.social-login-button {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    color: #fff;
+    margin: 10px 0;
+    width: 80%;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 435px;
+}
+
+.social-login-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+
+
+.social-login-button:hover {
+    background-color: #444;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.or-divider {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: 20px 0;
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #444;
+}
+
+.or-divider:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.or-divider:not(:empty)::after {
+    margin-left: .25em;
+}
+
+form {
+    width: 80%;
+}
+
+.form-group {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 3px;
+}
+
+.form-group input::placeholder {
+    color: #777;
+}
+
+
+.sign-in-button {
+    width: 100%;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+}
+
+.sign-in-button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signup-link a {
+    color: #888;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
