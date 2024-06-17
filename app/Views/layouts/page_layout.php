@@ -8,22 +8,40 @@
 
 
     <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= base_url('assets/css/nav.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/form.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/home.css') ?>">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 </head>
 
 <body>
 
-    <div class="topnav">
-        <a class="nav-logo" style="margin-top: 2px;" href="<?= base_url() ?>"><img class="logo" src="<?= base_url('assets/images/favicon.ico'); ?>" alt="Logo"></a>
-        <a href="<?= base_url() ?>">Home</a>
-        <a href="<?= base_url(); ?>/buku_request">Request Buku</a>
-        <a href="<?= base_url('login/keluar'); ?>" class="btn btn-danger">logout</a>
-    </div>
+    <header>
+        <div class="logo">logo pcr</div>
+        <nav>
+            <ul>
+                <li> <a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
+                <li> <a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
+                <?php if (session()->get('role') == 'dosen') : ?>
+                    <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Buku</a></li>
+                <?php endif; ?>
+                <li><a href="#">About Us</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <?php if (!session()->get('logged_in') == TRUE) : ?>
+                <button class="sign-in"><a href="<?= base_url(); ?>login">Sign in</a></button>
+                <button class="get-started"><a href="<?= base_url(); ?>registrasi">Registrasi</a></button>
+            <?php else : ?>
+                <button class="get-started"><a href="<?= base_url(); ?>logout">Logout</a></button>
+            <?php endif; ?>
 
-    <?= $this->renderSection('content') ?>
+        </div>
+    </header>
+    <main>
+        <?= $this->renderSection('content') ?>
+    </main>
+
 
 
     <script>

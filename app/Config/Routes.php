@@ -14,19 +14,28 @@ $routes->get('/', 'Home::index');
 $routes->get('/login', 'Login::index');
 $routes->get('/login/proses', 'Login::proses');
 $routes->post('/login', 'Login::loginBiasa');
-$routes->get('/login/keluar', 'Login::logout');
+$routes->get('logout', 'Login::logout');
 $routes->get('/registrasi', 'Login::registrasi');
 $routes->post('/registrasi', 'Login::registrasiProses');
 
 
-
+// buku_request
 $routes->group('/', ['filter' => 'auth'], function ($routes) {
     $routes->get('buku_request', 'BukuRequest::index');
     $routes->post('buku_request', 'BukuRequest::store');
     // $routes->post('/buku_request/store', 'BukuRequest::store');
 });
 
+// dosen
 $routes->group('', ['filter' => 'dosen'], function ($routes) {
-    $routes->get('/request_modul', 'ModulRequest::index');
-    // Tambahkan routes lain yang memerlukan akses dosen di sini
+    $routes->get('/modul_request', 'ModulRequest::index');
+    $routes->post('/modul_request', 'ModulRequest::store');
+});
+
+//staff
+$routes->group('', ['filter' => 'staff'], function ($routes) {
+    $routes->get('/dashboard', function () {
+        return view('pages/staff/home.php');
+    });
+    $routes->get('/dashboard/modul', 'ModulRequest::show');
 });

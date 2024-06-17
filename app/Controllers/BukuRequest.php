@@ -22,13 +22,8 @@ class BukuRequest extends BaseController
             'pengarang' => 'required',
             'penerbit' => 'required',
             'link_beli' => 'valid_url',
-            'harga_buku' => 'required|numeric',
+            'perkiraan_harga' => 'required|numeric',
         ];
-
-     
-        if (!session()->has('id_anggota')) {
-            $validationRules['nim'] = 'required|numeric';
-        }
 
         if (!$this->validate($validationRules)) {
             return redirect()->back()->withInput()->with('validation', \Config\Services::validation());
@@ -42,17 +37,16 @@ class BukuRequest extends BaseController
             'pengarang' => $this->request->getPost('pengarang'),
             'penerbit' => $this->request->getPost('penerbit'),
             'link_beli' => $this->request->getPost('link_beli'),
-            'harga_buku' => $this->request->getPost('harga_buku'),
+            'perkiraan_harga' => $this->request->getPost('perkiraan_harga'),
             'tanggal_request' => date("Y-m-d")
         ];
 
-        if (session()->has('id_anggota')) {
-            $data['id_anggota_request'] = session()->get('id_anggota');
-        } else {
-            $data['nim_request'] = $this->request->getPost('nim');
-        }
+        $data['id_anggota_request'] = session()->get('id_anggota');
 
         $buku_request->save($data);
-        return redirect()->to('/buku_request');
+        return redirect()->to('/buku_request')->with('success', 'Berhasil Mengisi Form');
     }
+
+    // staff
+
 }

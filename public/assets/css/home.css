@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --text: #636363;
+    --paragraph: "Inter", sans-serif;
+    --judul: "Outfit", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--paragraph);
+    background-color: #fdf7ec;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* position: fixed;
+    top: 0;
+    width: 100%; */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    background: #333;
+    transition: width 0.3s;
+    left: 0;
+    bottom: 0;
+}
+
+nav a:hover::after {
+    width: 100%;
+    transition: width 0.3s;
+}
+
+nav a.active,
+nav a.active::after {
+    color: #000;
+    font-weight: bolder;
+    width: 100%;
+    transition: width 0.3s;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.sign-in,
+.get-started {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sign-in a {
+    text-decoration: none;
+    background-color: transparent;
+    color: #333;
+}
+
+.sign-in {
+    background-color: transparent;
+    color: #333;
+}
+
+.get-started {
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.get-started a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.get-started:hover {
+    background-color: #555;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-text p {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.hero-text h1 {
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #444;
+    font-family: var(--judul);
+}
+
+.hero-text button {
+    padding: 15px 30px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.hero-text button:hover {
+    background-color: #555;
+}
+
+.hero-image img {
+    width: 400px;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image img {
+        width: 300px;
+    }
+}

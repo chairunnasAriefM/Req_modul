@@ -11,7 +11,8 @@ class Home extends BaseController
         return view('welcome_message', ['isLoggedIn' => $isLoggedIn]);
     }
 
-    public function tes(){
-        return view('auth/tes');
-        }
+    public function tes()
+    {
+        return view('pages/index.php');
+    }
 }

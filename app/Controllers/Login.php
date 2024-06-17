@@ -85,6 +85,7 @@ class Login extends BaseController
                 // Simpan atau update user
                 $this->civitas->save($row);
                 session()->set($row);
+                session()->set('logged_in', TRUE);
                 session()->regenerate(true);
 
                 if ($row['role'] == 'mahasiswa') {
@@ -199,7 +200,7 @@ class Login extends BaseController
                 if ($data->role == 'mahasiswa') {
                     return redirect()->to('buku_request');
                 } elseif ($data->role == 'dosen') {
-                    return view('pages/regular/request_buku');
+                    return redirect()->to('/');
                 }
             } else {
                 $session->setFlashdata('msg', 'Password salah');
