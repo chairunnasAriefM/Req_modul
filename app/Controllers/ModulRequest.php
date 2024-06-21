@@ -49,12 +49,31 @@ class ModulRequest extends BaseController
     }
 
     // staff
+    
+    public function indexStaff()
+    {
+        $modulModel = new ModulModel();
+        $data['moduls'] = $modulModel->where('status', 'proses eksekusi')->findAll();
+
+        $data['title'] = 'Pengajuan Menunggu Persetujuan';
+        return view('modul/index', $data);
+    }
+
+    public function preview($id)
+    {
+        $modulModel = new ModulModel();
+        $data['modul'] = $modulModel->find($id);
+
+        $data['title'] = 'Preview Pengajuan Modul';
+        return view('modul/preview', $data);
+    }
+
     public function show()
     {
         $modulModel = new ModulModel();
         $data['moduls'] = $modulModel->findAll();
-
-        return $this->response->setJSON($data);
-        // return view('dashboard', $data);
-    }
+    
+        $data['title'] = 'Dashboard';
+        return view('dashboard', $data);
+    }  
 }
