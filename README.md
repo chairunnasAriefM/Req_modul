@@ -14,7 +14,14 @@ PHP Ver : PHP 8.1.2
 composer install
 ```
 
-2. Copy `env to `.env`
+2.Install oauth google
+
+```shell
+composer require google/apiclient:"2.0"
+```
+
+
+3. Copy `env to `.env`
 
 ```shell
 cp env .env
@@ -26,7 +33,7 @@ or kalau di windows
 copy env .env
 ```
 
-3. Start the webserver
+4. Start the webserver
 
 ```shell
 php spark serve
