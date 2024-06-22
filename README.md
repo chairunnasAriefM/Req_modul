@@ -17,7 +17,7 @@ composer install
 2. Install oauth google
 
 ```shell
-composer require google/apiclient:"2.0"
+composer require google/apiclient:^2.7
 ```
 
 
