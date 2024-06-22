@@ -14,7 +14,7 @@ PHP Ver : PHP 8.1.2
 composer install
 ```
 
-2.Install oauth google
+2. Install oauth google
 
 ```shell
 composer require google/apiclient:"2.0"
