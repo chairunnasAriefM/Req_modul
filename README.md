@@ -4,9 +4,11 @@
 
 ## _“When I wrote this code, only God and I understood what I did. Now only God knows.”_ 
 
+## PLEASE READ THIS THING!!!!!!!!!!!!!!!!!
+
 ## Getting Started
 
-PHP Ver : PHP 8.1.2
+Minimum PHP Ver to run this code : PHP 8.1.2
 
 1. Install the dependencies
 
