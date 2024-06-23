@@ -49,8 +49,24 @@ class ModulRequest extends BaseController
     }
 
     // staff
-    public function show()
+    
+    public function indexStaff()
     {
+        $modulModel = new ModulModel();
+        $data['moduls'] = $modulModel->where('status', 'proses eksekusi')->findAll();
+
+        $data['title'] = 'Pengajuan Menunggu Persetujuan';
+        return view('modul/index', $data);
+    }
+
+    public function preview($id)
+    {
+        $modulModel = new ModulModel();
+        $data['modul'] = $modulModel->find($id);
+
+        $data['title'] = 'Preview Pengajuan Modul';
+        return view('modul/preview', $data);
+
         // $modulModel = new ModulModel();
         // $data['moduls'] = $modulModel->findAll();
 
@@ -62,5 +78,15 @@ class ModulRequest extends BaseController
 
         return $this->response->setJSON($query);
         // return view('dashboard', $data);
+
     }
+
+    public function show()
+    {
+        $modulModel = new ModulModel();
+        $data['moduls'] = $modulModel->findAll();
+    
+        $data['title'] = 'Dashboard';
+        return view('dashboard', $data);
+    }  
 }
