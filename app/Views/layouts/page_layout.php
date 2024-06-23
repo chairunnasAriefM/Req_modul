@@ -10,14 +10,18 @@
     <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= base_url('assets/css/form.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/home.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/nav.css') ?>">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    
 </head>
 
 <body>
 
     <header>
-        <div class="logo">logo pcr</div>
+        <div class="logo">
+            <img src="<?= base_url('/assets/images/logo_pcr.png') ?>" alt="Logo" class="logo-img">
+        </div>
         <nav>
             <ul>
                 <li> <a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
