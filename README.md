@@ -4,9 +4,11 @@
 
 ## _“When I wrote this code, only God and I understood what I did. Now only God knows.”_ 
 
+## PLEASE READ THIS THING!!!!!!!!!!!!!!!!!
+
 ## Getting Started
 
-PHP Ver : PHP 8.1.2
+Minimum PHP Ver to run this code : PHP 8.1.2
 
 1. Install the dependencies
 
@@ -14,7 +16,14 @@ PHP Ver : PHP 8.1.2
 composer install
 ```
 
-2. Copy `env to `.env`
+2. Install oauth google
+
+```shell
+composer require google/apiclient:^2.7
+```
+
+
+3. Copy `env to `.env`
 
 ```shell
 cp env .env
@@ -26,7 +35,7 @@ or kalau di windows
 copy env .env
 ```
 
-3. Start the webserver
+4. Start the webserver
 
 ```shell
 php spark serve

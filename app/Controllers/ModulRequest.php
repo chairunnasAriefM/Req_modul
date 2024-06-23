@@ -66,6 +66,19 @@ class ModulRequest extends BaseController
 
         $data['title'] = 'Preview Pengajuan Modul';
         return view('modul/preview', $data);
+
+        // $modulModel = new ModulModel();
+        // $data['moduls'] = $modulModel->findAll();
+
+        $db      = \Config\Database::connect();
+        $builder = $db->table('buku');
+        $query   = $builder->get();
+
+
+
+        return $this->response->setJSON($query);
+        // return view('dashboard', $data);
+
     }
 
     public function show()
