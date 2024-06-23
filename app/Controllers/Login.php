@@ -91,11 +91,11 @@ class Login extends BaseController
                 session()->regenerate(true);
 
                 // Tampilkan data dalam format JSON
-                header('Content-Type: application/json');
-                echo json_encode($data);
+                // header('Content-Type: application/json');
+                // echo json_encode($data);
 
                 // if ($row['role'] == 'mahasiswa') {
-                //     return redirect()->to('buku_request');
+                    return redirect()->to('/');
                 // } else {
                 //     return view('pages/regular/request_buku');
                 // }
@@ -203,11 +203,11 @@ class Login extends BaseController
                 $session->set($ses_data);
 
                 // Redirect berdasarkan role
-                if ($data->role == 'mahasiswa') {
-                    return redirect()->to('buku_request');
-                } elseif ($data->role == 'dosen') {
+                // if ($data->role == 'mahasiswa') {
+                //     return redirect()->to('buku_request');
+                // } elseif ($data->role == 'dosen') {
                     return redirect()->to('/');
-                }
+                // }
             } else {
                 $session->setFlashdata('msg', 'Password salah');
                 return redirect()->to('/login');
