@@ -23,7 +23,6 @@
             <div class="form-group">
                 <label for="edisi_tahun">Edisi Tahun</label>
                 <input type="number" id="edisi_tahun" name="edisi_tahun">
-                <!-- <select id="yearSelect" name="edisi_tahun"></select> -->
             </div>
 
             <div class="form-group">

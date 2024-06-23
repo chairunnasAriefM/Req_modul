@@ -29,7 +29,7 @@ $routes->group('/', ['filter' => 'auth'], function ($routes) {
 // dosen
 $routes->group('', ['filter' => 'dosen'], function ($routes) {
     $routes->get('/modul_request', 'ModulRequest::index');
-    $routes->post('/modul_request', 'ModulRequest::store');
+    $routes->post('/request_modul', 'ModulRequest::store');
 });
 
 //staff
