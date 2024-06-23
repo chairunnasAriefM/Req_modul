@@ -20,8 +20,8 @@ class Login extends BaseController
         $this->staff = new StaffPerpustakaanModel();
         $this->googleClient = new Google_Client();
 
-        $this->googleClient->setClientId('237280244422-8rj1bmnqubmp2oj4d3p6bcoqbrtf61dh.apps.googleusercontent.com');
-        $this->googleClient->setClientSecret('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');
+        $this->googleClient->setClientId('294017094906-5ffk2dvbkccuqof05f50403eourinuul.apps.googleusercontent.com');
+        $this->googleClient->setClientSecret('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');
         $this->googleClient->setRedirectUri('http://localhost:8080/login/proses');
         $this->googleClient->addScope('email');
         $this->googleClient->addScope('profile');
@@ -40,6 +40,7 @@ class Login extends BaseController
             $this->googleClient->setAccessToken($token['access_token']);
             $googleService = new \Google_Service_Oauth2($this->googleClient);
             $data = $googleService->userinfo->get();
+
 
             // Verifikasi token
             $payload = $this->googleClient->verifyIdToken($token['id_token']);
@@ -89,11 +90,15 @@ class Login extends BaseController
                 session()->set('logged_in', TRUE);
                 session()->regenerate(true);
 
-                if ($row['role'] == 'mahasiswa') {
-                    return redirect()->to('buku_request');
-                } else {
-                    return view('pages/regular/request_buku');
-                }
+                // Tampilkan data dalam format JSON
+                header('Content-Type: application/json');
+                echo json_encode($data);
+
+                // if ($row['role'] == 'mahasiswa') {
+                //     return redirect()->to('buku_request');
+                // } else {
+                //     return view('pages/regular/request_buku');
+                // }
             } else {
                 session()->setFlashdata('msg', 'Token tidak valid');
                 return redirect()->to('login');
