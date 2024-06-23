@@ -51,10 +51,16 @@ class ModulRequest extends BaseController
     // staff
     public function show()
     {
-        $modulModel = new ModulModel();
-        $data['moduls'] = $modulModel->findAll();
+        // $modulModel = new ModulModel();
+        // $data['moduls'] = $modulModel->findAll();
 
-        return $this->response->setJSON($data);
+        $db      = \Config\Database::connect();
+        $builder = $db->table('buku');
+        $query   = $builder->get();
+
+
+
+        return $this->response->setJSON($query);
         // return view('dashboard', $data);
     }
 }
