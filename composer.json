@@ -15,7 +15,7 @@
         "google/apiclient": "^2.7"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9",
+        "fakerphp/faker": "^1.23",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^10.5.16"
     },
