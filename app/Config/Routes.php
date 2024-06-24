@@ -23,8 +23,8 @@ $routes->post('/registrasi', 'Login::registrasiProses');
 $routes->group('/', ['filter' => 'auth'], function ($routes) {
     $routes->get('buku_request', 'BukuRequest::index');
     $routes->post('buku_request', 'BukuRequest::store');
-    // $routes->post('/buku_request/store', 'BukuRequest::store');
 });
+$routes->get('daftar_buku', 'BukuRequest::showAll');
 
 // dosen
 $routes->group('', ['filter' => 'dosen'], function ($routes) {
