@@ -24,7 +24,8 @@ $routes->group('/', ['filter' => 'auth'], function ($routes) {
     $routes->get('buku_request', 'BukuRequest::index');
     $routes->post('buku_request', 'BukuRequest::store');
 });
-$routes->get('daftar_buku', 'BukuRequest::showAll');
+$routes->get('daftar_buku', 'BukuRequest::showNew');
+$routes->get('daftar_req', 'BukuRequest::showAll');
 
 // dosen
 $routes->group('', ['filter' => 'dosen'], function ($routes) {

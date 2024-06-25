@@ -12,8 +12,15 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/home.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/nav.css') ?>">
 
+    <!-- swal2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
-    
+
+    <!-- swiper js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
 </head>
 
 <body>
@@ -29,7 +36,7 @@
                 <?php if (session()->get('role') == 'dosen') : ?>
                     <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
                 <?php endif; ?>
-                <li><a href="#">About Us</a></li>
+                <li><a href="<?php base_url() ?>daftar_buku" class="<?= uri_string() == 'daftar_buku' ? 'active' : '' ?>">Buku Baru</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
