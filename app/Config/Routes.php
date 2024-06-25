@@ -33,9 +33,35 @@ $routes->group('', ['filter' => 'dosen'], function ($routes) {
 });
 
 //staff
+
+// Default route
+// $routes->get('/', 'Dashboard::index');
+
+// Jika rute tidak ditemukan
+// $routes->set404Override(function(){
+//     return view('errors/html/error_404');
+// });
+
 $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->get('/dashboard', function () {
         return view('pages/staff/home.php');
     });
-    $routes->get('/dashboard/modul', 'ModulRequest::show');
+    // Menambahkan rute untuk modul
+    $routes->get('dashboard/modul', 'Dashboard::index');
+    
+    // Rute tambahan untuk fungsionalitas modul
+    $routes->get('/dashboard/modul/pending', 'Dashboard::pending');
+    $routes->get('/dashboard/modul/proses', 'Dashboard::proses');
+    $routes->post('/dashboard/modul/editStatus/(:num)', 'Dashboard::editStatus/$1');
+    
+    // Rute untuk halaman preview modul
+    $routes->get('/dashboard/modul/preview/(:num)', 'Dashboard::preview/$1');
+    $routes->get('/dashboard/modul/checkPdfContent/(:num)', 'Dashboard::CekPdf/$1');
 });
+
+
+
+     
+
+   
+
