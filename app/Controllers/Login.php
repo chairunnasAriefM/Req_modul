@@ -80,8 +80,7 @@ class Login extends BaseController
                 } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
                     $row['role'] = 'dosen';
                 } else {
-                    session()->setFlashdata('msg', 'Anda bukan warga PCR tidak boleh login');
-                    return redirect()->to('login');
+                    $row['role'] = 'civitas';
                 }
 
                 // Simpan atau update user
@@ -95,7 +94,7 @@ class Login extends BaseController
                 // echo json_encode($data);
 
                 // if ($row['role'] == 'mahasiswa') {
-                    return redirect()->to('/');
+                return redirect()->to('/');
                 // } else {
                 //     return view('pages/regular/request_buku');
                 // }
@@ -206,7 +205,7 @@ class Login extends BaseController
                 // if ($data->role == 'mahasiswa') {
                 //     return redirect()->to('buku_request');
                 // } elseif ($data->role == 'dosen') {
-                    return redirect()->to('/');
+                return redirect()->to('/');
                 // }
             } else {
                 $session->setFlashdata('msg', 'Password salah');

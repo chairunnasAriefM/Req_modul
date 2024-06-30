@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Models\BukuRequestModel;
+
 class Home extends BaseController
 {
     public function index()
     {
-        $isLoggedIn = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
+        $bukuModel = new BukuRequestModel();
+        $data['moduls'] = $bukuModel->findAll();
+        // return $this->response->setJSON($data);
 
-        return view('welcome_message', ['isLoggedIn' => $isLoggedIn]);
+        return view('pages/index', $data);
     }
 
-    public function tes()
-    {
-        return view('pages/index.php');
-    }
 }
