@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->get('tes', 'Home::tes');
+
 
 $routes->get('/', 'Home::index');
 
@@ -43,25 +43,23 @@ $routes->group('', ['filter' => 'dosen'], function ($routes) {
 // });
 
 $routes->group('', ['filter' => 'staff'], function ($routes) {
+
     $routes->get('/dashboard', function () {
         return view('pages/staff/home.php');
     });
-    // Menambahkan rute untuk modul
-    $routes->get('dashboard/modul', 'Dashboard::index');
+    $routes->get('/', 'Dashboard::dashboard'); // Rute untuk halaman dashboard
+       $routes->get('dashboard/index','Dashboard::index');//rute untuk modul
     
     // Rute tambahan untuk fungsionalitas modul
-    $routes->get('/dashboard/modul/pending', 'Dashboard::pending');
-    $routes->get('/dashboard/modul/proses', 'Dashboard::proses');
-    $routes->post('/dashboard/modul/editStatus/(:num)', 'Dashboard::editStatus/$1');
-    
-    // Rute untuk halaman preview modul
-    $routes->get('/dashboard/modul/preview/(:num)', 'Dashboard::preview/$1');
-    $routes->get('/dashboard/modul/checkPdfContent/(:num)', 'Dashboard::CekPdf/$1');
+    $routes->get('dashboard/index/pending', 'Dashboard::pending');
+    $routes->get('dashboard/index/proses', 'Dashboard::index');
+    $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
+
+    $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
 });
 
 
 
-     
 
    
 

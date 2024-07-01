@@ -1,10 +1,10 @@
 <?= $this->extend('layouts/layoutDashboard') ?>
 
-<?= $this->section('content') ?>
-
+<?= $this->Section('content') ?>
 <h1>Modul Menunggu Persetujuan</h1>
 
 <h2>Halaman Pending</h2>
+
 <table class="table">
     <thead>
         <tr>
@@ -16,7 +16,7 @@
     <tbody>
         <?php foreach ($pendingModul as $modul): ?>
         <tr>
-            <td><?= $modul->judul_modul?></td>
+            <td><?= $modul->judul_modul ?></td>
             <td><?= $modul->tanggal_request ?></td>
             <td>
                 <!-- Tombol untuk preview modul dengan logo Bootstrap -->
@@ -24,6 +24,18 @@
                     <span class="glyphicon glyphicon-eye-open"></span> Preview
                 </button>
 
+                <!-- Form untuk edit status -->
+                <form action="<?= base_url('dashboard/editStatus/' . $modul->modul_id) ?>" method="post" style="display: inline-block;">
+                    <select name="new_status" class="form-control">
+                        <option value="ditolak">Ditolak</option>
+                        <option value="diterima">Diterima</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-pencil"></span> Ubah Status
+                    </button>
+                </form>
+            </td>
+        </tr>
 
         <!-- Modal untuk preview modul -->
         <div class="modal fade" id="previewModal<?= $modul->modul_id ?>" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel<?= $modul->modul_id ?>" aria-hidden="true">
@@ -48,5 +60,4 @@
     </tbody>
 </table>
 
-<?= $this->endSection() ?>
-
+<?= $this->endSection()?>

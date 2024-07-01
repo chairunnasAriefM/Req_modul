@@ -26,7 +26,7 @@ class Dashboard extends BaseController
         $modulModel = new ModulModel();
         $pendingModul = $modulModel->where('status', 'pending')->findAll();
         $data = ['pendingModul' => $pendingModul];
-        return view('dashboard/pending', $data);
+        return view('pages/staff/pending', $data);
     }
 
     public function proses()
@@ -34,7 +34,7 @@ class Dashboard extends BaseController
         $modulModel = new ModulModel();
         $prosesModul = $modulModel->where('status', 'proses eksekusi')->findAll();
         $data = ['prosesModul' => $prosesModul];
-        return view('dashboard/proses', $data);
+        return view('pages/staff/proses', $data);
     }
 
     public function editStatus($modul_id)
@@ -42,20 +42,11 @@ class Dashboard extends BaseController
         $modulModel = new ModulModel();
         $newStatus = $this->request->getPost('new_status');
         $modulModel->update($modul_id, ['status' => $newStatus]);
-        return redirect()->to('/dashboard/modul');
+        return redirect()->to('/dashboard/pending');
     }
-
-    public function preview($modul_id)
-    {
-        $modulModel = new ModulModel();
-        $modul = $modulModel->find($modul_id);
-        $data = ['modul' => $modul];
-        return view('dashboard/preview', $data);
-    }
-
     public function CekPdf($modul_id)
     {
         $data = ['modul_id' => $modul_id];
-        return view('dashboard/check_pdf_content', $data);
+        return view('pages/staff/Cekpdf', $data);
     }
 }
