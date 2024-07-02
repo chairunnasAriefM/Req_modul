@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/layoutDashboard') ?>
+<?= $this->extend('layouts/LayoutDashboard.php') ?>
 
 <?= $this->Section('content') ?>
 <h1>Modul Menunggu Persetujuan</h1>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
+    <title>Dashboard </title>
 
 
 
@@ -22,14 +22,14 @@
 </head>
 
 <body>
-    <script src="<?= base_url('assets2/static/js/initTheme.js')?>"></script>
+    <script src="<?= base_url('assets2/static/js/initTheme.js') ?>"></script>
     <div id="app">
         <div id="sidebar">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="<?= base_url('assets2/compiled/svg/logo.svg')?>" alt="Logo" srcset=""></a>
+                            <a href="index.html"><img src="<?= base_url('assets2/compiled/svg/logo.svg') ?>" alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -79,36 +79,36 @@
                             <ul class="submenu ">
 
                                 <li class="submenu-item  ">
-                                    <a href="<?= base_url('')?>dashboard/index/pending">Pending</a>
+                                    <a href="<?= base_url('') ?>dashboard/index/pending">Pending</a>
 
                                 </li>
 
                                 <li class="submenu-item  ">
-                                <a href="<?= base_url('')?>dashboard/index/proses">Proses</a>
+                                    <a href="<?= base_url('') ?>dashboard/index/proses">Proses</a>
 
                                 </li>
 
-                    </ul>
+                            </ul>
                 </div>
             </div>
         </div>
-       <div id="main">
-        <?php $this->renderSection('content') ?>
-       </div>
+        <div id="main">
+            <?php $this->renderSection('content') ?>
+        </div>
     </div>
-   
-
-    <script src="<?=base_url('assets2/static/js/components/dark.js')?>"></script>
-    <script src="<?=base_url('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js')?>"></script>
 
 
-    <script src="<?=base_url('assets2/compiled/js/app.js')?>"></script>
+    <script src="<?= base_url('assets2/static/js/components/dark.js') ?>"></script>
+    <script src="<?= base_url('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
+
+
+    <script src="<?= base_url('assets2/compiled/js/app.js') ?>"></script>
 
 
 
     <!-- Need: Apexcharts -->
-    <script src="<?=base_url('assets2/extensions/apexcharts/apexcharts.min.js')?>"></script>
-    <script src="<?=base_url('assets2/static/js/pages/dashboard.js')?>"></script>
+    <script src="<?= base_url('assets2/extensions/apexcharts/apexcharts.min.js') ?>"></script>
+    <script src="<?= base_url('assets2/static/js/pages/dashboard.js') ?>"></script>
 
 </body>
 
