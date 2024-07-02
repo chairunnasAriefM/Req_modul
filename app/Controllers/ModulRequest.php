@@ -15,15 +15,18 @@ class ModulRequest extends BaseController
 
     public function store()
     {
-        // Validasi input
-        $validation = $this->validate([
+        // Determine if the file should be required
+        $rules = [
             'judul_modul' => 'required',
-            'soft_file' => 'uploaded[soft_file]|mime_in[soft_file,application/pdf]|max_size[soft_file,2048]',
             'jumlah_cetak' => 'required|integer'
-        ]);
+        ];
 
-        if (!$validation) {
-            return redirect()->back()->withInput()->with('validation', \Config\Services::validation());
+        if ($this->request->getPost('jenis_modul') === 'modul_baru') {
+            $rules['soft_file'] = 'uploaded[soft_file]|mime_in[soft_file,application/pdf]|max_size[soft_file,2048]';
+        }
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
         // Simpan data ke database
@@ -32,20 +35,22 @@ class ModulRequest extends BaseController
 
         $data = [
             'judul_modul' => $this->request->getPost('judul_modul'),
-            'soft_file' => $file->getName(),
             'jumlah_cetak' => $this->request->getPost('jumlah_cetak'),
             'tanggal_request' => date("Y-m-d"),
         ];
         $data['id_anggota_request'] = session()->get('id_anggota');
 
-        // Pindahkan file yang diupload ke direktori yang diinginkan
-        $file->move(WRITEPATH . 'uploads');
+        if ($file && $file->isValid()) {
+            // Pindahkan file yang diupload ke direktori yang diinginkan
+            $file->move(WRITEPATH . 'uploads');
+            $data['soft_file'] = $file->getName();
+        }
 
         // Simpan data 
         $modul->save($data);
 
         // Redirect dengan pesan sukses
-        return redirect()->to('/request_modul')->with('success', 'Berhasil Mengisi Form');
+        return redirect()->to('/modul_request')->with('success', 'Berhasil Mengisi Form');
     }
 
     // staff

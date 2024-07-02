@@ -47,6 +47,15 @@ class BukuRequest extends BaseController
         return redirect()->to('/buku_request')->with('success', 'Berhasil Mengisi Form');
     }
 
+    public function showNew()
+    {
+        $bukuModel = new BukuRequestModel();
+        $data['moduls'] = $bukuModel->findAll();
+        // return $this->response->setJSON($data);
+
+        return view('pages/regular/daftarBukuReq', $data);
+    }
+
     // staff
 
 }

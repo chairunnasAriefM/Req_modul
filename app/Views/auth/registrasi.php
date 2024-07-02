@@ -24,7 +24,7 @@
                 <input type="password" name="password" placeholder="Password" required>
             </div>
 
-            <button type="submit" class="sign-in-button">Sign in</button>
+            <button type="submit" class="sign-in-button">Sign up</button>
         </form>
 
         <div class="signup-link">
