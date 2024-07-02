@@ -247,7 +247,8 @@ nav a.active::after {
 
 .top-image {
     height: 100vh;
-    width: 100%;
+    width: 100vw;
+    /* width: 100%; */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -262,6 +263,21 @@ nav a.active::after {
     left: 0;
     transition: background-image 1s ease-in-out;
 }
+
+@media (max-width: 768px) {
+    .top-image {
+        height: 100vh;
+        width: 120vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-image {
+        height: 120vh;
+        width: 120vw;
+    }
+}
+
 
 .overlay {
     z-index: 2;
@@ -445,11 +461,31 @@ main {
     margin-top: -80px;
     width: 100vw;
     height: 70vh;
-    background-color: red;
     display: flex;
     justify-content: center;
     align-items: center;
     column-count: 2;
+    background-color: #333;
+}
+
+/* #show-book::before {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+#show-book {
+    background-image: url(../images/coverBg.jpeg);
+    background-repeat: no-repeat;
+    background-size: 50vw;
+    background-position: start;
+} */
+
+@media only screen and (min-width : 1024px) {
+    #show-book {
+        height: 100vh;
+    }
 }
 
 .cover-container {
@@ -473,6 +509,12 @@ main {
 .cover img {
     height: 200px;
     width: 150px;
+}
+
+.prev,
+.next {
+    margin-top: 50vh;
+    background-color: #242525;
 }
 
 

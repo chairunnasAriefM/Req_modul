@@ -36,7 +36,7 @@
         </nav>
         <div class="auth-buttons">
             <?php if (!session()->get('logged_in')) : ?>
-                <button class="sign-in"><a href="<?= base_url(); ?>registrasi">Sign in</a></button>
+                <button class="sign-in"><a href="<?= base_url(); ?>login">Sign in</a></button>
             <?php else : ?>
                 <button class="sign-in"><a href="<?= base_url(); ?>logout">Logout</a></button>
             <?php endif; ?>
@@ -86,7 +86,9 @@
 
         <!-- show new book -->
         <div class="container" id="show-book">
-            <button onclick="prevBook()">←</button>
+            <button class="prev" onclick="prevBook()">←</button>
+            <button class="next" onclick="nextBook()">→</button>
+
             <div class="cover-container">
                 <div class="cover" id="prev-book-cover">
                     <div class="skeleton skeleton-img"></div>
@@ -100,8 +102,12 @@
                     <div class="skeleton skeleton-img"></div>
                     <img id="next-book-img" alt="Next Book Cover" style="display: none;">
                 </div>
+
+
             </div>
-            <button onclick="nextBook()">→</button>
+
+
+
             <div class="info">
                 <div class="book-details">
                     <h1>Buku Baru</h2>
