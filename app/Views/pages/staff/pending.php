@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-               Data Pending
+                Data Pending
             </h5>
         </div>
         <div class="card-body">
@@ -27,7 +27,7 @@
                                 <td><?= $modul->tanggal_request ?></td>
                                 <td>
                                     <!-- Tombol untuk preview modul dengan logo Bootstrap -->
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#previewModal<?= $modul->modul_id ?>">
+                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#inlineForm">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#previewModal<?= $modul->modul_id ?>">
@@ -51,45 +51,99 @@
                             </tr>
 
                             <!-- Modal untuk preview modul -->
-                                <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
-                                    aria-labelledby="myModalLabel33" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                        role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="myModalLabel33">Data </h4>
-                                                <button type="button" class="close" data-bs-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <i data-feather="x"></i>
+                            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel33">Data </h4>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <i data-feather="x"></i>
+                                            </button>
+                                        </div>
+                                        <form action="#">
+                                            <div class="modal-body">
+                                                <label for="email">Email: </label>
+                                                <div class="form-group">
+                                                    <input id="email" type="text" placeholder="Email Address" class="form-control">
+                                                </div>
+                                                <label for="password">Password: </label>
+                                                <div class="form-group">
+                                                    <input id="password" type="password" placeholder="Password" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Close</span>
+                                                </button>
+                                                <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">login</span>
                                                 </button>
                                             </div>
-                                            <form action="#">
-                                                <div class="modal-body">
-                                                    <label for="email">Email: </label>
-                                                    <div class="form-group">
-                                                        <input id="email" type="text" placeholder="Email Address"
-                                                            class="form-control">
-                                                    </div>
-                                                    <label for="password">Password: </label>
-                                                    <div class="form-group">
-                                                        <input id="password" type="password" placeholder="Password"
-                                                            class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light-secondary"
-                                                        data-bs-dismiss="modal">
-                                                        <i class="bx bx-x d-block d-sm-none"></i>
-                                                        <span class="d-none d-sm-block">Close</span>
-                                                    </button>
-                                                    <button type="button" class="btn btn-primary ms-1"
-                                                        data-bs-dismiss="modal">
-                                                        <i class="bx bx-check d-block d-sm-none"></i>
-                                                        <span class="d-none d-sm-block">login</span>
-                                                    </button>
-                                                </div>
-                                            </form>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+<?php endforeach; ?>
+</tbody>
+
+</table>
+</div>
+</div>
+</div>
+<!-- Form and scrolling Components start -->
+<section id="form-and-scrolling-components">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <h4 class="card-title">Modal with Login Form</h4>
+                            <p> Created Simple Login Form.</p>
+                            <!-- Button trigger for login form modal -->
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                                Launch Modal
+                            </button>
+
+                            <!--login form Modal -->
+                            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel33">Login Form </h4>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <i data-feather="x"></i>
+                                            </button>
                                         </div>
+                                        <form action="#">
+                                            <div class="modal-body">
+                                                <label for="email">Email: </label>
+                                                <div class="form-group">
+                                                    <input id="email" type="text" placeholder="Email Address" class="form-control">
+                                                </div>
+                                                <label for="password">Password: </label>
+                                                <div class="form-group">
+                                                    <input id="password" type="password" placeholder="Password" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Close</span>
+                                                </button>
+                                                <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">login</span>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -97,13 +151,10 @@
                     </div>
                 </div>
             </div>
-                        <?php endforeach; ?>
-                    </tbody>
-
-                </table>
-            </div>
         </div>
     </div>
+</section>
+<!-- Form and scrolling Components end -->
 
 </section>
 
