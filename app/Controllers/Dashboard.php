@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ModulModel;
+use App\Models\BukuRequestModel;
 
 class Dashboard extends BaseController
 {
@@ -44,9 +45,42 @@ class Dashboard extends BaseController
         $modulModel->update($modul_id, ['status' => $newStatus]);
         return redirect()->to('/dashboard/pending');
     }
+
     public function CekPdf($modul_id)
     {
         $data = ['modul_id' => $modul_id];
         return view('pages/staff/Cekpdf', $data);
+    }
+
+    public function indexx()
+    {
+        $BukuRequestModel = new BukuRequestModel();
+        $pendingBuku = $BukuRequestModel->where('status', 'pending')->findAll();
+        $data = ['pendingBuku' => $pendingBuku];
+        return view('pages/staff/pending', $data);
+    }
+
+    public function pendingBuku()
+    {
+        $BukuRequestModel = new BukuRequestModel();
+        $pendingBuku = $BukuRequestModel->where('status', 'pending')->findAll();
+        $data = ['pendingBuku' => $pendingBuku];
+        return view('pages/staff/pendingBuku', $data);
+    }
+
+    public function prosesBuku()
+    {
+        $BukuRequestModel = new BukuRequestModel();
+        $prosesBuku = $BukuRequestModel->where('status', 'proses eksekusi')->findAll();
+        $data = ['prosesBuku' => $prosesBuku];
+        return view('pages/staff/prosesBuku', $data);
+    }
+
+    public function editStatusBuku($buku_id)
+    {
+        $BukuRequestModel = new BukuRequestModel();
+        $newStatusBuku = $this->request->getPost('new_status');
+        $BukuRequestModel->update($buku_id, ['status' => $newStatusBuku]);
+        return redirect()->to('/dashboard/pendingBuku');
     }
 }

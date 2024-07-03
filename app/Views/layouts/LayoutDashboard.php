@@ -89,6 +89,27 @@
                                 </li>
 
                             </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Buku Menunggu Persetujuan</span>
+                            </a>
+
+                            <ul class="submenu ">
+
+                                <li class="submenu-item  ">
+                                    <a href="<?= base_url('') ?>dashboard/indexx/pendingBuku">Pending</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="<?= base_url('') ?>dashboard/indexx/prosesBuku">Proses</a>
+
+                                </li>
+
+                            </ul>
+                        </li>
                 </div>
             </div>
         </div>

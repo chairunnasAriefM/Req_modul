@@ -36,10 +36,8 @@ $routes->group('', ['filter' => 'dosen'], function ($routes) {
 });
 
 //staff
-
 // Default route
 // $routes->get('/', 'Dashboard::index');
-
 // Jika rute tidak ditemukan
 // $routes->set404Override(function(){
 //     return view('errors/html/error_404');
@@ -51,18 +49,20 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
         return view('pages/staff/home.php');
     });
     $routes->get('/', 'Dashboard::dashboard'); // Rute untuk halaman dashboard
-       $routes->get('dashboard/index','Dashboard::index');//rute untuk modul
-    
+    $routes->get('dashboard/index', 'Dashboard::index'); //rute untuk modul
+
+    //-----------------------------------------------------------------------------------------------//
+
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
     $routes->get('dashboard/index/proses', 'Dashboard::index');
     $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
-
     $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
+
+    //-----------------------------------------------------------------------------------------------//
+
+    // Rute tambahan untuk fungsionalitas Buku
+    $routes->get('dashboard/indexx/pendingBuku', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/indexx/prosesBuku', 'Dashboard::indexx');
+    $routes->post('dashboard/indexx/editStatusBuku/(:num)', 'Dashboard::editStatusBuku/$1');
 });
-
-
-
-
-   
-

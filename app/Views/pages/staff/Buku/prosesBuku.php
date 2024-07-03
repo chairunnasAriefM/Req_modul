@@ -1,6 +1,6 @@
 <?= $this->extend('layouts/layoutDashboard') ?>
 
-<?= $this->section('content') ?>
+<?= $this->Section('content') ?>
 
 <!-- Minimal jQuery Datatable start -->
 <section class="section">
@@ -263,3 +263,4 @@
         </div>
     </div>
 </section>
+<?= $this->endSection() ?>
