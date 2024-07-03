@@ -21,7 +21,7 @@ class Dashboard extends BaseController
         // return view('layouts/LayoutDashboard');
     }
 
-    public function pending()
+    public function pendingModul()
     {
         $modulModel = new ModulModel();
         $pendingModul = $modulModel->where('status', 'pending')->findAll();

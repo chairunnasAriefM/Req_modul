@@ -50,19 +50,16 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->get('/dashboard', function () {
         return view('pages/staff/home.php');
     });
-    $routes->get('/', 'Dashboard::dashboard'); // Rute untuk halaman dashboard
-       $routes->get('dashboard/index','Dashboard::index');//rute untuk modul
-    
+
+    // modul
+    $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
+    $routes->get('dashboard/prosesModul', 'Dashboard::proses');
+
+
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
-    $routes->get('dashboard/index/proses', 'Dashboard::index');
+    $routes->get('dashboard/index/proses', 'Dashboard::proses');
     $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
 
     $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
 });
-
-
-
-
-   
-
