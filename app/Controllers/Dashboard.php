@@ -11,15 +11,12 @@ class Dashboard extends BaseController
 
     public function index()
     {
-        $modulModel = new ModulModel();
-        $pendingModul = $modulModel->where('status', 'pending')->findAll();
-        $data = ['pendingModul' => $pendingModul];
-
+        $homeModel = new StaffPerpustakaanModel();
+        $data['home'] = $homeModel->findAll();
         // return $this->response->setJSON($data);
-        return view('pages/staff/dashboard', $data);
 
-        // return view('layouts/LayoutDashboard');
-    }
+        return view('pages/staff/dashboard', $data);
+    }
 
     public function pendingModul()
     {
