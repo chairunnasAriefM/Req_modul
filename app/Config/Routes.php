@@ -47,9 +47,7 @@ $routes->group('', ['filter' => 'dosen'], function ($routes) {
 
 $routes->group('', ['filter' => 'staff'], function ($routes) {
 
-    $routes->get('/dashboard', function () {
-        return view('pages/staff/home.php');
-    });
+    $routes->get('dashboard', 'Dashboard::index');
 
     // modul
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
