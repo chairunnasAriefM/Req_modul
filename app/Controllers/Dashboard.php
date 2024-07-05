@@ -4,19 +4,42 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\StaffPerpustakaanModel;
+use App\Models\CountStaffModel;
 use App\Models\ModulModel;
+use App\Models\BukuRequestModel;
 
 class Dashboard extends BaseController
 {
-
     public function index()
     {
         $homeModel = new StaffPerpustakaanModel();
         $data['home'] = $homeModel->findAll();
-        // return $this->response->setJSON($data);
 
-        return view('pages/staff/dashboard', $data);
-    }
+        $modulModel = new ModulModel();
+        $data['count_pending_modul'] = $modulModel->get_count_pending_modul();
+        $data['count_proses_modul'] = $modulModel->get_count_proses_modul();
+
+        $BukuRequestModel = new BukuRequestModel();
+        $data['count_pending_buku'] = $BukuRequestModel->get_count_pending_buku();
+        $data['count_proses_buku'] = $BukuRequestModel->get_count_proses_buku();
+
+        return view('pages/staff/home', $data);
+    }
+    
+    //public function index()
+    //{
+    //    $homeModel = new StaffPerpustakaanModel();
+    //    $data['home'] = $homeModel->findAll();
+    //
+    //  $countModel = new CountStaffModel();
+    //  $data['count_pending_modul'] = $countModel->get_count_pending_modul();
+    //  $data['count_proses_modul'] = $countModel->get_count_proses_modul();
+    //  $data['count_pending_buku'] = $countModel->get_count_pending_buku();
+    //  $data['count_proses_buku'] = $countModel->get_count_proses_buku();
+        
+    //  return view('pages/staff/home', $data);
+    //}
 
     public function pendingModul()
     {

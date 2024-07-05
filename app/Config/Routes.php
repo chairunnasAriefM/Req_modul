@@ -55,7 +55,6 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
     $routes->get('dashboard/prosesModul', 'Dashboard::proses');
 
-
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
     $routes->get('dashboard/index/proses', 'Dashboard::proses');
