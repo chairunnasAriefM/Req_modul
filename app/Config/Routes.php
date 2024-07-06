@@ -67,4 +67,8 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->post('/dashboard/index/editStatus/(:num)','Dashboard::editStatus/$1');
 
     $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
+
+    $routes->get('dashboard/index/pendingBuku', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/index/prosesBuku', 'Dashboard::prosesBuku');
+    $routes->post('/dashboard/index/editStatusBuku/(:num)','Dashboard::editStatusBuku/$1');
 });

@@ -10,17 +10,21 @@ use App\Models\BukuRequestModel;
 class Dashboard extends BaseController
 {
     protected $modulModel;
+    protected $bukuRequestModel;
 
     public function __construct()
     {
         $this->modulModel = new ModulModel();
+        $this->bukuRequestModel = new BukuRequestModel();
     }
 
     public function index()
     {
         // Modul
         $totalModul = $this->modulModel->countAll();
+        $totalBuku = $this->bukuRequestModel->countAll();
         $statusCountsModul = $this->getStatusCounts($this->modulModel);
+        $statusCountsBuku = $this->getStatusCounts($this->bukuRequestModel);
 
         $data = [
             'totalModul' => $totalModul,
@@ -29,6 +33,13 @@ class Dashboard extends BaseController
             'totalModulTolak' => $statusCountsModul['totalTolak'],
             'totalModulProses' => $statusCountsModul['totalProses'],
             'totalModulSelesai' => $statusCountsModul['totalSelesai'],
+            //----------------------------------------------------------//
+            'totalBuku' => $totalBuku,
+            'totalBukuPending' => $statusCountsBuku['totalPending'],
+            'totalBukuTerima' => $statusCountsBuku['totalTerima'],
+            'totalBukuTolak' => $statusCountsBuku['totalTolak'],
+            'totalBukuProses' => $statusCountsBuku['totalProses'],
+            'totalBukuSelesai' => $statusCountsBuku['totalSelesai'],
         ];
 
         return view('pages/staff/home', $data);
@@ -68,37 +79,23 @@ class Dashboard extends BaseController
         return view('pages/staff/Cekpdf', ['modul_id' => $modul_id]);
     }
 
-    public function indexx()
-    {
-        $BukuRequestModel = new BukuRequestModel();
-        $pendingBuku = $BukuRequestModel->where('status', 'pending')->findAll();
-        $data = ['pendingBuku' => $pendingBuku];
-        return view('pages/staff/dashboard', $data);
-    }
+    //------------------------------------------------------------------------------------//
 
     public function pendingBuku()
     {
-        $BukuRequestModel = new BukuRequestModel();
-        $pendingBuku = $BukuRequestModel->where('status', 'pending')->findAll();
-        $data = ['pendingBuku' => $pendingBuku];
-        return view('pages/staff/pendingBuku', $data);
+        $pendingBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
+        return view('pages/staff/pendingBuku', ['pendingBuku' => $pendingBuku]);
     }
 
     public function prosesBuku()
     {
-        $BukuRequestModel = new BukuRequestModel();
-        $prosesBuku = $BukuRequestModel->where('status', 'proses eksekusi')->findAll();
-        $data = ['prosesBuku' => $prosesBuku];
-        return view('pages/staff/prosesBuku', $data);
+        $prosesBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
+        return view('pages/staff/pendingBuku', ['pendingBuku' => $prosesBuku]);
     }
 
-    public function editStatusBuku($buku_id)
+    public function editStatusBuku($buku_id, $status)
     {
-        $BukuRequestModel = new BukuRequestModel();
-        $newStatusBuku = $this->request->getPost('new_status');
-        $BukuRequestModel->update($buku_id, ['status' => $newStatusBuku]);
-        return redirect()->to('/dashboard/pendingBuku');
+        $this->modulModel->update($buku_id, ['status' => $status]);
+        return $this->response->setJSON(['status' => 'success']);
     }
 }
-
-    

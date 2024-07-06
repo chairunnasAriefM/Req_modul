@@ -17,7 +17,7 @@
                         <tr>
                             <th>Judul Buku</th>
                             <th>Tanggal Request</th>
-                            <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
