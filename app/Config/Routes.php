@@ -49,7 +49,7 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     $routes->get('dashboard', 'Dashboard::index');
 
-    // modulws 
+    // modul
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
     $routes->get('dashboard/prosesModul', 'Dashboard::proses');
 
@@ -64,5 +64,10 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->get('dashboard/index/proses', 'Dashboard::proses');
     $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
 
-    $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
+    // Buku
+    $routes->get('dashboard/pendingBuku', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/prosesBuku', 'Dashboard::prosesBuku');
+
+    // ubah status
+    $routes->post('/dashboard/editStatusBuku/(:num)/(:segment)', 'Dashboard::editStatusBuku/$1/$2');
 });

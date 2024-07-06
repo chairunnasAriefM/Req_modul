@@ -76,7 +76,7 @@
                         </li>
 
                         <!-- modul side bar -->
-                        <li class="sidebar-item has-sub">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'modul') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-journal-bookmark"></i>
                                 <span>Modul</span>
@@ -87,9 +87,15 @@
                                     <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Pending</a>
                                 </li>
 
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingModul' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Disetujui</a>
+                                </li>
+
                                 <li class="submenu-item <?= uri_string() == 'dashboard/prosesModul' ? 'active' : '' ?> ">
                                     <a href="<?= base_url('dashboard/prosesModul') ?>" class="submenu-link">Proses</a>
                                 </li>
+
+
 
                             </ul>
 
@@ -99,19 +105,23 @@
                         <!-- end sidebar modul -->
 
                         <!-- start sidebar Buku -->
-                        <li class="sidebar-item has-sub">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'buku') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book"></i>
                                 <span>Buku</span>
                             </a>
 
                             <ul class="submenu active">
-                                <li class="submenu-item  <?= uri_string() == '' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>" class="submenu-link">Pending</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingBuku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/pendingBuku" class="submenu-link">Pending</a>
                                 </li>
 
-                                <li class="submenu-item <?= uri_string() == '' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>" class="submenu-link">Proses</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingBuku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/pendingBuku" class="submenu-link">Disetujui</a>
+                                </li>
+
+                                <li class="submenu-item <?= uri_string() == 'dashboard/prosesBuku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/prosesBuku" class="submenu-link">Proses</a>
                                 </li>
 
                             </ul>
@@ -128,6 +138,12 @@
             </div>
         </div>
         <div id="main">
+            <!-- burger -->
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
             <?php $this->renderSection('content') ?>
         </div>
     </div>

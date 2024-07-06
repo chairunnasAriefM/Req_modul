@@ -78,4 +78,27 @@ class Dashboard extends BaseController
     {
         return view('pages/staff/Cekpdf', ['modul_id' => $modul_id]);
     }
+
+    // buku
+    public function pendingBuku()
+    {
+        $pendingBuku = $this->bukuModel->where('status', 'pending')->findAll();
+        return view('pages/staff/buku/pending', ['pendingBuku' => $pendingBuku]);
+    }
+
+    public function prosesBuku()
+    {
+        $pendingBuku = $this->bukuModel->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/buku/proses', ['prosesBuku' => $pendingBuku]);
+    }
+
+    public function editStatusBuku($id_buku, $status)
+    {
+        try {
+            $this->bukuModel->update($id_buku, ['status' => $status]);
+            return $this->response->setJSON(['status' => 'success']);
+        } catch (\Exception $e) {
+            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
 }
