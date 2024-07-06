@@ -47,11 +47,11 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     $routes->get('/dashboard', function () {
         return view('pages/staff/home.php');
-    });
+    });                                                    
     $routes->get('/', 'Dashboard::dashboard'); // Rute untuk halaman dashboard
     $routes->get('dashboard/index', 'Dashboard::index'); //rute untuk modul
     $routes->get('dashboard/indexx', 'Dashboard::indexx'); //rute untuk buku
-
+                                                                               
     //-----------------------------------------------------------------------------------------------//
 
     // Rute tambahan untuk fungsionalitas modul
