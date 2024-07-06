@@ -3,82 +3,79 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ModulModel;
 use App\Models\BukuRequestModel;
 
 class Dashboard extends BaseController
 {
+    protected $modulModel;
+    protected $bukuModel;
 
+    public function __construct()
+    {
+        $this->modulModel = new ModulModel();
+        $this->bukuModel = new BukuRequestModel();
+    }
 
     public function index()
     {
-        $modul = new ModulModel();
-        $buku = new BukuRequestModel();
+        // Modul
+        $totalModul = $this->modulModel->countAll();
+        $statusCountsModul = $this->getStatusCounts($this->modulModel);
 
-        // modul
-        $totalModul = $modul->countAll();
-        $totalModulPending = $modul->where('status', 'pending')->countAllResults();
-        $totalModulTerima = $modul->where('status', 'diterima')->countAllResults();
-        $totalModulTolak = $modul->where('status', 'ditolak')->countAllResults();
-        $totalModulProses = $modul->where('status', 'proses eksekusi')->countAllResults();
-        $totalModulSelesai = $modul->where('status', 'sudah dieksekusi')->countAllResults();
-
-        // buku
-        $totalBuku = $buku->countAll();
-        $totalBukuPending = $buku->where('status', 'pending')->countAllResults();
-        $totalBukuTerima = $buku->where('status', 'diterima')->countAllResults();
-        $totalBukuTolak = $buku->where('status', 'ditolak')->countAllResults();
-        $totalBukuProses = $buku->where('status', 'proses eksekusi')->countAllResults();
-        $totalBukuSelesai = $buku->where('status', 'sudah dieksekusi')->countAllResults();
+        // Buku
+        $totalBuku = $this->bukuModel->countAll();
+        $statusCountsBuku = $this->getStatusCounts($this->bukuModel);
 
         $data = [
-            // modul
             'totalModul' => $totalModul,
-            'totalModulPending' => $totalModulPending,
-            'totalModulTerima' => $totalModulTerima,
-            'totalModulTolak' => $totalModulTolak,
-            'totalModulProses' => $totalModulProses,
-            'totalModulSelesai' => $totalModulSelesai,
-            // buku
             'totalBuku' => $totalBuku,
-            'totalBukuPending' => $totalBukuPending,
-            'totalBukuTerima' => $totalBukuTerima,
-            'totalBukuTolak' => $totalBukuTolak,
-            'totalBukuProses' => $totalBukuProses,
-            'totalBukuSelesai' => $totalBukuSelesai,
+            'totalModulPending' => $statusCountsModul['totalPending'],
+            'totalModulTerima' => $statusCountsModul['totalTerima'],
+            'totalModulTolak' => $statusCountsModul['totalTolak'],
+            'totalModulProses' => $statusCountsModul['totalProses'],
+            'totalModulSelesai' => $statusCountsModul['totalSelesai'],
+            'totalBukuPending' => $statusCountsBuku['totalPending'],
+            'totalBukuTerima' => $statusCountsBuku['totalTerima'],
+            'totalBukuTolak' => $statusCountsBuku['totalTolak'],
+            'totalBukuProses' => $statusCountsBuku['totalProses'],
+            'totalBukuSelesai' => $statusCountsBuku['totalSelesai'],
         ];
 
         return view('pages/staff/home', $data);
     }
 
-    // modul
+    protected function getStatusCounts($model)
+    {
+        return [
+            'totalPending' => $model->where('status', 'pending')->countAllResults(),
+            'totalTerima' => $model->where('status', 'diterima')->countAllResults(),
+            'totalTolak' => $model->where('status', 'ditolak')->countAllResults(),
+            'totalProses' => $model->where('status', 'proses eksekusi')->countAllResults(),
+            'totalSelesai' => $model->where('status', 'sudah dieksekusi')->countAllResults(),
+        ];
+    }
+
     public function pendingModul()
     {
-        $modulModel = new ModulModel();
-        $pendingModul = $modulModel->where('status', 'pending')->findAll();
-        $data = ['pendingModul' => $pendingModul];
-        return view('pages/staff/modul/pending', $data);
+        $pendingModul = $this->modulModel->where('status', 'pending')->findAll();
+        return view('pages/staff/modul/pending', ['pendingModul' => $pendingModul]);
     }
 
     public function proses()
     {
-        $modulModel = new ModulModel();
-        $prosesModul = $modulModel->where('status', 'proses eksekusi')->findAll();
-        $data = ['prosesModul' => $prosesModul];
-        return view('pages/staff/modul/proses', $data);
+        $prosesModul = $this->modulModel->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/modul/proses', ['prosesModul' => $prosesModul]);
     }
 
-    public function editStatus($modul_id)
+    public function editStatus($modul_id, $status)
     {
-        $modulModel = new ModulModel();
-        $newStatus = $this->request->getPost('new_status');
-        $modulModel->update($modul_id, ['status' => $newStatus]);
-        return redirect()->to('/dashboard/pending');
+        $this->modulModel->update($modul_id, ['status' => $status]);
+        return $this->response->setJSON(['status' => 'success']);
     }
-    public function CekPdf($modul_id)
+
+    public function cekPdf($modul_id)
     {
-        $data = ['modul_id' => $modul_id];
-        return view('pages/staff/Cekpdf', $data);
+        return view('pages/staff/Cekpdf', ['modul_id' => $modul_id]);
     }
 }

@@ -49,10 +49,15 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     $routes->get('dashboard', 'Dashboard::index');
 
-    // modul
+    // modulws 
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
     $routes->get('dashboard/prosesModul', 'Dashboard::proses');
 
+    // ubah status
+    $routes->post('/dashboard/editStatus/(:num)/(:segment)', 'Dashboard::editStatus/$1/$2');
+
+    // Routes membaca file dari writable/uploads 
+    $routes->get('uploads/(:any)', 'UploadsController::index/$1');
 
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
