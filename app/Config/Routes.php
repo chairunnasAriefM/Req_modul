@@ -55,11 +55,16 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
     $routes->get('dashboard/prosesModul', 'Dashboard::proses');
 
-
+    //ubah status
+    $routes->post('/dashboard/editStatus/(:num)/(:segment)','Dashboard::editStatus/$1/$2');
+    
+    //membaca file dari writable/uploads
+    $routes->get('uploads/(:any)', 'UploadsController::index/$1');
+                                                                              
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
     $routes->get('dashboard/index/proses', 'Dashboard::proses');
-    $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
+    $routes->post('/dashboard/index/editStatus/(:num)','Dashboard::editStatus/$1');
 
     $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
 });

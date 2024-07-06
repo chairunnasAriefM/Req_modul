@@ -8,45 +8,64 @@ use App\Models\ModulModel;
 
 class Dashboard extends BaseController
 {
+    protected $modulModel;
+
+    public function __construct()
+    {
+        $this->modulModel = new ModulModel();
+    }
 
     public function index()
     {
-        $modulModel = new ModulModel();
-        $pendingModul = $modulModel->where('status', 'pending')->findAll();
-        $data = ['pendingModul' => $pendingModul];
+        // Modul
+        $totalModul = $this->modulModel->countAll();
+        $statusCountsModul = $this->getStatusCounts($this->modulModel);
 
-        // return $this->response->setJSON($data);
-        return view('pages/staff/dashboard', $data);
+        $data = [
+            'totalModul' => $totalModul,
+            'totalModulPending' => $statusCountsModul['totalPending'],
+            'totalModulTerima' => $statusCountsModul['totalTerima'],
+            'totalModulTolak' => $statusCountsModul['totalTolak'],
+            'totalModulProses' => $statusCountsModul['totalProses'],
+            'totalModulSelesai' => $statusCountsModul['totalSelesai'],
+        ];
 
-        // return view('layouts/LayoutDashboard');
+        return view('pages/staff/home', $data);
+    }
+
+    protected function getStatusCounts($model)
+    {
+        return [
+            'totalPending' => $model->where('status', 'pending')->countAllResults(),
+            'totalTerima' => $model->where('status', 'diterima')->countAllResults(),
+            'totalTolak' => $model->where('status', 'ditolak')->countAllResults(),
+            'totalProses' => $model->where('status', 'proses eksekusi')->countAllResults(),
+            'totalSelesai' => $model->where('status', 'sudah dieksekusi')->countAllResults(),
+        ];
     }
 
     public function pendingModul()
     {
-        $modulModel = new ModulModel();
-        $pendingModul = $modulModel->where('status', 'pending')->findAll();
-        $data = ['pendingModul' => $pendingModul];
-        return view('pages/staff/pending', $data);
+        $pendingModul = $this->modulModel->where('status', 'pending')->findAll();
+        return view('pages/staff/modul/pending', ['pendingModul' => $pendingModul]);
     }
 
     public function proses()
     {
-        $modulModel = new ModulModel();
-        $prosesModul = $modulModel->where('status', 'proses eksekusi')->findAll();
-        $data = ['prosesModul' => $prosesModul];
-        return view('pages/staff/proses', $data);
+        $prosesModul = $this->modulModel->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/modul/proses', ['prosesModul' => $prosesModul]);
     }
 
-    public function editStatus($modul_id)
+    public function editStatus($modul_id, $status)
     {
-        $modulModel = new ModulModel();
-        $newStatus = $this->request->getPost('new_status');
-        $modulModel->update($modul_id, ['status' => $newStatus]);
-        return redirect()->to('/dashboard/pending');
+        $this->modulModel->update($modul_id, ['status' => $status]);
+        return $this->response->setJSON(['status' => 'success']);
     }
+
     public function CekPdf($modul_id)
     {
-        $data = ['modul_id' => $modul_id];
-        return view('pages/staff/Cekpdf', $data);
+        return view('pages/staff/Cekpdf', ['modul_id' => $modul_id]);
     }
 }
+
+    
