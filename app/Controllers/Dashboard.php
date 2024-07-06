@@ -20,9 +20,9 @@ class Dashboard extends BaseController
         $data['count_pending_modul'] = $modulModel->get_count_pending_modul();
         $data['count_proses_modul'] = $modulModel->get_count_proses_modul();
 
-        $BukuRequestModel = new BukuRequestModel();
-        $data['count_pending_buku'] = $BukuRequestModel->get_count_pending_buku();
-        $data['count_proses_buku'] = $BukuRequestModel->get_count_proses_buku();
+        $bukuRequestModel = new BukuRequestModel();
+        $data['count_pending_buku'] = $bukuRequestModel->get_count_pending_buku();
+        $data['count_proses_buku'] = $bukuRequestModel->get_count_proses_buku();
 
         return view('pages/staff/home', $data);
     }

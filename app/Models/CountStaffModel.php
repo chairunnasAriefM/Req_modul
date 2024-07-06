@@ -4,7 +4,7 @@ class CountStaffModel extends Model
 {
     public function get_count_pending_modul(){
         $result = $this->db->select('COUNT(*) as count_pending_modul')
-                           ->from('dbreqmodul') 
+                           ->from('modul') 
                            ->where('status', 'pending')
                            ->get()
                            ->row_array();
@@ -13,7 +13,7 @@ class CountStaffModel extends Model
 
     public function get_count_proses_modul(){
         $result = $this->db->select('COUNT(*) as count_proses_modul')
-                           ->from('dbreqmodul')
+                           ->from('modul')
                            ->where('status', 'proses eksekusi')
                            ->get()
                            ->row_array();
@@ -22,7 +22,7 @@ class CountStaffModel extends Model
 
     public function get_count_pending_buku(){
         $result = $this->db->select('COUNT(*) as count_pending_buku')
-                           ->from('dbreqmodul')
+                           ->from('buku')
                            ->where('status', 'pending')
                            ->get()
                            ->row_array();
@@ -31,7 +31,7 @@ class CountStaffModel extends Model
 
     public function get_count_proses_buku(){
         $result = $this->db->select('COUNT(*) as count_proses_buku')
-                           ->from('dbreqmodul')
+                           ->from('buku')
                            ->where('status', 'proses eksekusi')
                            ->get()
                            ->row_array();
