@@ -36,8 +36,10 @@ $routes->group('', ['filter' => 'dosen'], function ($routes) {
 });
 
 //staff
+
 // Default route
 // $routes->get('/', 'Dashboard::index');
+
 // Jika rute tidak ditemukan
 // $routes->set404Override(function(){
 //     return view('errors/html/error_404');
@@ -47,23 +49,22 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     $routes->get('/dashboard', function () {
         return view('pages/staff/home.php');
-    });                                                    
-    $routes->get('/', 'Dashboard::dashboard'); // Rute untuk halaman dashboard
-    $routes->get('dashboard/index', 'Dashboard::index'); //rute untuk modul
-    $routes->get('dashboard/indexx', 'Dashboard::indexx'); //rute untuk buku
-                                                                               
-    //-----------------------------------------------------------------------------------------------//
+    });
 
+    // modul
+    $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
+    $routes->get('dashboard/prosesModul', 'Dashboard::proses');
+
+    //ubah status
+    $routes->post('/dashboard/editStatus/(:num)/(:segment)','Dashboard::editStatus/$1/$2');
+    
+    //membaca file dari writable/uploads
+    $routes->get('uploads/(:any)', 'UploadsController::index/$1');
+                                                                              
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
-    $routes->get('dashboard/index/proses', 'Dashboard::index');
-    $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
+    $routes->get('dashboard/index/proses', 'Dashboard::proses');
+    $routes->post('/dashboard/index/editStatus/(:num)','Dashboard::editStatus/$1');
+
     $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
-
-    //-----------------------------------------------------------------------------------------------//
-
-    // Rute tambahan untuk fungsionalitas Buku
-    $routes->get('dashboard/indexx/pendingBuku', 'Dashboard::pendingBuku');
-    $routes->get('dashboard/indexx/prosesBuku', 'Dashboard::indexx');
-    $routes->post('dashboard/indexx/editStatusBuku/(:num)', 'Dashboard::editStatusBuku/$1');
 });

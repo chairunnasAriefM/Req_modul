@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/app-dark.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/iconly.css') ?>">
 
+    <link rel="stylesheet" href="<?= base_url('assets2/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') ?>">
+
+    <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/table-datatable-jquery.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/app.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/app-dark.css') ?>">
+
+
 </head>
 
 <body>
@@ -29,7 +36,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="<?= base_url('assets2/compiled/svg/logo.svg') ?>" alt="Logo" srcset=""></a>
+                            <a href="index.html"><img src="<?= base_url('assets/images/logo_pcr_biasa') ?>" alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -61,55 +68,30 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item active ">
+                        <li class="sidebar-item active">
                             <a href="index.html" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
-
-
                         </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
-                                <span>Modul Menunggu Persetujuan</span>
+                                <span>Modul</span>
                             </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="<?= base_url('') ?>dashboard/index/pending">Pending</a>
-
+                            <ul class="submenu">
+                                <li class="submenu-item">
+                                    <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Pending</a>
                                 </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="<?= base_url('') ?>dashboard/index/proses">Proses</a>
-
+                                <li class="submenu-item">
+                                    <a href="<?= base_url('dashboard/prosesModul') ?>" class="submenu-link">Proses</a>
                                 </li>
-
                             </ul>
                         </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Buku Menunggu Persetujuan</span>
-                            </a>
+                    </ul>
 
-                            <ul class="submenu ">
 
-                                <li class="submenu-item  ">
-                                    <a href="<?= base_url('') ?>dashboard/indexx/pendingBuku">Pending</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="<?= base_url('') ?>dashboard/indexx/prosesBuku">Proses</a>
-
-                                </li>
-
-                            </ul>
-                        </li>
                 </div>
             </div>
         </div>
@@ -120,16 +102,22 @@
 
 
     <script src="<?= base_url('assets2/static/js/components/dark.js') ?>"></script>
-    <script src="<?= base_url('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
-
-
+    <script src="<?= base_url('assets2/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
     <script src="<?= base_url('assets2/compiled/js/app.js') ?>"></script>
-
-
 
     <!-- Need: Apexcharts -->
     <script src="<?= base_url('assets2/extensions/apexcharts/apexcharts.min.js') ?>"></script>
     <script src="<?= base_url('assets2/static/js/pages/dashboard.js') ?>"></script>
+
+
+    <script src="<?= base_url('assets2/extensions/apexcharts/apexcharts.min.js') ?>"></script>
+    <script src="<?= base_url('assets2/static/js/pages/dashboard.js') ?>"></script>
+
+    <script src="<?= base_url('assets2/extensions/jquery/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('assets2/extensions/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
+    <script src="<?= base_url('assets2/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') ?>"></script>
+    <script src="<?= base_url('assets2/static/js/pages/datatables.js') ?>"></script>
+
 
 </body>
 
