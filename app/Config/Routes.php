@@ -50,7 +50,7 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     });
     $routes->get('/', 'Dashboard::dashboard'); // Rute untuk halaman dashboard
     $routes->get('dashboard/index', 'Dashboard::index'); //rute untuk modul
-    $routes->get('dashboard/indexx', 'Dashboard::indexx'); //rute untuk modul
+    $routes->get('dashboard/indexx', 'Dashboard::indexx'); //rute untuk buku
 
     //-----------------------------------------------------------------------------------------------//
 
