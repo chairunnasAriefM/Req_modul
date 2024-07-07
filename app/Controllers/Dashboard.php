@@ -84,13 +84,13 @@ class Dashboard extends BaseController
     public function pendingBuku()
     {
         $pendingBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
-        return view('pages/staff/pendingBuku', ['pendingBuku' => $pendingBuku]);
+        return view('pages/staff/Buku/pendingBuku', ['pendingBuku' => $pendingBuku]);
     }
 
     public function prosesBuku()
     {
         $prosesBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
-        return view('pages/staff/pendingBuku', ['pendingBuku' => $prosesBuku]);
+        return view('pages/staff/Buku/pendingBuku', ['pendingBuku' => $prosesBuku]);
     }
 
     public function editStatusBuku($buku_id, $status)

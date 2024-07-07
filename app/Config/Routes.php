@@ -56,19 +56,19 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     $routes->get('dashboard/prosesModul', 'Dashboard::proses');
 
     //ubah status
-    $routes->post('/dashboard/editStatus/(:num)/(:segment)','Dashboard::editStatus/$1/$2');
-    
+    $routes->post('/dashboard/editStatus/(:num)/(:segment)', 'Dashboard::editStatus/$1/$2');
+
     //membaca file dari writable/uploads
     $routes->get('uploads/(:any)', 'UploadsController::index/$1');
-                                                                              
+
     // Rute tambahan untuk fungsionalitas modul
     $routes->get('dashboard/index/pending', 'Dashboard::pending');
     $routes->get('dashboard/index/proses', 'Dashboard::proses');
-    $routes->post('/dashboard/index/editStatus/(:num)','Dashboard::editStatus/$1');
+    $routes->post('/dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
 
     $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
 
-    $routes->get('dashboard/index/pendingBuku', 'Dashboard::pendingBuku');
-    $routes->get('dashboard/index/prosesBuku', 'Dashboard::prosesBuku');
-    $routes->post('/dashboard/index/editStatusBuku/(:num)','Dashboard::editStatusBuku/$1');
+    $routes->get('dashboard/pendingBuku', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/prosesBuku', 'Dashboard::prosesBuku');
+    $routes->post('/dashboard/editStatusBuku/(:num)/(:segment)', 'Dashboard::editStatusBuku/$1/$2');
 });

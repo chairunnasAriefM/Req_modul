@@ -1,18 +1,19 @@
-<?= $this->extend('layouts/layoutDashboard') ?>
+<?= $this->extend('layouts/LayoutDashboard.php') ?>
 
-<?= $this->Section('content') ?>
+<?= $this->section('content') ?>
 
-<!-- Minimal jQuery Datatable start -->
+<h1>Buku dalam Proses Eksekusi</h1>
+
 <section class="section">
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                Minimal jQuery Datatable
+                Data Pending
             </h5>
         </div>
         <div class="card-body">
-            <div class="table-responsive datatable-minimal">
-                <table class="table" id="table2">
+            <div class="table-responsive">
+                <table class="table" id="table1">
                     <thead>
                         <tr>
                             <th>Judul Buku</th>
@@ -21,192 +22,126 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Graiden</td>
-                            <td>vehicula.aliquet@semconsequat.co.uk</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Dale</td>
-                            <td>fringilla.euismod.enim@quam.ca</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Nathaniel</td>
-                            <td>mi.Duis@diam.edu</td>
-                            <td>
-                                <span class="badge bg-danger">Inactive</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Darius</td>
-                            <td>velit@nec.com</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Oleg</td>
-                            <td>rhoncus.id@Aliquamauctorvelit.net</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kermit</td>
-                            <td>diam.Sed.diam@anteVivamusnon.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jermaine</td>
-                            <td>sodales@nuncsit.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ferdinand</td>
-                            <td>gravida.molestie@tinciduntadipiscing.org</td>
-                            <td>
-                                <span class="badge bg-danger">Inactive</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kuame</td>
-                            <td>Quisque.purus@mauris.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Deacon</td>
-                            <td>Duis.a.mi@sociisnatoquepenatibus.com</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Channing</td>
-                            <td>tempor.bibendum.Donec@ornarelectusante.ca</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Aladdin</td>
-                            <td>sem.ut@pellentesqueafacilisis.ca</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Cruz</td>
-                            <td>non@quisturpisvitae.ca</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Keegan</td>
-                            <td>molestie.dapibus@condimentumDonecat.edu</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ray</td>
-                            <td>placerat.eget@sagittislobortis.edu</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Maxwell</td>
-                            <td>diam@dapibus.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Carter</td>
-                            <td>urna.justo.faucibus@orci.com</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Stone</td>
-                            <td>velit.Aliquam.nisl@sitametrisus.com</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Berk</td>
-                            <td>fringilla.porttitor.vulputate@taciti.edu</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Philip</td>
-                            <td>turpis@euenimEtiam.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kibo</td>
-                            <td>feugiat@urnajustofaucibus.co.uk</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Bruno</td>
-                            <td>elit.Etiam.laoreet@luctuslobortisClass.edu</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Leonard</td>
-                            <td>blandit.enim.consequat@mollislectuspede.net</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Hamilton</td>
-                            <td>mauris@diam.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Harding</td>
-                            <td>Lorem.ipsum.dolor@etnetuset.com</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Emmanuel</td>
-                            <td>eget.lacus.Mauris@feugiatSednec.org</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
+                        <?php foreach ($prosesBuku as $buku) : ?>
+                            <tr>
+                                <td><?= esc($buku->judul_buku) ?></td>
+                                <td><?= esc($buku->tanggal_request) ?></td>
+                                <td>
+                                    <!-- Tombol untuk preview buku dengan logo Bootstrap -->
+                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $buku->buku_id ?>">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </button>
+
+                                    <!-- Form untuk edit status -->
+                                    <form action="<?= base_url('dashboard/editStatus/' . $buku->buku_id) ?>" method="post" style="display: inline-block;">
+                                        <?= csrf_field() ?>
+                                        <input type="hidden" name="new_status" value="selesai">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-clipboard2-check"></i> Selesaikan
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <!-- Modal untuk preview buku -->
+                            <div class="modal fade text-left" id="previewModal<?= $buku->buku_id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?= $buku->buku_id ?>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel<?= $buku->buku_id ?>">Preview Buku</h4>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <i data-feather="x"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label for="buku_id_<?= $buku->buku_id ?>" class="form-label">Buku ID</label>
+                                                    <input type="text" class="form-control" id="buku_id_<?= $buku->buku_id ?>" value="<?= $buku->buku_id ?>" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="id_anggota_request<?= $buku->buku_id ?>" class="form-label">ID Anggota Request</label>
+                                                    <input type="text" class="form-control" id="id_anggota_request<?= $buku->buku_id ?>" value="<?= $buku->id_anggota_request ?>" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="judul_buku<?= $buku->buku_id ?>" class="form-label">Judul Buku</label>
+                                                    <input type="text" class="form-control" id="judul_buku<?= $buku->buku_id ?>" value="<?= $buku->judul_buku ?>" readonly>
+                                                </div>
+                                                <?php if (!empty($buku->soft_file)) : ?>
+                                                    <div class="mb-3">
+                                                        <label for="soft_file_<?= $buku->buku_id ?>" class="form-label">Soft File</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="soft_file_<?= $buku->buku_id ?>" value="<?= $buku->soft_file ?>" readonly>
+                                                            <a href="<?= base_url('uploads/' . $buku->soft_file) ?>" class="btn btn-primary" target="_blank"><i class="bi bi-eye-fill"></i> Lihat PDF</a>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <div class="mb-3">
+                                                    <label for="jumlah_cetak<?= $buku->buku_id ?>" class="form-label">Jumlah Cetak</label>
+                                                    <input type="text" class="form-control" id="jumlah_cetak<?= $buku->buku_id ?>" value="<?= $buku->jumlah_cetak ?>" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="status<?= $buku->buku_id ?>" class="form-label">Status</label>
+                                                    <input type="text" class="form-control" id="status<?= $buku->buku_id ?>" value="<?= $buku->status ?>" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tanggal_request<?= $buku->buku_id ?>" class="form-label">Tanggal Request</label>
+                                                    <input type="text" class="form-control" id="tanggal_request<?= $buku->buku_id ?>" value="<?= $buku->tanggal_request ?>" readonly>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Close</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Script SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmAction(action, buku_id) {
+        let actionText = action === 'approve' ? 'approve' : 'reject';
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Anda tidak bisa mengembalikan nilai",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, ${actionText} it!`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let status = action === 'approve' ? 'diterima' : 'ditolak';
+                fetch(`/dashboard/editStatus/${buku_id}/${status}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => response.json()).then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire(
+                            'Updated!',
+                            'Status telah diperbarui',
+                            'success'
+                        ).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>
+
 <?= $this->endSection() ?>
