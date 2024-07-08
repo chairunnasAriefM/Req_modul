@@ -6,50 +6,46 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-// $routes->get('/',  function () {
-//     return view('pages/index');
-// });
+$routes->get('forbidden',  function () {
+    return view('errors/html/403');
+});
 
-$routes->get('/',  'Home::index');
-
+$routes->get('/',   function () {
+    return view('pages/index');
+});
 // auth
-$routes->get('/login', 'Login::index');
-$routes->get('/login/proses', 'Login::proses');
-$routes->post('/login', 'Login::loginBiasa');
-$routes->get('logout', 'Login::logout');
-$routes->get('/registrasi', 'Login::registrasi');
-$routes->post('/registrasi', 'Login::registrasiProses');
+$routes->get('/login', 'Auth::index');
+$routes->get('/login/proses', 'Auth::proses');
+$routes->post('/login', 'Auth::loginBiasa');
+$routes->get('logout', 'Auth::logout');
+$routes->get('/registrasi', 'Auth::registrasi');
+$routes->post('/registrasi', 'Auth::registrasiProses');
 
 
 // buku_request
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('buku_request', 'BukuRequest::index');
     $routes->post('buku_request', 'BukuRequest::store');
+
+    $routes->get('historyBuku', 'BukuRequest::HistoryBuku');
 });
-$routes->get('daftar_buku', 'BukuRequest::showNew');
-$routes->get('daftar_req', 'BukuRequest::showAll');
+
 
 // dosen
 $routes->group('', ['filter' => 'dosen'], function ($routes) {
     $routes->get('/modul_request', 'ModulRequest::index');
     $routes->post('/request_modul', 'ModulRequest::store');
+
+    $routes->get('historyModul', 'ModulRequest::historyModul');
 });
 
 //staff
-
-// Default route
-// $routes->get('/', 'Dashboard::index');
-
-// Jika rute tidak ditemukan
-// $routes->set404Override(function(){
-//     return view('errors/html/error_404');
-// });
 
 $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     $routes->get('dashboard', 'Dashboard::index');
 
-    // modul
+    // routes untuk modul 
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
     $routes->get('dashboard/disetujuiModul', 'Dashboard::disetujuiModul');
     $routes->get('dashboard/prosesModul', 'Dashboard::prosesModul');
@@ -60,12 +56,18 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     // Routes membaca file dari writable/uploads 
     $routes->get('uploads/(:any)', 'UploadsController::index/$1');
 
+    // export to excel
+    $routes->get('dashboard/export-modul', 'Dashboard::exportModulToExcel');
 
-    // Buku
+
+    // routes untuk Buku
     $routes->get('dashboard/pendingBuku', 'Dashboard::pendingBuku');
     $routes->get('dashboard/disetujuiBuku', 'Dashboard::disetujuiBuku');
     $routes->get('dashboard/prosesBuku', 'Dashboard::prosesBuku');
 
     // ubah status
     $routes->post('/dashboard/editStatusBuku/(:num)/(:segment)', 'Dashboard::editStatusBuku/$1/$2');
+
+    // export to excel
+    $routes->get('dashboard/export-buku', 'Dashboard::exportBukuToExcel');
 });

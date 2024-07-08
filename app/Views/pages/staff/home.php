@@ -9,6 +9,7 @@
 
 <div class="page-heading">
     <h3>Buku</h3>
+    <a class="btn btn-success" href="<?= base_url() ?>/dashboard/export-buku">Cetak Data Request Buku Periode Ini</a>
 </div>
 
 <div class="page-content">
@@ -90,6 +91,7 @@
 
 <div class="page-heading">
     <h3>Modul</h3>
+    <a class="btn btn-success" href="<?= base_url() ?>/dashboard/export-modul">Cetak Data Request Modul Periode Ini</a>
 </div>
 
 <div class="page-content">

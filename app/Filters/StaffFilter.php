@@ -49,7 +49,7 @@ class StaffFilter implements FilterInterface
 
         // Periksa apakah peran pengguna adalah dosen
         if (session()->get('role') !== 'staff') {
-            return redirect()->to('/')->with('error', 'Anda tidak memiliki akses ke halaman ini');
+            return redirect()->to('/forbidden'); // Arahkan ke halaman 403
         }
     }
 }

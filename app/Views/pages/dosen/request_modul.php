@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 
-<div class="form-container">
+<div class="form-container" style="margin-top: 100px;">
 
     <div class="form-group">
 
@@ -17,6 +17,11 @@
 
     <form id="modern-form" method="post" action="<?= base_url() ?>/request_modul" enctype="multipart/form-data">
         <?= csrf_field() ?> <!-- CSRF protection -->
+
+        <div class="form-group">
+            <label for="asal_prodi">Prodi</label>
+            <input type="text" id="asal_prodi" name="asal_prodi" value="<?= old('asal_prodi') ?>">
+        </div>
 
         <div class="form-group">
             <label for="judul_modul">Judul Modul</label>

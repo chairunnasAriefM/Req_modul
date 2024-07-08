@@ -7,7 +7,12 @@
     <div class="form-container">
         <form id="modern-form" method="post" action="/buku_request">
             <h2>Request Buku</h2>
- 
+
+            <div class="form-group">
+                <label for="asal_prodi">Asal Prodi</label>
+                <input type="text" id="asal_prodi" name="asal_prodi">
+            </div>
+
             <div class="form-group">
                 <label for="jenis_buku">Jenis Buku</label>
                 <select name="jenis_buku" id="jenis_buku">

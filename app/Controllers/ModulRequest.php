@@ -18,6 +18,7 @@ class ModulRequest extends BaseController
         // Determine if the file should be required
         $rules = [
             'judul_modul' => 'required',
+            'asal_prodi' => 'required',
             'jumlah_cetak' => 'required|integer'
         ];
 
@@ -34,6 +35,7 @@ class ModulRequest extends BaseController
         $file = $this->request->getFile('soft_file');
 
         $data = [
+            'asal_prodi' => $this->request->getPost('asal_prodi'),
             'judul_modul' => $this->request->getPost('judul_modul'),
             'jumlah_cetak' => $this->request->getPost('jumlah_cetak'),
             'tanggal_request' => date("Y-m-d"),
@@ -53,45 +55,18 @@ class ModulRequest extends BaseController
         return redirect()->to('/modul_request')->with('success', 'Berhasil Mengisi Form');
     }
 
-    // staff
-    
-    public function indexStaff()
+    // History
+    public function HistoryModul()
     {
-        $modulModel = new ModulModel();
-        $data['moduls'] = $modulModel->where('status', 'proses eksekusi')->findAll();
+        $id_session = session()->get('id_anggota');
 
-        $data['title'] = 'Pengajuan Menunggu Persetujuan';
-        return view('modul/index', $data);
+        // Buat instance model BukuRequestModel
+        $modul = new ModulModel();
+
+        // Query untuk mengambil data buku request berdasarkan id session
+        $modul = $modul->where('id_anggota_request', $id_session)->findAll();
+
+        // Kirim data ke view
+        return view('pages/dosen/historyModul', ['modul_history' => $modul]);
     }
-
-    public function preview($id)
-    {
-        $modulModel = new ModulModel();
-        $data['modul'] = $modulModel->find($id);
-
-        $data['title'] = 'Preview Pengajuan Modul';
-        return view('modul/preview', $data);
-
-        // $modulModel = new ModulModel();
-        // $data['moduls'] = $modulModel->findAll();
-
-        $db      = \Config\Database::connect();
-        $builder = $db->table('buku');
-        $query   = $builder->get();
-
-
-
-        return $this->response->setJSON($query);
-        // return view('dashboard', $data);
-
-    }
-
-    public function show()
-    {
-        $modulModel = new ModulModel();
-        $data['moduls'] = $modulModel->findAll();
-    
-        $data['title'] = 'Dashboard';
-        return view('dashboard', $data);
-    }  
 }

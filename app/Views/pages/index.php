@@ -15,6 +15,7 @@
     <!-- myjs -->
     <script src="<?= base_url('assets/js/home.js') ?>"></script>
 
+
     <!-- Bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -29,8 +30,8 @@
             <ul class="navbar-menu" id="nav">
                 <li><a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
                 <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
-                <?php if (session()->get('role') == 'dosen') : ?>
-                    <li><a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
+                <?php if (session()->get('is_dosen') == TRUE) : ?>
+                    <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -38,7 +39,15 @@
             <?php if (!session()->get('logged_in')) : ?>
                 <button class="sign-in"><a href="<?= base_url(); ?>login">Sign in</a></button>
             <?php else : ?>
-                <button class="sign-in"><a href="<?= base_url(); ?>logout">Logout</a></button>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction()"><i class="bi bi-person"></i> hi, <?= esc(session('nama')) ?>
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="myDropdown">
+                        <a href="<?= base_url() ?>historyBuku" class="history"><i class="bi bi-clock-history"></i> Cek History</a>
+                        <a href="<?= base_url('logout') ?>" class="logout" style="color: white;"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
         <div class="navbar-burger">
@@ -52,8 +61,8 @@
         <ul>
             <li><a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
             <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
-            <?php if (session()->get('role') == 'dosen') : ?>
-                <li><a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
+            <?php if (session()->get('is_dosen') == TRUE) : ?>
+                <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
             <?php endif; ?>
             <?php if (!session()->get('logged_in')) : ?>
                 <li><a href="<?= base_url(); ?>registrasi">Sign in</a></li>

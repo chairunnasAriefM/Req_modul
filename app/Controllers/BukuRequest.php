@@ -16,6 +16,7 @@ class BukuRequest extends BaseController
     public function store()
     {
         $validationRules = [
+            'asal_prodi' => 'required|min_length[3]',
             'judul_buku' => 'required|min_length[3]',
             'jenis_buku' => 'required',
             'edisi_tahun' => 'required|numeric',
@@ -31,6 +32,7 @@ class BukuRequest extends BaseController
 
         $buku_request = new BukuRequestModel();
         $data = [
+            'asal_prodi' => $this->request->getPost('asal_prodi'),
             'judul_buku' => $this->request->getPost('judul_buku'),
             'jenis_buku' => $this->request->getPost('jenis_buku'),
             'edisi_tahun' => $this->request->getPost('edisi_tahun'),
@@ -47,15 +49,14 @@ class BukuRequest extends BaseController
         return redirect()->to('/buku_request')->with('success', 'Berhasil Mengisi Form');
     }
 
-    public function showNew()
+    public function HistoryBuku()
     {
-        $bukuModel = new BukuRequestModel();
-        $data['moduls'] = $bukuModel->findAll();
-        // return $this->response->setJSON($data);
+        $id_session = session()->get('id_anggota');
 
-        return view('pages/regular/daftarBukuReq', $data);
+        $buku_request = new BukuRequestModel();
+
+        $buku_history = $buku_request->where('id_anggota_request', $id_session)->findAll();
+
+        return view('pages/regular/historyBuku', ['buku_history' => $buku_history]);
     }
-
-    // staff
-
 }

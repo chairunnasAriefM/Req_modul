@@ -25,7 +25,7 @@
             <ul>
                 <li> <a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
                 <li> <a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
-                <?php if (session()->get('role') == 'dosen') : ?>
+                <?php if (session()->get('is_dosen') == TRUE) : ?>
                     <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
                 <?php endif; ?>
             </ul>
