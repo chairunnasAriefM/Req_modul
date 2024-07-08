@@ -23,8 +23,8 @@
                     <tbody>
                         <?php foreach ($pendingBuku as $buku) : ?>
                             <tr>
-                                <td><?= $buku->judul_buku ?></td>
-                                <td><?= $buku->tanggal_request ?></td>
+                                <td><?= htmlspecialchars($buku->judul_buku, ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($buku->tanggal_request, ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>
                                     <!-- Tombol untuk preview buku dengan logo Bootstrap -->
                                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $buku->buku_id ?>">
@@ -53,44 +53,42 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel<?= $buku_item->buku_id ?>">Preview Buku</h4>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i data-feather="x"></i>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
                             <label for="buku_id_<?= $buku_item->buku_id ?>" class="form-label">Buku ID</label>
-                            <input type="text" class="form-control" id="buku_id_<?= $buku_item->buku_id ?>" value="<?= $buku_item->buku_id ?>" readonly>
+                            <input type="text" class="form-control" id="buku_id_<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->buku_id, ENT_QUOTES, 'UTF-8') ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="id_anggota_request<?= $buku_item->buku_id ?>" class="form-label">ID Anggota Request</label>
-                            <input type="text" class="form-control" id="id_anggota_request<?= $buku_item->buku_id ?>" value="<?= $buku_item->id_anggota_request ?>" readonly>
+                            <input type="text" class="form-control" id="id_anggota_request<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->id_anggota_request, ENT_QUOTES, 'UTF-8') ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="judul_buku<?= $buku_item->buku_id ?>" class="form-label">Judul Buku</label>
-                            <input type="text" class="form-control" id="judul_buku<?= $buku_item->buku_id ?>" value="<?= $buku_item->judul_buku ?>" readonly>
+                            <input type="text" class="form-control" id="judul_buku<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->judul_buku, ENT_QUOTES, 'UTF-8') ?>" readonly>
                         </div>
                         <?php if (!empty($buku_item->soft_file)) : ?>
                             <div class="mb-3">
                                 <label for="soft_file_<?= $buku_item->buku_id ?>" class="form-label">Soft File</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="soft_file_<?= $buku_item->buku_id ?>" value="<?= $buku_item->soft_file ?>" readonly>
-                                    <a href="<?= base_url('uploads/' . $buku_item->soft_file) ?>" class="btn btn-primary" target="_blank"><i class="bi bi-eye-fill"></i> Lihat PDF</a>
+                                    <input type="text" class="form-control" id="soft_file_<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->soft_file, ENT_QUOTES, 'UTF-8') ?>" readonly>
+                                    <a href="<?= base_url('uploads/' . htmlspecialchars($buku_item->soft_file, ENT_QUOTES, 'UTF-8')) ?>" class="btn btn-primary" target="_blank"><i class="bi bi-eye-fill"></i> Lihat PDF</a>
                                 </div>
                             </div>
                         <?php endif; ?>
                         <div class="mb-3">
                             <label for="jumlah_cetak<?= $buku_item->buku_id ?>" class="form-label">Jumlah Cetak</label>
-                            <input type="text" class="form-control" id="jumlah_cetak<?= $buku_item->buku_id ?>" value="<?= $buku_item->jumlah_cetak ?>" readonly>
+                            <input type="text" class="form-control" id="jumlah_cetak<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->jumlah_cetak, ENT_QUOTES, 'UTF-8') ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="status<?= $buku_item->buku_id ?>" class="form-label">Status</label>
-                            <input type="text" class="form-control" id="status<?= $buku_item->buku_id ?>" value="<?= $buku_item->status ?>" readonly>
+                            <input type="text" class="form-control" id="status<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->status, ENT_QUOTES, 'UTF-8') ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_request<?= $buku_item->buku_id ?>" class="form-label">Tanggal Request</label>
-                            <input type="text" class="form-control" id="tanggal_request<?= $buku_item->buku_id ?>" value="<?= $buku_item->tanggal_request ?>" readonly>
+                            <input type="text" class="form-control" id="tanggal_request<?= $buku_item->buku_id ?>" value="<?= htmlspecialchars($buku_item->tanggal_request, ENT_QUOTES, 'UTF-8') ?>" readonly>
                         </div>
                     </form>
                 </div>
@@ -135,7 +133,19 @@
                         ).then(() => {
                             location.reload();
                         });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Ada masalah saat memperbarui status',
+                            'error'
+                        );
                     }
+                }).catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        'Ada masalah saat memperbarui status',
+                        'error'
+                    );
                 });
             }
         });
