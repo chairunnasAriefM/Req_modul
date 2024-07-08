@@ -4,7 +4,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Data Modul sedang dalam proses eksekusi</h5>
+            <h5 class="card-title">Data Modul Sedang Dalam Proses Eksekusi</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -22,7 +22,8 @@
                                 <td><?= $modul->judul_modul ?></td>
                                 <td><?= $modul->tanggal_request ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>">
+
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" title="Preview" data-bs-target="#previewModal<?= $modul->modul_id ?>">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
                                     <button type="button" class="btn btn-success" onclick="confirmAction(<?= $modul->modul_id ?>)">

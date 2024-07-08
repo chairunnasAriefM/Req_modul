@@ -231,6 +231,13 @@
     <script src="<?= base_url('assets2/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') ?>"></script>
     <script src="<?= base_url('assets2/static/js/pages/datatables.js') ?>"></script>
 
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+
 
 </body>
 

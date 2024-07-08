@@ -77,7 +77,7 @@ class Login extends BaseController
                 // cek warga pcr atau tidak
                 if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
                     $row['role'] = 'mahasiswa';
-                } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
+                } elseif (strpos($email, '@pcr.ac.id') !== false) {
                     $row['role'] = 'dosen';
                 } else {
                     $row['role'] = 'civitas';
@@ -162,12 +162,10 @@ class Login extends BaseController
     {
         if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
             return 'mahasiswa';
-        } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
-            return 'dosen';
         } elseif (strpos($email, '@pcr.ac.id') !== false) {
-            return 'civitas';
+            return 'dosen';
         } else {
-            return false;
+            return 'civitas';
         }
     }
 

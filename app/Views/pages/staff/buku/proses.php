@@ -1,12 +1,11 @@
 <?= $this->extend('layouts/LayoutDashboard.php') ?>
 
 <?= $this->section('content') ?>
-<h1>Buku Menunggu Persetujuan</h1>
 
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Data Pending</h5>
+            <h5 class="card-title">Data Buku Sedang Dalam Proses Eksekusi</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
