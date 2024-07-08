@@ -29,13 +29,13 @@
                                 <td><?= esc($buku->tanggal_request) ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>">
+                                        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>" title="Detail">
                                             <i class="bi bi-eye-fill"></i>
                                         </button>
-                                        <button type="button" class="btn btn-success me-2" onclick="confirmAction('approve', <?= esc($buku->id_buku) ?>)">
+                                        <button type="button" class="btn btn-success me-2" onclick="confirmAction('approve', <?= esc($buku->id_buku) ?>)" title="Setuju"> 
                                             <i class="bi bi-clipboard2-check"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= esc($buku->id_buku) ?>)">
+                                        <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= esc($buku->id_buku) ?>)" title="Tolak">
                                             <i class="bi bi-clipboard-x-fill"></i>
                                         </button>
                                     </div>

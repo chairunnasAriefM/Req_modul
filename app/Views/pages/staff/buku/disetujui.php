@@ -28,7 +28,7 @@
                                 <td><?= esc($buku->tanggal_request) ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>">
+                                        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" title="Detail" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>">
                                             <i class="bi bi-eye-fill"></i> Detail
                                         </button>
                                         <button type="button" class="btn btn-success" onclick="confirmAction(<?= $buku->id_buku ?>)">

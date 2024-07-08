@@ -23,13 +23,13 @@
                                 <td><?= $modul->judul_modul ?></td>
                                 <td><?= $modul->tanggal_request ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>">
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>" title="Detail">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
-                                    <button type="button" class="btn btn-success" onclick="confirmAction('approve', <?= $modul->modul_id ?>)">
+                                    <button type="button" class="btn btn-success" onclick="confirmAction('approve', <?= $modul->modul_id ?>)" title="Setuju">
                                         <i class="bi bi-clipboard2-check"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= $modul->modul_id ?>)">
+                                    <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= $modul->modul_id ?>)" title="Tolak">
                                         <i class="bi bi-clipboard-x-fill"></i>
                                     </button>
                                 </td>
