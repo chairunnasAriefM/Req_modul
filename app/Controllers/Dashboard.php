@@ -3,38 +3,38 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ModulModel;
 use App\Models\BukuRequestModel;
 
 class Dashboard extends BaseController
 {
     protected $modulModel;
-    protected $bukuRequestModel;
+    protected $bukuModel;
 
     public function __construct()
     {
         $this->modulModel = new ModulModel();
-        $this->bukuRequestModel = new BukuRequestModel();
+        $this->bukuModel = new BukuRequestModel();
     }
 
     public function index()
     {
         // Modul
         $totalModul = $this->modulModel->countAll();
-        $totalBuku = $this->bukuRequestModel->countAll();
         $statusCountsModul = $this->getStatusCounts($this->modulModel);
-        $statusCountsBuku = $this->getStatusCounts($this->bukuRequestModel);
+
+        // Buku
+        $totalBuku = $this->bukuModel->countAll();
+        $statusCountsBuku = $this->getStatusCounts($this->bukuModel);
 
         $data = [
             'totalModul' => $totalModul,
+            'totalBuku' => $totalBuku,
             'totalModulPending' => $statusCountsModul['totalPending'],
             'totalModulTerima' => $statusCountsModul['totalTerima'],
             'totalModulTolak' => $statusCountsModul['totalTolak'],
             'totalModulProses' => $statusCountsModul['totalProses'],
             'totalModulSelesai' => $statusCountsModul['totalSelesai'],
-            //----------------------------------------------------------//
-            'totalBuku' => $totalBuku,
             'totalBukuPending' => $statusCountsBuku['totalPending'],
             'totalBukuTerima' => $statusCountsBuku['totalTerima'],
             'totalBukuTolak' => $statusCountsBuku['totalTolak'],
@@ -62,7 +62,13 @@ class Dashboard extends BaseController
         return view('pages/staff/modul/pending', ['pendingModul' => $pendingModul]);
     }
 
-    public function proses()
+    public function disetujuiModul()
+    {
+        $disetujuiModul = $this->modulModel->where('status', 'diterima')->findAll();
+        return view('pages/staff/modul/disetujui', ['disetujuiModul' => $disetujuiModul]);
+    }
+
+    public function prosesModul()
     {
         $prosesModul = $this->modulModel->where('status', 'proses eksekusi')->findAll();
         return view('pages/staff/modul/proses', ['prosesModul' => $prosesModul]);
@@ -74,28 +80,37 @@ class Dashboard extends BaseController
         return $this->response->setJSON(['status' => 'success']);
     }
 
-    public function CekPdf($modul_id)
+    public function cekPdf($modul_id)
     {
         return view('pages/staff/Cekpdf', ['modul_id' => $modul_id]);
     }
 
-    //------------------------------------------------------------------------------------//
-
+    // buku
     public function pendingBuku()
     {
-        $pendingBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
-        return view('pages/staff/Buku/pendingBuku', ['pendingBuku' => $pendingBuku]);
+        $pendingBuku = $this->bukuModel->where('status', 'pending')->findAll();
+        return view('pages/staff/buku/pending', ['pendingBuku' => $pendingBuku]);
+    }
+
+    public function disetujuiBuku()
+    {
+        $disetujuiBuku = $this->bukuModel->where('status', 'diterima')->findAll();
+        return view('pages/staff/buku/disetujui', ['disetujuiBuku' => $disetujuiBuku]);
     }
 
     public function prosesBuku()
     {
-        $prosesBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
-        return view('pages/staff/Buku/pendingBuku', ['pendingBuku' => $prosesBuku]);
+        $pendingBuku = $this->bukuModel->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/buku/proses', ['prosesBuku' => $pendingBuku]);
     }
 
-    public function editStatusBuku($buku_id, $status)
+    public function editStatusBuku($id_buku, $status)
     {
-        $this->modulModel->update($buku_id, ['status' => $status]);
-        return $this->response->setJSON(['status' => 'success']);
+        try {
+            $this->bukuModel->update($id_buku, ['status' => $status]);
+            return $this->response->setJSON(['status' => 'success']);
+        } catch (\Exception $e) {
+            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }
