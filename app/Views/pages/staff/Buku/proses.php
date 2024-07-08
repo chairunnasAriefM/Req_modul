@@ -28,12 +28,12 @@
                                 <td><?= esc($buku->tanggal_request) ?></td>
                                 <td>
                                     <!-- Tombol untuk preview buku dengan logo Bootstrap -->
-                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $buku->buku_id ?>">
+                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $buku->id_buku ?>">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
 
                                     <!-- Form untuk edit status -->
-                                    <form action="<?= base_url('dashboard/editStatus/' . $buku->buku_id) ?>" method="post" style="display: inline-block;">
+                                    <form action="<?= base_url('dashboard/editStatusBuku/' . $buku->id_buku) ?>" method="post" style="display: inline-block;">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="new_status" value="selesai">
                                         <button type="submit" class="btn btn-success">
@@ -44,11 +44,11 @@
                             </tr>
 
                             <!-- Modal untuk preview buku -->
-                            <div class="modal fade text-left" id="previewModal<?= $buku->buku_id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?= $buku->buku_id ?>" aria-hidden="true">
+                            <div class="modal fade text-left" id="previewModal<?= $buku->id_buku ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?= $buku->id_buku ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel<?= $buku->buku_id ?>">Preview Buku</h4>
+                                            <h4 class="modal-title" id="myModalLabel<?= $buku->id_buku ?>">Preview Buku</h4>
                                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <i data-feather="x"></i>
                                             </button>
@@ -56,37 +56,24 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="mb-3">
-                                                    <label for="buku_id_<?= $buku->buku_id ?>" class="form-label">Buku ID</label>
-                                                    <input type="text" class="form-control" id="buku_id_<?= $buku->buku_id ?>" value="<?= $buku->buku_id ?>" readonly>
+                                                    <label for="id_buku_<?= $buku->id_buku ?>" class="form-label">Buku ID</label>
+                                                    <input type="text" class="form-control" id="id_buku_<?= $buku->id_buku ?>" value="<?= $buku->id_buku ?>" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="id_anggota_request<?= $buku->buku_id ?>" class="form-label">ID Anggota Request</label>
-                                                    <input type="text" class="form-control" id="id_anggota_request<?= $buku->buku_id ?>" value="<?= $buku->id_anggota_request ?>" readonly>
+                                                    <label for="judul_buku_<?= $buku->id_buku ?>" class="form-label">Judul Buku</label>
+                                                    <input type="text" class="form-control" id="judul_buku_<?= $buku->id_buku ?>" value="<?= $buku->judul_buku ?>" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="judul_buku<?= $buku->buku_id ?>" class="form-label">Judul Buku</label>
-                                                    <input type="text" class="form-control" id="judul_buku<?= $buku->buku_id ?>" value="<?= $buku->judul_buku ?>" readonly>
-                                                </div>
-                                                <?php if (!empty($buku->soft_file)) : ?>
-                                                    <div class="mb-3">
-                                                        <label for="soft_file_<?= $buku->buku_id ?>" class="form-label">Soft File</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" id="soft_file_<?= $buku->buku_id ?>" value="<?= $buku->soft_file ?>" readonly>
-                                                            <a href="<?= base_url('uploads/' . $buku->soft_file) ?>" class="btn btn-primary" target="_blank"><i class="bi bi-eye-fill"></i> Lihat PDF</a>
-                                                        </div>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <div class="mb-3">
-                                                    <label for="jumlah_cetak<?= $buku->buku_id ?>" class="form-label">Jumlah Cetak</label>
-                                                    <input type="text" class="form-control" id="jumlah_cetak<?= $buku->buku_id ?>" value="<?= $buku->jumlah_cetak ?>" readonly>
+                                                    <label for="edisi_tahun_<?= $buku->id_buku ?>" class="form-label">Edisi Tahun</label>
+                                                    <input type="text" class="form-control" id="edisi_tahun_<?= $buku->id_buku ?>" value="<?= $buku->edisi_tahun ?>" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="status<?= $buku->buku_id ?>" class="form-label">Status</label>
-                                                    <input type="text" class="form-control" id="status<?= $buku->buku_id ?>" value="<?= $buku->status ?>" readonly>
+                                                    <label for="pengarang_<?= $buku->id_buku ?>" class="form-label">Pengarang</label>
+                                                    <input type="text" class="form-control" id="pengarang_<?= $buku->id_buku ?>" value="<?= $buku->pengarang ?>" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="tanggal_request<?= $buku->buku_id ?>" class="form-label">Tanggal Request</label>
-                                                    <input type="text" class="form-control" id="tanggal_request<?= $buku->buku_id ?>" value="<?= $buku->tanggal_request ?>" readonly>
+                                                    <label for="tanggal_request_<?= $buku->id_buku ?>" class="form-label">Tanggal Request</label>
+                                                    <input type="text" class="form-control" id="tanggal_request_<?= $buku->id_buku ?>" value="<?= $buku->tanggal_request ?>" readonly>
                                                 </div>
                                             </form>
                                         </div>
@@ -113,7 +100,7 @@
     function confirmAction(action, buku_id) {
         let actionText = action === 'approve' ? 'approve' : 'reject';
         Swal.fire({
-            title: 'Apakah anda yakin?',
+            title: 'Apakah Anda yakin?',
             text: "Anda tidak bisa mengembalikan nilai",
             icon: 'warning',
             showCancelButton: true,
@@ -123,7 +110,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 let status = action === 'approve' ? 'diterima' : 'ditolak';
-                fetch(`/dashboard/editStatus/${buku_id}/${status}`, {
+                fetch(`/dashboard/editStatusBuku/${buku_id}/${status}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

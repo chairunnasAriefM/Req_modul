@@ -28,18 +28,10 @@ class Dashboard extends BaseController
         $statusCountsBuku = $this->getStatusCounts($this->bukuModel);
 
         $data = [
-            'totalModul' => $totalModul,
-            'totalBuku' => $totalBuku,
             'totalModulPending' => $statusCountsModul['totalPending'],
-            'totalModulTerima' => $statusCountsModul['totalTerima'],
-            'totalModulTolak' => $statusCountsModul['totalTolak'],
             'totalModulProses' => $statusCountsModul['totalProses'],
-            'totalModulSelesai' => $statusCountsModul['totalSelesai'],
             'totalBukuPending' => $statusCountsBuku['totalPending'],
-            'totalBukuTerima' => $statusCountsBuku['totalTerima'],
-            'totalBukuTolak' => $statusCountsBuku['totalTolak'],
             'totalBukuProses' => $statusCountsBuku['totalProses'],
-            'totalBukuSelesai' => $statusCountsBuku['totalSelesai'],
         ];
 
         return view('pages/staff/home', $data);

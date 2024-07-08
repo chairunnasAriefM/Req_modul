@@ -7,166 +7,76 @@
     <hr>
 </div>
 
-<div class="page-heading">
-    <h3>Buku</h3>
-</div>
-
 <div class="page-content">
-    <section class="row">
-        <div class="col-12 col-lg-9">
-            <div class="row">
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon purple mb-2">
-                                        <i class="fa fa-list"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Total Request</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalBuku ?></h6>
-                                </div>
-                            </div>
+    <div class="row">
+        <!-- Total Request -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card bg-primary text-white shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Modul</div>
+                            <div class="h5 mb-0 font-weight-bold"><?= $totalModulPending ?></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon blue mb-2">
-                                        <i class="fa fa-clock"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Pending</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalBukuPending ?></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon green mb-2">
-                                        <i class="fa fa-check"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Disetujui</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalBukuTerima ?></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon red mb-2">
-                                        <i class="fa fa-cogs"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Proses Eksekusi</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalBukuProses ?></h6>
-                                </div>
-                            </div>
+                        <div class="col-auto">
+                            <i class="fas fa-list fa-2x"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
 
-<div class="page-heading">
-    <h3>Modul</h3>
-</div>
-
-<div class="page-content">
-    <section class="row">
-        <div class="col-12 col-lg-9">
-            <div class="row">
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon purple mb-2">
-                                        <i class="fa fa-list"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Total Request</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalModul ?></h6>
-                                </div>
-                            </div>
+        <!-- Pending -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card bg-warning text-white shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Proses Modul</div>
+                            <div class="h5 mb-0 font-weight-bold"><?= $totalModulProses ?></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon blue mb-2">
-                                        <i class="fa fa-clock"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Pending</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalModulPending ?></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon green mb-2">
-                                        <i class="fa fa-check"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Disetujui</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalModulTerima ?></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                    <div class="stats-icon red mb-2">
-                                        <i class="fa fa-cogs"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Proses Eksekusi</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalModulProses ?></h6>
-                                </div>
-                            </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Disetujui -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card bg-success text-white shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Buku</div>
+                            <div class="h5 mb-0 font-weight-bold"><?= $totalBukuPending ?></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proses Eksekusi -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card bg-danger text-white shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Proses Buku</div>
+                            <div class="h5 mb-0 font-weight-bold"><?= $totalBukuProses ?></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-cogs fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?= $this->endSection() ?>
