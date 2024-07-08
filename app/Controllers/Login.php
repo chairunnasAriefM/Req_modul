@@ -77,7 +77,7 @@ class Login extends BaseController
                 // cek warga pcr atau tidak
                 if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
                     $row['role'] = 'mahasiswa';
-                } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
+                } elseif (strpos($email, '@pcr.ac.id') !== false) {
                     $row['role'] = 'dosen';
                 } else {
                     $row['role'] = 'civitas';
@@ -162,12 +162,10 @@ class Login extends BaseController
     {
         if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
             return 'mahasiswa';
-        } elseif (strpos($email, '@dosen.pcr.ac.id') !== false) {
-            return 'dosen';
         } elseif (strpos($email, '@pcr.ac.id') !== false) {
-            return 'civitas';
+            return 'dosen';
         } else {
-            return false;
+            return 'civitas';
         }
     }
 
@@ -200,6 +198,8 @@ class Login extends BaseController
                     'logged_in' => TRUE
                 ];
                 $session->set($ses_data);
+                session()->set('logged_in', TRUE);
+                session()->regenerate(true);
 
                 // Redirect berdasarkan role
                 // if ($data->role == 'mahasiswa') {
@@ -228,9 +228,11 @@ class Login extends BaseController
                     'logged_in' => TRUE
                 ];
                 $session->set($ses_data);
+                session()->set('logged_in', TRUE);
+                session()->regenerate(true);
 
                 // Redirect untuk staff
-                return view('pages/regular/request_buku');
+                return redirect()->to('/dashboard');
             } else {
                 $session->setFlashdata('msg', 'Password atau Email salah');
                 return redirect()->to('/login');

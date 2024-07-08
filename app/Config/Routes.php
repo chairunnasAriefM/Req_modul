@@ -47,19 +47,25 @@ $routes->group('', ['filter' => 'dosen'], function ($routes) {
 
 $routes->group('', ['filter' => 'staff'], function ($routes) {
 
-    $routes->get('/dashboard', function () {
-        return view('pages/staff/home.php');
-    });
+    $routes->get('dashboard', 'Dashboard::index');
 
     // modul
     $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
-    $routes->get('dashboard/prosesModul', 'Dashboard::proses');
+    $routes->get('dashboard/disetujuiModul', 'Dashboard::disetujuiModul');
+    $routes->get('dashboard/prosesModul', 'Dashboard::prosesModul');
+
+    // ubah status
+    $routes->post('/dashboard/editStatus/(:num)/(:segment)', 'Dashboard::editStatus/$1/$2');
+
+    // Routes membaca file dari writable/uploads 
+    $routes->get('uploads/(:any)', 'UploadsController::index/$1');
 
 
-    // Rute tambahan untuk fungsionalitas modul
-    $routes->get('dashboard/index/pending', 'Dashboard::pending');
-    $routes->get('dashboard/index/proses', 'Dashboard::proses');
-    $routes->post('dashboard/index/editStatus/(:num)', 'Dashboard::editStatus/$1');
+    // Buku
+    $routes->get('dashboard/pendingBuku', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/disetujuiBuku', 'Dashboard::disetujuiBuku');
+    $routes->get('dashboard/prosesBuku', 'Dashboard::prosesBuku');
 
-    $routes->get('dashboard/index/checkPdfContent/(:num)', 'Dashboard::checkPdfContent/$1');
+    // ubah status
+    $routes->post('/dashboard/editStatusBuku/(:num)/(:segment)', 'Dashboard::editStatusBuku/$1/$2');
 });
