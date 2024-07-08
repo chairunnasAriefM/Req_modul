@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/table-datatable-jquery.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/app.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets2/compiled/css/app-dark.css') ?>">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="<?= base_url('assets2/extensions/@fortawesome/fontawesome-free/css/all.min.css') ?>">
 
 
 </head>
@@ -36,7 +38,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="<?= base_url('assets/images/logo_pcr_biasa.png') ?>" alt="Logo" srcset=""></a>
+                            <a href="<?= base_url() ?>"><img src="<?= base_url('assets/images/logo_pcr_biasa.png') ?>" alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -87,12 +89,12 @@
                                     <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Pending</a>
                                 </li>
 
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Disetujui</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/disetujuiModul' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/disetujuiModul') ?>" class="submenu-link">Disetujui</a>
                                 </li>
 
                                 <li class="submenu-item <?= uri_string() == 'dashboard/prosesModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('dashboard/prosesModul') ?>" class="submenu-link">Proses</a>
+                                    <a href="<?= base_url('') ?>dashboard/prosesModul" class="submenu-link">Proses</a>
                                 </li>
 
 
@@ -116,8 +118,8 @@
                                     <a href="<?= base_url('') ?>dashboard/pendingBuku" class="submenu-link">Pending</a>
                                 </li>
 
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/pendingBuku" class="submenu-link">Disetujui</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/disetujuiBuku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/disetujuiBuku" class="submenu-link">Disetujui</a>
                                 </li>
 
                                 <li class="submenu-item <?= uri_string() == 'dashboard/prosesBuku' ? 'active' : '' ?> ">
@@ -137,16 +139,79 @@
                 </div>
             </div>
         </div>
-        <div id="main">
-            <!-- burger -->
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
+        <div id="main" class='layout-navbar navbar-fixed'>
+            <header>
+                <nav class="navbar navbar-expand navbar-light navbar-top">
+
+                    <div class="container-fluid">
+                        <a href="#" class="burger-btn d-block">
+                            <i class="bi bi-justify fs-3"></i>
+                        </a>
+
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mb-lg-0">
+                                <li class="nav-item dropdown me-1">
+                                    <a class="nav-link active dropdown-toggle text-gray-600" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class='bi bi-envelope bi-sub fs-4'></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <h6 class="dropdown-header">Mail</h6>
+                                        </li>
+                                        <li><a class="dropdown-item" href="https://mail.google.com/">Buka periode pengajuan</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="dropdown" style="margin-left: 20px;">
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="user-menu d-flex">
+                                        <div class="user-name text-end me-3">
+                                            <h6 class="mb-0 text-gray-600"><?= esc(session()->get('nama_staff')) ?></h6>
+                                            <p class="mb-0 text-sm text-gray-600"><?= esc(session()->get('role')) ?></p>
+                                        </div>
+                                        <div class="user-img d-flex align-items-center">
+                                            <div class="avatar avatar-md">
+
+                                                <img src="<?= base_url('assets2/compiled/jpg/2.jpg') ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
+                                    <li>
+                                        <h6 class="dropdown-header">Hello, <?= esc(session()->get('nama_staff')) ?></h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
+                                            Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
+                                            Settings</a></li>
+                                    <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
             </header>
-            <?php $this->renderSection('content') ?>
+            <div id="main-content">
+                <?php $this->renderSection('content') ?>
+            </div>
+            <!-- footer -->
+            <footer style="bottom: 0;">
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2024 &copy; Politeknik Caltex Riau</p>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
+
+
 
 
     <script src="<?= base_url('assets2/static/js/components/dark.js') ?>"></script>

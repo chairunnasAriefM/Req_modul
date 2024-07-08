@@ -200,6 +200,8 @@ class Login extends BaseController
                     'logged_in' => TRUE
                 ];
                 $session->set($ses_data);
+                session()->set('logged_in', TRUE);
+                session()->regenerate(true);
 
                 // Redirect berdasarkan role
                 // if ($data->role == 'mahasiswa') {
@@ -228,9 +230,11 @@ class Login extends BaseController
                     'logged_in' => TRUE
                 ];
                 $session->set($ses_data);
+                session()->set('logged_in', TRUE);
+                session()->regenerate(true);
 
                 // Redirect untuk staff
-                return view('pages/regular/request_buku');
+                return redirect()->to('/dashboard');
             } else {
                 $session->setFlashdata('msg', 'Password atau Email salah');
                 return redirect()->to('/login');

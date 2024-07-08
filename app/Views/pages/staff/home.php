@@ -19,9 +19,9 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon purple mb-2">
-                                        <i class="iconly-boldShow"></i>
+                                        <i class="fa fa-list"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -36,9 +36,9 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon blue mb-2">
-                                        <i class="iconly-boldProfile"></i>
+                                        <i class="fa fa-clock"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -53,9 +53,9 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon green mb-2">
-                                        <i class="iconly-boldAdd-User"></i>
+                                        <i class="fa fa-check"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -70,14 +70,14 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon red mb-2">
-                                        <i class="iconly-boldBookmark"></i>
+                                        <i class="fa fa-cogs"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Ditolak</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalBukuTolak ?></h6>
+                                    <h6 class="text-muted font-semibold">Proses Eksekusi</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $totalBukuProses ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -100,9 +100,9 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon purple mb-2">
-                                        <i class="iconly-boldShow"></i>
+                                        <i class="fa fa-list"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -117,9 +117,9 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon blue mb-2">
-                                        <i class="iconly-boldProfile"></i>
+                                        <i class="fa fa-clock"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -134,9 +134,9 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon green mb-2">
-                                        <i class="iconly-boldAdd-User"></i>
+                                        <i class="fa fa-check"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -151,14 +151,14 @@
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon red mb-2">
-                                        <i class="iconly-boldBookmark"></i>
+                                        <i class="fa fa-cogs"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Proses</h6>
-                                    <h6 class="font-extrabold mb-0"><?= $totalModulTolak ?></h6>
+                                    <h6 class="text-muted font-semibold">Proses Eksekusi</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $totalModulProses ?></h6>
                                 </div>
                             </div>
                         </div>
@@ -167,6 +167,6 @@
             </div>
         </div>
     </section>
-
 </div>
+
 <?= $this->endSection() ?>

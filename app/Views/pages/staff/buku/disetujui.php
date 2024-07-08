@@ -1,12 +1,12 @@
 <?= $this->extend('layouts/LayoutDashboard.php') ?>
 
 <?= $this->section('content') ?>
-<!-- <h1>Buku Menunggu Persetujuan</h1> -->
+<h1>Buku Menunggu Persetujuan</h1>
 
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Data Buku Menunggu Persetujuan</h5>
+            <h5 class="card-title">Data Pending</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -21,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pendingBuku as $buku) : ?>
+                        <?php foreach ($disetujuiBuku as $buku) : ?>
                             <tr>
                                 <td><?= esc($buku->judul_buku) ?></td>
                                 <td><?= esc($buku->edisi_tahun) ?></td>
@@ -30,13 +30,10 @@
                                 <td>
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>">
-                                            <i class="bi bi-eye-fill"></i>
+                                            <i class="bi bi-eye-fill"></i> Detail
                                         </button>
-                                        <button type="button" class="btn btn-success me-2" onclick="confirmAction('approve', <?= esc($buku->id_buku) ?>)">
-                                            <i class="bi bi-clipboard2-check"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= esc($buku->id_buku) ?>)">
-                                            <i class="bi bi-clipboard-x-fill"></i>
+                                        <button type="button" class="btn btn-success" onclick="confirmAction(<?= $buku->id_buku ?>)">
+                                            <i class="bi bi-gear-fill"></i> Jalankan Proses Eksekusi
                                         </button>
                                     </div>
                                 </td>
@@ -114,8 +111,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmAction(action, id_buku) {
-        let actionText = action === 'approve' ? 'approve' : 'reject';
+    function confirmAction(id_buku) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Anda tidak bisa mengembalikan ini!",
@@ -123,11 +119,10 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: `Yes, ${actionText} it!`
+            confirmButtonText: 'Yes, proses eksekusi it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                let status = action === 'approve' ? 'diterima' : 'ditolak';
-                fetch(`/dashboard/editStatusBuku/${id_buku}/${status}`, {
+                fetch(`/dashboard/editStatusBuku/${id_buku}/proses eksekusi`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -144,14 +139,14 @@
                     } else {
                         Swal.fire(
                             'Error!',
-                            'Terjadi kesalahan: ' + data.message,
+                            'Terjadi kesalahan dalam memperbarui status.',
                             'error'
                         );
                     }
                 }).catch(error => {
                     Swal.fire(
                         'Error!',
-                        'Terjadi kesalahan: ' + error.message,
+                        'Terjadi kesalahan dalam memperbarui status.',
                         'error'
                     );
                 });

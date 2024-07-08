@@ -62,7 +62,13 @@ class Dashboard extends BaseController
         return view('pages/staff/modul/pending', ['pendingModul' => $pendingModul]);
     }
 
-    public function proses()
+    public function disetujuiModul()
+    {
+        $disetujuiModul = $this->modulModel->where('status', 'diterima')->findAll();
+        return view('pages/staff/modul/disetujui', ['disetujuiModul' => $disetujuiModul]);
+    }
+
+    public function prosesModul()
     {
         $prosesModul = $this->modulModel->where('status', 'proses eksekusi')->findAll();
         return view('pages/staff/modul/proses', ['prosesModul' => $prosesModul]);
@@ -84,6 +90,12 @@ class Dashboard extends BaseController
     {
         $pendingBuku = $this->bukuModel->where('status', 'pending')->findAll();
         return view('pages/staff/buku/pending', ['pendingBuku' => $pendingBuku]);
+    }
+
+    public function disetujuiBuku()
+    {
+        $disetujuiBuku = $this->bukuModel->where('status', 'diterima')->findAll();
+        return view('pages/staff/buku/disetujui', ['disetujuiBuku' => $disetujuiBuku]);
     }
 
     public function prosesBuku()
