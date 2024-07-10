@@ -16,7 +16,7 @@ class BukuRequest extends BaseController
     public function store()
     {
         $validationRules = [
-            'asal_prodi' => 'required|min_length[3]',
+            // 'asal_prodi' => 'required|min_length[3]',
             'judul_buku' => 'required|min_length[3]',
             'jenis_buku' => 'required',
             'edisi_tahun' => 'required|numeric',

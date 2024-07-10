@@ -10,7 +10,7 @@
 
             <div class="form-group">
                 <label for="asal_prodi">Asal Prodi</label>
-                <input type="text" id="asal_prodi" name="asal_prodi">
+                <input type="text" id="asal_prodi" name="asal_prodi" placeholder="Kosongkan Jika bukan Mahasiswa">
             </div>
 
             <div class="form-group">

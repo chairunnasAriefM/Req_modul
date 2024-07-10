@@ -132,6 +132,28 @@
 
                         <!-- end sidebar Buku -->
 
+                        <!-- start sidebar Dosen -->
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'dosen') !== false ? 'active' : '' ?>">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-lines-fill"></i>
+                                <span>Dosen</span>
+                            </a>
+
+                            <ul class="submenu active">
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tampilDosen' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tampilDosen" class="submenu-link">Data Dosen</a>
+                                </li>
+
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tambahDosen' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tambahDosen" class="submenu-link">Tambah Dosen</a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <!-- end sidebar Dosen -->
+
 
                     </ul>
 
@@ -237,6 +259,43 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <?php if (isset($validation) && $validation->getErrors()) : ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "Gagal",
+                    html: "<?= implode('<br>', $validation->getErrors()) ?>",
+                    icon: "error"
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('msg')) : ?>
+        <script>
+            Swal.fire({
+                title: "Terjadi Galat!",
+                text: "<?= session()->getFlashdata('msg'); ?>",
+                icon: "error"
+            });
+        </script>
+    <?php endif; ?>
+
+    <script>
+        if ('<?= session()->get('swal') ?>') {
+            Swal.fire({
+                title: 'Success!',
+                text: '<?= session()->get('swal') ?>',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
+
 
 
 </body>

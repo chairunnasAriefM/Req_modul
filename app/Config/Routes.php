@@ -70,4 +70,21 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     // export to excel
     $routes->get('dashboard/export-buku', 'Dashboard::exportBukuToExcel');
+
+    // routes pengaturan dosen 
+
+    // tampil dosen
+    $routes->get('/dashboard/tampilDosen', 'Auth::tampilDosen');
+
+    // tambah dosen
+    $routes->get('/dashboard/tambahDosen',   function () {
+        return view('pages/staff/dosen/tambahDosen.php');
+    });
+    $routes->post('/dashboard/tambahDosen', 'Auth::tambahDosen');
+
+    // update dosen 
+    $routes->post('/dashboard/dosen/update', 'Auth::updateDosen');
+
+    // delete dosen 
+    $routes->get('/dashboard/dosen/delete/(:segment)', 'Auth::deleteDosen/$1');
 });

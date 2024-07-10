@@ -146,9 +146,9 @@ class Auth extends BaseController
         if (strpos($email, '@mahasiswa.pcr.ac.id') !== false) {
             return 'mahasiswa';
         } elseif (strpos($email, '@pcr.ac.id') !== false) {
-            return 'dosen';
-        } else {
             return 'civitas';
+        } else {
+            return false;
         }
     }
 
@@ -229,4 +229,93 @@ class Auth extends BaseController
         session()->destroy();
         return redirect()->to('login');
     }
+
+    public function tampilDosen()
+    {
+        $civitasModel = new CivitasAkademikModel();
+
+        $dosen = $civitasModel->where('is_dosen', TRUE)->findAll();
+
+        return view('pages/staff/dosen/tampilDosen.php', ['dosens' => $dosen]);
+    }
+
+    public function tambahDosen()
+    {
+        $rules = [
+            'nama' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email',
+            'password' => 'required|min_length[6]|max_length[200]',
+        ];
+
+        if ($this->validate($rules)) {
+            $email = $this->request->getVar('email');
+            $role = $this->determineRole($email);
+
+            if ($role === false) {
+                return redirect()->back()->with('msg', 'Email bukan warga PCR');
+            }
+
+            $civitas = new CivitasAkademikModel();
+            $uuid = bin2hex(random_bytes(16));
+            $data = [
+                'id_anggota' => $uuid,
+                'nama' => $this->request->getVar('nama'),
+                'email' => $email,
+                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+                'is_dosen' => TRUE
+            ];
+
+            $civitas->save($data);
+            return redirect()->to('/dashboard/tambahDosen')->with('swal', 'Data berhasil Ditambah');
+        } else {
+            $data['validation'] = $this->validator;
+            echo view('pages/staff/dosen/tambahDosen.php', $data);
+        }
+    }
+
+    // update dosen
+    public function updateDosen()
+    {
+        $rules = [
+            'id_anggota' => 'required', // Ensure this is passed as a hidden input in your form
+            'nama' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email',
+            'password' => 'permit_empty|min_length[6]|max_length[200]',
+        ];
+
+        if ($this->validate($rules)) {
+            $id_anggota = $this->request->getVar('id_anggota');
+            $data = [
+                'nama' => $this->request->getVar('nama'),
+                'email' => $this->request->getVar('email'),
+            ];
+
+            // Update password only if it is provided
+            if (!empty($this->request->getVar('password'))) {
+                $data['password'] = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
+            }
+
+            $civitas = new CivitasAkademikModel();
+            $civitas->update($id_anggota, $data);
+
+            return redirect()->to('/dashboard/tampilDosen')->with('swal', 'Data berhasil Diperbarui');
+        } else {
+            // Pass the validation errors back to the form
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+    }
+
+
+    // hapus dosen 
+    public function deleteDosen($id_anggota)
+    {
+        $civitas = new CivitasAkademikModel();
+        if ($civitas->delete($id_anggota)) {
+            return redirect()->to('/dashboard/tampilDosen')->with('swal', 'Data berhasil Dihapus');
+        } else {
+            return redirect()->to('/dashboard/tampilDosen')->with('swal', 'Error deleting the data');
+        }
+    }
+
+    // 
 }
