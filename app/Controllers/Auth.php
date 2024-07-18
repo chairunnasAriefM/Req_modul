@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Firebase\JWT\JWT;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\CivitasAkademikModel;
@@ -26,6 +27,8 @@ class Auth extends BaseController
         $this->googleClient->setRedirectUri('http://localhost:8080/login/proses');
         $this->googleClient->addScope('email');
         $this->googleClient->addScope('profile');
+
+        JWT::$leeway = 60;
     }
 
     public function index()
