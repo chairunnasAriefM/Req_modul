@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ModulModel;
+use App\Models\ModulRequestModel;
 use App\Models\BukuRequestModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -13,24 +13,24 @@ use CodeIgniter\I18n\Time;
 
 class Dashboard extends BaseController
 {
-    protected $modulModel;
-    protected $bukuModel;
+    protected $ModulRequestModel;
+    protected $bukuRequestModel;
 
     public function __construct()
     {
-        $this->modulModel = new ModulModel();
-        $this->bukuModel = new BukuRequestModel();
+        $this->ModulRequestModel = new ModulRequestModel();
+        $this->bukuRequestModel = new BukuRequestModel();
     }
 
     public function index()
     {
         // Modul
-        $totalModul = $this->modulModel->countAll();
-        $statusCountsModul = $this->getStatusCounts($this->modulModel);
+        $totalModul = $this->ModulRequestModel->countAll();
+        $statusCountsModul = $this->getStatusCounts($this->ModulRequestModel);
 
         // Buku
-        $totalBuku = $this->bukuModel->countAll();
-        $statusCountsBuku = $this->getStatusCounts($this->bukuModel);
+        $totalBuku = $this->bukuRequestModel->countAll();
+        $statusCountsBuku = $this->getStatusCounts($this->bukuRequestModel);
 
         $data = [
             'totalModul' => $totalModul,
@@ -63,25 +63,25 @@ class Dashboard extends BaseController
 
     public function pendingModul()
     {
-        $pendingModul = $this->modulModel->where('status', 'pending')->findAll();
+        $pendingModul = $this->ModulRequestModel->where('status', 'pending')->findAll();
         return view('pages/staff/modul/pending', ['pendingModul' => $pendingModul]);
     }
 
     public function disetujuiModul()
     {
-        $disetujuiModul = $this->modulModel->where('status', 'diterima')->findAll();
+        $disetujuiModul = $this->ModulRequestModel->where('status', 'diterima')->findAll();
         return view('pages/staff/modul/disetujui', ['disetujuiModul' => $disetujuiModul]);
     }
 
     public function prosesModul()
     {
-        $prosesModul = $this->modulModel->where('status', 'proses eksekusi')->findAll();
+        $prosesModul = $this->ModulRequestModel->where('status', 'proses eksekusi')->findAll();
         return view('pages/staff/modul/proses', ['prosesModul' => $prosesModul]);
     }
 
     public function editStatus($modul_id, $status)
     {
-        $this->modulModel->update($modul_id, ['status' => $status]);
+        $this->ModulRequestModel->update($modul_id, ['status' => $status]);
         return $this->response->setJSON(['status' => 'success']);
     }
 
@@ -112,8 +112,8 @@ class Dashboard extends BaseController
     {
         list($startDate, $endDate) = $this->getPeriodStartEnd();
 
-        $modulModel = new ModulModel();
-        $moduls = $modulModel->where('tanggal_request >=', $startDate)
+        $ModulRequestModel = new ModulRequestModel();
+        $moduls = $ModulRequestModel->where('tanggal_request >=', $startDate)
             ->where('tanggal_request <=', $endDate)
             ->findAll();
 
@@ -197,26 +197,26 @@ class Dashboard extends BaseController
     // buku
     public function pendingBuku()
     {
-        $pendingBuku = $this->bukuModel->where('status', 'pending')->findAll();
+        $pendingBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
         return view('pages/staff/buku/pending', ['pendingBuku' => $pendingBuku]);
     }
 
     public function disetujuiBuku()
     {
-        $disetujuiBuku = $this->bukuModel->where('status', 'diterima')->findAll();
+        $disetujuiBuku = $this->bukuRequestModel->where('status', 'diterima')->findAll();
         return view('pages/staff/buku/disetujui', ['disetujuiBuku' => $disetujuiBuku]);
     }
 
     public function prosesBuku()
     {
-        $pendingBuku = $this->bukuModel->where('status', 'proses eksekusi')->findAll();
+        $pendingBuku = $this->bukuRequestModel->where('status', 'proses eksekusi')->findAll();
         return view('pages/staff/buku/proses', ['prosesBuku' => $pendingBuku]);
     }
 
     public function editStatusBuku($id_buku, $status)
     {
         try {
-            $this->bukuModel->update($id_buku, ['status' => $status]);
+            $this->bukuRequestModel->update($id_buku, ['status' => $status]);
             return $this->response->setJSON(['status' => 'success']);
         } catch (\Exception $e) {
             return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
@@ -227,8 +227,8 @@ class Dashboard extends BaseController
     {
         list($startDate, $endDate) = $this->getPeriodStartEnd();
 
-        $bukuModel = new BukuRequestModel();
-        $bukus = $bukuModel->where('tanggal_request >=', $startDate)
+        $bukuRequestModel = new BukuRequestModel();
+        $bukus = $bukuRequestModel->where('tanggal_request >=', $startDate)
             ->where('tanggal_request <=', $endDate)
             ->findAll();
 

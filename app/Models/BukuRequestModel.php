@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class BukuRequestModel extends Model
 {
-    protected $table            = 'buku';
+    protected $table            = 'request_buku';
     protected $primaryKey       = 'id_buku';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';

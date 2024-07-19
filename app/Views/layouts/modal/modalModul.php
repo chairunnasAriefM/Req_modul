@@ -13,10 +13,6 @@
                             <input type="text" class="form-control" id="modul_id_<?= $modul->modul_id ?>" value="<?= $modul->modul_id ?>" readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="id_anggota_request_<?= $modul->modul_id ?>" class="form-label">ID Anggota Request</label>
-                            <input type="text" class="form-control" id="id_anggota_request_<?= $modul->modul_id ?>" value="<?= $modul->id_anggota_request ?>" readonly>
-                        </div>
-                        <div class="mb-3">
                             <label for="judul_modul_<?= $modul->modul_id ?>" class="form-label">Judul Modul</label>
                             <input type="text" class="form-control" id="judul_modul_<?= $modul->modul_id ?>" value="<?= $modul->judul_modul ?>" readonly>
                         </div>
@@ -29,18 +25,6 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <div class="mb-3">
-                            <label for="jumlah_cetak_<?= $modul->modul_id ?>" class="form-label">Jumlah Cetak</label>
-                            <input type="text" class="form-control" id="jumlah_cetak_<?= $modul->modul_id ?>" value="<?= $modul->jumlah_cetak ?>" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="status_<?= $modul->modul_id ?>" class="form-label">Status</label>
-                            <input type="text" class="form-control" id="status_<?= $modul->modul_id ?>" value="<?= $modul->status ?>" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal_request_<?= $modul->modul_id ?>" class="form-label">Tanggal Request</label>
-                            <input type="text" class="form-control" id="tanggal_request_<?= $modul->modul_id ?>" value="<?= $modul->tanggal_request ?>" readonly>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

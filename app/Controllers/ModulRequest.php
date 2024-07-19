@@ -5,9 +5,17 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ModulModel;
+use App\Models\ModulRequestModel;
 
 class ModulRequest extends BaseController
 {
+    protected $modulReq;
+
+    public function __construct()
+    {
+        $this->modulReq = new ModulRequestModel();
+    }
+
     public function index()
     {
         return view('pages/dosen/request_modul');
@@ -68,5 +76,31 @@ class ModulRequest extends BaseController
 
         // Kirim data ke view
         return view('pages/dosen/historyModul', ['modul_history' => $modul]);
+    }
+
+    // staff dashboard area
+
+    public function pendingModul()
+    {
+        $pendingModul = $this->modulReq->where('status', 'pending')->findAll();
+        return view('pages/staff/modul_request/pending', ['pendingModul' => $pendingModul]);
+    }
+
+    public function disetujuiModul()
+    {
+        $disetujuiModul = $this->modulReq->where('status', 'diterima')->findAll();
+        return view('pages/staff/modul_request/disetujui', ['disetujuiModul' => $disetujuiModul]);
+    }
+
+    public function prosesModul()
+    {
+        $prosesModul = $this->modulReq->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/modul_request/proses', ['prosesModul' => $prosesModul]);
+    }
+
+    public function editStatus($modul_id, $status)
+    {
+        $this->modulReq->update($modul_id, ['status' => $status]);
+        return $this->response->setJSON(['status' => 'success']);
     }
 }

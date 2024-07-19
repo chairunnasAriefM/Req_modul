@@ -14,6 +14,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
+                            <th>Asal Prodi</th>
                             <th>Email</th>
                             <th>Aksi</th>
                         </tr>
@@ -23,6 +24,7 @@
                             <tr>
                                 <td><?= esc($dosen->id_anggota) ?></td>
                                 <td><?= esc($dosen->nama) ?></td>
+                                <td><?= esc($dosen->asal_prodi) ?></td>
                                 <td><?= esc($dosen->email) ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
@@ -58,6 +60,10 @@
                                                 <div class="mb-3">
                                                     <label for="nama_dosen_<?= esc($dosen->id_anggota) ?>" class="form-label">Nama Dosen</label>
                                                     <input type="text" class="form-control" id="nama_dosen_<?= esc($dosen->id_anggota) ?>" value="<?= esc($dosen->nama) ?>" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="nama_dosen_<?= esc($dosen->id_anggota) ?>" class="form-label">Asal Prodi</label>
+                                                    <input type="text" class="form-control" id="nama_dosen_<?= esc($dosen->id_anggota) ?>" value="<?= esc($dosen->asal_prodi) ?>" readonly>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email_dosen_<?= esc($dosen->id_anggota) ?>" class="form-label">Email</label>

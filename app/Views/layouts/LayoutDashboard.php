@@ -27,6 +27,8 @@
     <!-- font awesome -->
     <link rel="stylesheet" href="<?= base_url('assets2/extensions/@fortawesome/fontawesome-free/css/all.min.css') ?>">
 
+    <!-- swal2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -78,10 +80,28 @@
                         </li>
 
                         <!-- modul side bar -->
-                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'modul') !== false ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), '-modul') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-journal-bookmark"></i>
                                 <span>Modul</span>
+                            </a>
+
+                            <ul class="submenu active">
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tampil-modul' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/tampil-modul') ?>" class="submenu-link">Data Modul</a>
+                                </li>
+
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tambah-modul' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/tambah-modul') ?>" class="submenu-link">Tambah</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'pending') !== false ? 'active' : '' ?>">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-journal-bookmark"></i>
+                                <span>Request Modul</span>
                             </a>
 
                             <ul class="submenu active">
@@ -98,7 +118,6 @@
                                 </li>
 
 
-
                             </ul>
 
 
@@ -107,10 +126,29 @@
                         <!-- end sidebar modul -->
 
                         <!-- start sidebar Buku -->
-                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'buku') !== false ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), '-buku') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book"></i>
                                 <span>Buku</span>
+                            </a>
+
+                            <ul class="submenu active">
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tampil-buku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tampil-buku" class="submenu-link">Data Buku</a>
+                                </li>
+
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tambah-buku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tambah-buku" class="submenu-link">Tambah</a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'pending') !== false ? 'active' : '' ?>">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-book"></i>
+                                <span>Request Buku</span>
                             </a>
 
                             <ul class="submenu active">
@@ -274,6 +312,19 @@
             });
         </script>
     <?php endif; ?>
+
+    <?php if (session()->getFlashdata('errors')) : ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "Gagal",
+                    html: "<?= implode('<br>', session()->getFlashdata('errors')) ?>",
+                    icon: "error"
+                });
+            });
+        </script>
+    <?php endif; ?>
+
 
     <?php if (session()->getFlashdata('msg')) : ?>
         <script>

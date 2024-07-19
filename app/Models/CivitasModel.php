@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CivitasAkademikModel extends Model
+class CivitasModel extends Model
 {
-    protected $table            = 'civitas_akademik';
+    protected $table            = 'civitas';
     protected $primaryKey       = 'id_anggota';
     protected $useAutoIncrement = false;
     protected $returnType       = 'object';

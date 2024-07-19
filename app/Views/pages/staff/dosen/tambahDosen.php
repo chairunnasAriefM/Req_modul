@@ -21,6 +21,12 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
+                                        <label for="asal_prodi">Asal Prodi</label>
+                                        <input type="text" id="asal_prodi" class="form-control" placeholder="Asal Prodi" name="asal_prodi">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="email" id="email" class="form-control" placeholder="Email" name="email">
                                     </div>

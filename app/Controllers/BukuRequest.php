@@ -8,6 +8,14 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class BukuRequest extends BaseController
 {
+
+    protected $buku;
+
+    function __construct()
+    {
+        $this->buku = new BukuRequestModel();
+    }
+
     public function index()
     {
         return view('pages/regular/request_buku');
@@ -58,5 +66,34 @@ class BukuRequest extends BaseController
         $buku_history = $buku_request->where('id_anggota_request', $id_session)->findAll();
 
         return view('pages/regular/historyBuku', ['buku_history' => $buku_history]);
+    }
+
+    // staff dashboard buku
+    public function pendingBuku()
+    {
+        $pendingBuku = $this->buku->where('status', 'pending')->findAll();
+        return view('pages/staff/buku_request/pending', ['pendingBuku' => $pendingBuku]);
+    }
+
+    public function disetujuiBuku()
+    {
+        $disetujuiBuku = $this->buku->where('status', 'diterima')->findAll();
+        return view('pages/staff/buku_request/disetujui', ['disetujuiBuku' => $disetujuiBuku]);
+    }
+
+    public function prosesBuku()
+    {
+        $pendingBuku = $this->buku->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/buku_request/proses', ['prosesBuku' => $pendingBuku]);
+    }
+
+    public function editStatusBuku($id_buku, $status)
+    {
+        try {
+            $this->buku->update($id_buku, ['status' => $status]);
+            return $this->response->setJSON(['status' => 'success']);
+        } catch (\Exception $e) {
+            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Firebase\JWT\JWT;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\CivitasAkademikModel;
+use App\Models\CivitasModel;
 use App\Models\StaffPerpustakaanModel;
 use Google_Client;
 
@@ -18,7 +18,7 @@ class Auth extends BaseController
     public function __construct()
     {
         session();
-        $this->civitas = new CivitasAkademikModel();
+        $this->civitas = new CivitasModel();
         $this->staff = new StaffPerpustakaanModel();
         $this->googleClient = new Google_Client();
 
@@ -126,7 +126,7 @@ class Auth extends BaseController
                 return redirect()->back()->with('msg', 'Email bukan warga PCR');
             }
 
-            $civitas = new CivitasAkademikModel();
+            $civitas = new CivitasModel();
             $uuid = bin2hex(random_bytes(16));
             $data = [
                 'id_anggota' => $uuid,
@@ -169,7 +169,7 @@ class Auth extends BaseController
             return redirect()->to('/login');
         }
 
-        // Cek di tabel civitas_akademik
+        // Cek di tabel civitas_
         $data = $this->civitas->where('email', $email)->first();
 
         if ($data) {
@@ -235,7 +235,7 @@ class Auth extends BaseController
 
     public function tampilDosen()
     {
-        $civitasModel = new CivitasAkademikModel();
+        $civitasModel = new CivitasModel();
 
         $dosen = $civitasModel->where('is_dosen', TRUE)->findAll();
 
@@ -258,7 +258,7 @@ class Auth extends BaseController
                 return redirect()->back()->with('msg', 'Email bukan warga PCR');
             }
 
-            $civitas = new CivitasAkademikModel();
+            $civitas = new CivitasModel();
             $uuid = bin2hex(random_bytes(16));
             $data = [
                 'id_anggota' => $uuid,
@@ -298,7 +298,7 @@ class Auth extends BaseController
                 $data['password'] = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
             }
 
-            $civitas = new CivitasAkademikModel();
+            $civitas = new CivitasModel();
             $civitas->update($id_anggota, $data);
 
             return redirect()->to('/dashboard/tampilDosen')->with('swal', 'Data berhasil Diperbarui');
@@ -312,7 +312,7 @@ class Auth extends BaseController
     // hapus dosen 
     public function deleteDosen($id_anggota)
     {
-        $civitas = new CivitasAkademikModel();
+        $civitas = new CivitasModel();
         if ($civitas->delete($id_anggota)) {
             return redirect()->to('/dashboard/tampilDosen')->with('swal', 'Data berhasil Dihapus');
         } else {
@@ -320,5 +320,36 @@ class Auth extends BaseController
         }
     }
 
-    // 
+    // registrasi staffPerpustakaan
+    public function registrasiStaff()
+    {
+        return view('auth/regisStaff');
+    }
+
+    public function registrasiProsesStaff()
+    {
+        $rules = [
+            'nama' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[staff_perpustakaan.email]',
+            'password' => 'required|min_length[6]|max_length[200]',
+        ];
+
+        if ($this->validate($rules)) {
+            $email = $this->request->getVar('email');
+
+            $uuid = bin2hex(random_bytes(16));
+            $data = [
+                'staff_id' => $uuid,
+                'nama_staff' => $this->request->getVar('nama'),
+                'email' => $email,
+                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+            ];
+
+            $this->staff->save($data);
+            return redirect()->to('/');
+        } else {
+            $data['validation'] = $this->validator;
+            echo view('auth/registrasi', $data);
+        }
+    }
 }
