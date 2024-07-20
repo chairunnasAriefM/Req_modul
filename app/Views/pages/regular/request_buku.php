@@ -2,11 +2,12 @@
 
 <?= $this->section('content') ?>
 
+
 <section class="form-section">
     <div class="form-container">
         <form id="modern-form" method="post" action="/buku_request">
             <h2>Request Buku</h2>
-
+ 
             <div class="form-group">
                 <label for="jenis_buku">Jenis Buku</label>
                 <select name="jenis_buku" id="jenis_buku">
@@ -23,7 +24,6 @@
             <div class="form-group">
                 <label for="edisi_tahun">Edisi Tahun</label>
                 <input type="number" id="edisi_tahun" name="edisi_tahun">
-                <!-- <select id="yearSelect" name="edisi_tahun"></select> -->
             </div>
 
             <div class="form-group">

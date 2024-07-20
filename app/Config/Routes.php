@@ -6,9 +6,11 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->get('tes', 'Home::tes');
+// $routes->get('/',  function () {
+//     return view('pages/index');
+// });
 
-$routes->get('/', 'Home::index');
+$routes->get('/',  'Home::index');
 
 // auth
 $routes->get('/login', 'Login::index');
@@ -20,22 +22,50 @@ $routes->post('/registrasi', 'Login::registrasiProses');
 
 
 // buku_request
-$routes->group('/', ['filter' => 'auth'], function ($routes) {
+$routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('buku_request', 'BukuRequest::index');
     $routes->post('buku_request', 'BukuRequest::store');
-    // $routes->post('/buku_request/store', 'BukuRequest::store');
 });
+$routes->get('daftar_buku', 'BukuRequest::showNew');
+$routes->get('daftar_req', 'BukuRequest::showAll');
 
 // dosen
 $routes->group('', ['filter' => 'dosen'], function ($routes) {
     $routes->get('/modul_request', 'ModulRequest::index');
-    $routes->post('/modul_request', 'ModulRequest::store');
+    $routes->post('/request_modul', 'ModulRequest::store');
 });
 
 //staff
+
+// Default route
+// $routes->get('/', 'Dashboard::index');
+
+// Jika rute tidak ditemukan
+// $routes->set404Override(function(){
+//     return view('errors/html/error_404');
+// });
+
 $routes->group('', ['filter' => 'staff'], function ($routes) {
-    $routes->get('/dashboard', function () {
-        return view('pages/staff/home.php');
-    });
-    $routes->get('/dashboard/modul', 'ModulRequest::show');
+
+    $routes->get('dashboard', 'Dashboard::index');
+
+    // modul
+    $routes->get('dashboard/pendingModul', 'Dashboard::pendingModul');
+    $routes->get('dashboard/disetujuiModul', 'Dashboard::disetujuiModul');
+    $routes->get('dashboard/prosesModul', 'Dashboard::prosesModul');
+
+    // ubah status
+    $routes->post('/dashboard/editStatus/(:num)/(:segment)', 'Dashboard::editStatus/$1/$2');
+
+    // Routes membaca file dari writable/uploads 
+    $routes->get('uploads/(:any)', 'UploadsController::index/$1');
+
+
+    // Buku
+    $routes->get('dashboard/pendingBuku', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/disetujuiBuku', 'Dashboard::disetujuiBuku');
+    $routes->get('dashboard/prosesBuku', 'Dashboard::prosesBuku');
+
+    // ubah status
+    $routes->post('/dashboard/editStatusBuku/(:num)/(:segment)', 'Dashboard::editStatusBuku/$1/$2');
 });
