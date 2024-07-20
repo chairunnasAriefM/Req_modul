@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+header img {
+    height: 50px;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.library-banner {
+    position: relative;
+    text-align: center;
+}
+
+.library-banner img {
+    width: 100%;
+    height: auto;
+}
+
+.book-fetch {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.book-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.book-cover img {
+    width: 200px;
+    height: auto;
+}
+
+.book-details {
+    max-width: 600px;
+    text-align: left;
+}
+
+.book-details h2,
+.book-details p {
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.contact-info,
+.social-media {
+    width: 45%;
+}
+
+.contact-info h3,
+.social-media h3 {
+    margin-top: 0;
+}
+
+.social-media a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin: 5px 0;
+}
+

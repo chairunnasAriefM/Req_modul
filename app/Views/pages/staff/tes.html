@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Fetch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-image: url('Book\ Now!\ \ B33.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            margin-left: auto;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        nav img {
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .library-banner {
+            position: relative;
+            text-align: center;
+            background-image: url('buku.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+        }
+
+        .library-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .book-fetch {
+            padding: 20px;
+            background-image: url('Book\ Now!\ \ B33.jpg');
+            flex: 1;
+        }
+
+        .book-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .book-cover-slider {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book-cover-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .book-cover-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .book-cover-slide img {
+            width: 100px;
+            height: auto;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .book-details {
+            flex: 2;
+            text-align: left;
+            font-family: 'Times New Roman', Times, serif;
+            background-image: url('182\ Old\ Parchment\ Background\ Burnt\ High\ Res\ Illustrations.jpg'); height: fit-content; width: fit-content;
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .book-details::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .book-details p {
+            margin: 15px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            font-family: 'Times New Roman', Times, serif;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .contact-info,
+        .social-media {
+            width: 45%;
+            margin: 10px 0;
+        }
+
+        .contact-info h3,
+        .social-media h3 {
+            margin-top: 0;
+        }
+
+        .social-media a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo_pcr-removebg-preview (1).png" alt="Politeknik Caltex Riau">
+        <nav>
+            <a href="#"><img src="Ikon_Lokasi_Rumah__Ikon_Lokasi__Ikon_Rumah__Logo_PNG_dan_Vektor_dengan_Background_Transparan_untuk_Unduh_Gratis-removebg-preview.png" alt="Home">Home</a>
+            <a href="#"><img src="Checklist_Clipart_Hd_PNG__Office_Checklist_Icon__Office_Icons__Checklist_Icons__Customer_PNG_Image_For_Free_Download-removebg-preview.png" alt="Request Buku">Request Buku</a>
+            <a href="#"><img src="Checklist_free_vector_icons_designed_by_Prosymbols-removebg-preview (1).png" alt="Request Modul">Request Modul</a>
+            <a href="#"><img src="Download_Clock_icon__symbol_sign_for_free-removebg-preview.png" alt="History">History</a>
+        </nav>
+    </header>
+    <main>
+        <section class="library-banner">
+        </section>
+        <section class="book-fetch">
+            <div class="book-content">
+                <div class="book-cover-slider">
+                    <div class="slider-wrapper">
+                        <button class="prev">&#10094;</button>
+                        <div class="book-cover-wrapper">
+                            <div class="book-cover-slide" data-title="Book Title 1" data-author="Author 1" data-publisher="Publisher 1" data-year="Year 1">
+                                <img src="book_cover-removebg-preview.png" alt="Book Cover 1"> 
+                            </div>
+                            <div class="book-cover-slide" data-title="Book Title 2" data-author="Author 2" data-publisher="Publisher 2" data-year="Year 2">
+                                <img src="book_cover-removebg-preview.png" alt="Book Cover 2">
+                            </div>
+                            <div class="book-cover-slide" data-title="Book Title 3" data-author="Author 3" data-publisher="Publisher 3" data-year="Year 3">
+                                <img src="book_cover-removebg-preview.png" alt="Book Cover 3">
+                            </div>
+                            <div class="book-cover-slide" data-title="Book Title 4" data-author="Author 4" data-publisher="Publisher 4" data-year="Year 4">
+                                <img src="book_cover-removebg-preview.png" alt="Book Cover 4">
+                            </div>
+                        </div>
+                        <button class="next">&#10095;</button>
+                    </div>
+                </div>
+                <div class="book-details">
+                    <p id="book-title">Judul Buku:</p>
+                    <p id="book-author">Penulis:</p>
+                    <p id="book-publisher">Penerbit:</p>
+                    <p id="book-year">Tahun:</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Hubungi Kami</h3>
+                <p>Email: contact@example.com</p>
+                <p>Phone: 123-456-7890</p>
+            </div>
+            <div class="social-media">
+                <h3>Media Sosial</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        const sliderWrapper = document.querySelector('.book-cover-wrapper');
+        const slides = document.querySelectorAll('.book-cover-slide');
+        const totalSlides = slides.length;
+        const bookTitle = document.getElementById('book-title');
+        const bookAuthor = document.getElementById('book-author');
+        const bookPublisher = document.getElementById('book-publisher');
+        const bookYear = document.getElementById('book-year');
+        let currentIndex = 0;
+
+        function updateSlider() {
+            const offset = -currentIndex * 100;
+            sliderWrapper.style.transform = `translateX(${offset}%)`;
+            updateBookDetails();
+        }
+
+        function updateBookDetails() {
+            const slide = slides[currentIndex];
+            bookTitle.textContent = `Judul Buku: ${slide.dataset.title}`;
+            bookAuthor.textContent = `Penulis: ${slide.dataset.author}`;
+            bookPublisher.textContent = `Penerbit: ${slide.dataset.publisher}`;
+            bookYear.textContent = `Tahun: ${slide.dataset.year}`;
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+            updateSlider();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+            updateSlider();
+        });
+
+        updateSlider(); // Initialize slider position and book details
+    </script>
+</body>
+</html>
