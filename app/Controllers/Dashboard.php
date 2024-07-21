@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Controllers\BukuRequest;
 use App\Models\ModulRequestModel;
 use App\Models\BukuRequestModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -13,13 +14,17 @@ use CodeIgniter\I18n\Time;
 
 class Dashboard extends BaseController
 {
+    protected $bukuRequestController;
     protected $ModulRequestModel;
     protected $bukuRequestModel;
+    protected $db;
 
     public function __construct()
     {
         $this->ModulRequestModel = new ModulRequestModel();
         $this->bukuRequestModel = new BukuRequestModel();
+        $this->bukuRequestController = new BukuRequest();
+        $this->db = \Config\Database::connect();
     }
 
     public function index()
@@ -61,35 +66,6 @@ class Dashboard extends BaseController
         ];
     }
 
-    public function pendingModul()
-    {
-        $pendingModul = $this->ModulRequestModel->where('status', 'pending')->findAll();
-        return view('pages/staff/modul/pending', ['pendingModul' => $pendingModul]);
-    }
-
-    public function disetujuiModul()
-    {
-        $disetujuiModul = $this->ModulRequestModel->where('status', 'diterima')->findAll();
-        return view('pages/staff/modul/disetujui', ['disetujuiModul' => $disetujuiModul]);
-    }
-
-    public function prosesModul()
-    {
-        $prosesModul = $this->ModulRequestModel->where('status', 'proses eksekusi')->findAll();
-        return view('pages/staff/modul/proses', ['prosesModul' => $prosesModul]);
-    }
-
-    public function editStatus($modul_id, $status)
-    {
-        $this->ModulRequestModel->update($modul_id, ['status' => $status]);
-        return $this->response->setJSON(['status' => 'success']);
-    }
-
-    public function cekPdf($modul_id)
-    {
-        return view('pages/staff/Cekpdf', ['modul_id' => $modul_id]);
-    }
-
     private function getPeriodStartEnd()
     {
         $currentMonth = date('n');
@@ -110,33 +86,41 @@ class Dashboard extends BaseController
 
     public function exportModulToExcel()
     {
-        list($startDate, $endDate) = $this->getPeriodStartEnd();
+        $startDate = $this->request->getGet('start_date');
+        $endDate = $this->request->getGet('end_date');
 
-        $ModulRequestModel = new ModulRequestModel();
-        $moduls = $ModulRequestModel->where('tanggal_request >=', $startDate)
-            ->where('tanggal_request <=', $endDate)
-            ->findAll();
+        $db = \Config\Database::connect();
+        $builder = $db->table('arsip_modul_request AS rcm')
+            ->select('rcm.id_request_modul, m.judul_modul, rcm.jumlah_cetak, rcm.status, rcm.tanggal_request, c.nama as nama_pemohon')
+            ->join('modul AS m', 'rcm.id_modul = m.id_modul', 'left')
+            ->join('civitas AS c', 'rcm.id_anggota = c.id_anggota', 'left')
+            ->where('rcm.tanggal_request >=', $startDate)
+            ->where('rcm.tanggal_request <=', $endDate);
+
+        $query = $builder->get();
+        $moduls = $query->getResult();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Modul');
 
-        // Set header
+        $title = 'Modul request ' . $startDate . ' sampai ' . $endDate;
+        if (strlen($title) > 31) {
+            $title = substr($title, 0, 28) . '...';
+        }
+        $sheet->setTitle($title);
+
         $headers = [
-            'A1' => 'Modul ID',
-            'B1' => 'ID Anggota Request',
-            'C1' => 'Judul Modul',
-            'D1' => 'Soft File',
-            'E1' => 'Jumlah Cetak',
-            'F1' => 'Status',
-            'G1' => 'Tanggal Request',
-            'H1' => 'Asal Prodi'
+            'A1' => 'ID Request Modul',
+            'B1' => 'Judul Modul',
+            'C1' => 'Jumlah Cetak',
+            'D1' => 'Status',
+            'E1' => 'Tanggal Request',
+            'F1' => 'Tanggal Request',
         ];
         foreach ($headers as $cell => $text) {
             $sheet->setCellValue($cell, $text);
         }
 
-        // Apply styling to headers
         $headerStyle = [
             'font' => [
                 'bold' => true,
@@ -153,23 +137,19 @@ class Dashboard extends BaseController
                 ]
             ]
         ];
-        $sheet->getStyle('A1:H1')->applyFromArray($headerStyle);
+        $sheet->getStyle('A1:G1')->applyFromArray($headerStyle);
 
-        // Populate data
         $row = 2;
         foreach ($moduls as $modul) {
-            $sheet->setCellValue('A' . $row, $modul->modul_id);
-            $sheet->setCellValue('B' . $row, $modul->id_anggota_request);
-            $sheet->setCellValue('C' . $row, $modul->judul_modul);
-            $sheet->setCellValue('D' . $row, $modul->soft_file);
-            $sheet->setCellValue('E' . $row, $modul->jumlah_cetak);
-            $sheet->setCellValue('F' . $row, $modul->status);
-            $sheet->setCellValue('G' . $row, $modul->tanggal_request);
-            $sheet->setCellValue('H' . $row, $modul->asal_prodi);
+            $sheet->setCellValue('A' . $row, $modul->id_request_modul);
+            $sheet->setCellValue('B' . $row, $modul->judul_modul);
+            $sheet->setCellValue('C' . $row, $modul->jumlah_cetak);
+            $sheet->setCellValue('D' . $row, $modul->status);
+            $sheet->setCellValue('E' . $row, $modul->tanggal_request);
+            $sheet->setCellValue('F' . $row, $modul->nama_pemohon);
             $row++;
         }
 
-        // Apply border to all data cells
         $dataStyle = [
             'borders' => [
                 'allBorders' => [
@@ -178,14 +158,12 @@ class Dashboard extends BaseController
                 ]
             ]
         ];
-        $sheet->getStyle('A1:H' . ($row - 1))->applyFromArray($dataStyle);
+        $sheet->getStyle('A1:G' . ($row - 1))->applyFromArray($dataStyle);
 
-        // Auto size columns
-        foreach (range('A', 'H') as $columnID) {
+        foreach (range('A', 'G') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        // Send file to browser for download
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="modul.xlsx"');
         header('Cache-Control: max-age=0');
@@ -194,61 +172,47 @@ class Dashboard extends BaseController
         exit;
     }
 
-    // buku
-    public function pendingBuku()
-    {
-        $pendingBuku = $this->bukuRequestModel->where('status', 'pending')->findAll();
-        return view('pages/staff/buku/pending', ['pendingBuku' => $pendingBuku]);
-    }
-
-    public function disetujuiBuku()
-    {
-        $disetujuiBuku = $this->bukuRequestModel->where('status', 'diterima')->findAll();
-        return view('pages/staff/buku/disetujui', ['disetujuiBuku' => $disetujuiBuku]);
-    }
-
-    public function prosesBuku()
-    {
-        $pendingBuku = $this->bukuRequestModel->where('status', 'proses eksekusi')->findAll();
-        return view('pages/staff/buku/proses', ['prosesBuku' => $pendingBuku]);
-    }
-
-    public function editStatusBuku($id_buku, $status)
-    {
-        try {
-            $this->bukuRequestModel->update($id_buku, ['status' => $status]);
-            return $this->response->setJSON(['status' => 'success']);
-        } catch (\Exception $e) {
-            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-    }
 
     public function exportBukuToExcel()
     {
-        list($startDate, $endDate) = $this->getPeriodStartEnd();
+        $startDate = '2024-01-01';
+        $endDate = '2024-07-21';
 
-        $bukuRequestModel = new BukuRequestModel();
-        $bukus = $bukuRequestModel->where('tanggal_request >=', $startDate)
-            ->where('tanggal_request <=', $endDate)
-            ->findAll();
+        // Menggunakan Query Builder untuk menghindari SQL Injection
+        $builder = $this->db->table('arsip_request_buku AS arb')
+            ->select('arb.id_request_buku, c.id_anggota, arb.jenis_buku, arb.judul_buku, arb.edisi_tahun, arb.penerbit, arb.pengarang, arb.link_beli, arb.perkiraan_harga, arb.status, arb.tanggal_request, c.nama, c.asal_prodi')
+            ->join('civitas AS c', 'c.id_anggota = arb.id_anggota', 'left')
+            ->where('arb.tanggal_request >=', $startDate)
+            ->where('arb.tanggal_request <=', $endDate);
+
+        $query = $builder->get();
+        $bukus = $query->getResult();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Modul');
+
+        // Menentukan judul sheet
+        $title = 'Buku request ' . $startDate . ' sampai ' . $endDate;
+        if (strlen($title) > 31) {
+            $title = substr($title, 0, 28) . '...'; // Memotong judul jika melebihi 31 karakter
+        }
+        $sheet->setTitle($title);
 
         // Set header
         $headers = [
             'A1' => 'ID Buku',
-            'B1' => 'ID Anggota Request',
-            'C1' => 'Judul Buku',
-            'D1' => 'Edisi Tahun',
-            'E1' => 'Penerbit',
-            'F1' => 'Pengarang',
-            'G1' => 'Jenis Buku',
+            'B1' => 'ID Anggota ',
+            'C1' => 'Jenis Buku',
+            'D1' => 'Judul Buku',
+            'E1' => 'Edisi Tahun',
+            'F1' => 'Penerbit',
+            'G1' => 'Pengarang',
             'H1' => 'Link Pembelian',
             'I1' => 'Perkiraan Harga',
-            'J1' => 'Tanggal Request',
-            'K1' => 'Asal Prodi'
+            'J1' => 'Status',
+            'K1' => 'Tanggal Request',
+            'L1' => 'Nama',
+            'M1' => 'Asal Prodi'
         ];
         foreach ($headers as $cell => $text) {
             $sheet->setCellValue($cell, $text);
@@ -271,22 +235,24 @@ class Dashboard extends BaseController
                 ]
             ]
         ];
-        $sheet->getStyle('A1:K1')->applyFromArray($headerStyle);
+        $sheet->getStyle('A1:M1')->applyFromArray($headerStyle);
 
         // Populate data
         $row = 2;
         foreach ($bukus as $buku) {
-            $sheet->setCellValue('A' . $row, $buku->id_buku);
-            $sheet->setCellValue('B' . $row, $buku->id_anggota_request);
-            $sheet->setCellValue('C' . $row, $buku->judul_buku);
-            $sheet->setCellValue('D' . $row, $buku->edisi_tahun);
-            $sheet->setCellValue('E' . $row, $buku->penerbit);
-            $sheet->setCellValue('F' . $row, $buku->pengarang);
-            $sheet->setCellValue('G' . $row, $buku->jenis_buku);
+            $sheet->setCellValue('A' . $row, $buku->id_request_buku);
+            $sheet->setCellValue('B' . $row, $buku->id_anggota);
+            $sheet->setCellValue('C' . $row, $buku->jenis_buku);
+            $sheet->setCellValue('D' . $row, $buku->judul_buku);
+            $sheet->setCellValue('E' . $row, $buku->edisi_tahun);
+            $sheet->setCellValue('F' . $row, $buku->penerbit);
+            $sheet->setCellValue('G' . $row, $buku->pengarang);
             $sheet->setCellValue('H' . $row, $buku->link_beli);
             $sheet->setCellValue('I' . $row, $buku->perkiraan_harga);
-            $sheet->setCellValue('J' . $row, $buku->tanggal_request);
-            $sheet->setCellValue('K' . $row, $buku->asal_prodi);
+            $sheet->setCellValue('J' . $row, $buku->status);
+            $sheet->setCellValue('K' . $row, $buku->tanggal_request);
+            $sheet->setCellValue('L' . $row, $buku->nama);
+            $sheet->setCellValue('M' . $row, $buku->asal_prodi);
             $row++;
         }
 
@@ -299,10 +265,10 @@ class Dashboard extends BaseController
                 ]
             ]
         ];
-        $sheet->getStyle('A1:K' . ($row - 1))->applyFromArray($dataStyle);
+        $sheet->getStyle('A1:M' . ($row - 1))->applyFromArray($dataStyle);
 
         // Auto size columns
-        foreach (range('A', 'K') as $columnID) {
+        foreach (range('A', 'M') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
@@ -313,5 +279,23 @@ class Dashboard extends BaseController
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
         exit;
+    }
+
+
+
+
+
+    // Buku Request controller 
+    public function disetujuiBuku()
+    {
+        return $this->bukuRequestController->disetujuiBuku();
+    }
+    public function pendingBuku()
+    {
+        return $this->bukuRequestController->pendingBuku();
+    }
+    public function prosesBuku()
+    {
+        return $this->bukuRequestController->prosesBuku();
     }
 }

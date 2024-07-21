@@ -7,11 +7,11 @@ use CodeIgniter\Model;
 class ModulRequestModel extends Model
 {
     protected $table            = 'request_cetak_modul';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'id_request_modul';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
+    protected $protectFields    = false;
     protected $allowedFields    = [];
 
     protected bool $allowEmptyInserts = false;

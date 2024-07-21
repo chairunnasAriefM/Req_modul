@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Req Modul</title>
+    <title>Book Fetch - <?= $this->renderSection('title') ?></title>
 
     <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= base_url('assets/css/form.css'); ?>">
@@ -58,8 +58,7 @@
         });
     </script>
 
-    <!-- Jquery dan Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Jquery dan swal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>

@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Req Modul</title>
+    <title>Book Fetch - Home</title>
     <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= base_url('assets/css/index.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
 
     <!-- swiper js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+    <!-- remix icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" crossorigin="">
+
     <!-- myjs -->
     <script src="<?= base_url('assets/js/home.js') ?>"></script>
 
-
-    <!-- Bootsrap icon -->
+    <!-- Bootstrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
@@ -29,6 +32,8 @@
         <nav>
             <ul class="navbar-menu" id="nav">
                 <li><a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
+                <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Kontak</a></li>
+                <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Daftar Buku</a></li>
                 <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
                 <?php if (session()->get('is_dosen') == TRUE) : ?>
                     <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
@@ -87,53 +92,44 @@
                     <div class="hero-text">
                         <h1>Buku Favorit Anda di Perpustakaan</h1>
                         <p>Bantu kami memperluas koleksi dengan merekomendasikan buku favorit Anda.</p>
-                        <button class="request-books"><a href="<?= base_url() ?>/buku_request" style="text-decoration: none; color:white">📚 Request Books</a></button>
+                        <button class="request-books"><a href="<?= base_url() ?>/buku_request" style="text-decoration: none; color:white">📚 Request Buku</a></button>
                     </div>
                 </div>
             </div>
         </div>
 
+
         <!-- show new book -->
-        <div class="container" id="show-book">
-            <button class="prev" onclick="prevBook()">←</button>
-            <button class="next" onclick="nextBook()">→</button>
-
-            <div class="cover-container">
-                <div class="cover" id="prev-book-cover">
-                    <div class="skeleton skeleton-img"></div>
-                    <img id="prev-book-img" alt="Previous Book Cover" style="display: none;">
-                </div>
-                <div class="cover" id="current-book-cover">
-                    <div class="skeleton skeleton-img" id="book-cover-skeleton"></div>
-                    <img id="book-cover" alt="Book Cover" style="display: none;">
-                </div>
-                <div class="cover" id="next-book-cover">
-                    <div class="skeleton skeleton-img"></div>
-                    <img id="next-book-img" alt="Next Book Cover" style="display: none;">
-                </div>
-
-
-            </div>
-
-
-
-            <div class="info">
-                <div class="book-details">
-                    <h1>Buku Baru</h2>
-                        <div class="separator">
-                            <div class="separator-line"></div>
+        <h1>Daftar Buku Terbaru</h1>
+        <div class="container">
+            <div class="books">
+                <?php foreach ($data as $buku) : ?>
+                    <div class="banner_wrapper">
+                        <div class="banner">
+                            <img src="<?= $buku->cover ? base_url('uploads/cover_buku/' . esc($buku->cover)) : base_url('assets/images/noCover.png') ?>" alt="Cover Buku" class="banner__image">
                         </div>
-                        <div class="section-title">Judul</div>
-                        <div class="detail" id="book-title"></div>
-                        <div class="section-title">Penulis/Pengarang</div>
-                        <div class="detail" id="book-authors"></div>
-                        <div class="section-title">Penerbit</div>
-                        <div class="detail" id="book-publisher"></div>
-                        <div class="section-title">Tahun Terbit</div>
-                        <div class="detail" id="book-year">2024</div>
-                </div>
+                        <div class="card__wrapper">
+                            <div class="card">
+                                <div class="card__info">
+                                    <div>
+                                        <span><?= $buku->judul_buku ?></span>
+                                        <p>Pengarang: <?= $buku->pengarang ?></p>
+                                    </div>
+                                </div>
+                                <button onclick="window.location.href='/buku/detail/'">Lihat Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="pagination">
+                <button id="prev" onclick="prevPage()">Previous</button>
+                <button id="next" onclick="nextPage()">Next</button>
             </div>
         </div>
+
+
+
     </main>
 
     <!-- footer -->
@@ -154,88 +150,43 @@
     </footer>
 
     <script>
-        let currentIndex = 0;
-        const books = [
-            <?php if (!empty($moduls)) : ?>
-                <?php foreach ($moduls as $buku) : ?> {
-                        title: "<?php echo $buku->judul_buku; ?>",
-                        authors: "<?php echo $buku->pengarang; ?>",
-                        publisher: "<?php echo $buku->penerbit; ?>",
-                        year: "<?php echo $buku->edisi_tahun; ?>"
-                    },
-                <?php endforeach; ?>
-            <?php endif; ?>
-        ];
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const books = document.querySelectorAll('.banner_wrapper');
+            const booksPerPage = 5;
+            let currentPage = 1;
 
-        function fetchBookCover(title) {
-            return fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(title)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.docs && data.docs.length > 0) {
-                        const coverId = data.docs[0].cover_i;
-                        if (coverId) {
-                            return `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`;
-                        } else {
-                            return '<?= base_url('assets/images/noCover.png') ?>';
-                        }
+            function showPage(page) {
+                let start = (page - 1) * booksPerPage;
+                let end = start + booksPerPage;
+
+                books.forEach((book, index) => {
+                    if (index >= start && index < end) {
+                        book.style.display = 'block';
                     } else {
-                        return '<?= base_url('assets/images/noCover.png') ?>';
+                        book.style.display = 'none';
                     }
-                })
-                .catch(() => {
-                    return '<?= base_url('assets/images/noCover.png') ?>';
                 });
-        }
 
-        function updateBookDetails() {
-            const skeleton = document.getElementById('book-cover-skeleton');
-            const img = document.getElementById('book-cover');
-            const prevImg = document.getElementById('prev-book-img');
-            const nextImg = document.getElementById('next-book-img');
+                document.getElementById('prev').style.display = page === 1 ? 'none' : 'inline-block';
+                document.getElementById('next').style.display = end >= books.length ? 'none' : 'inline-block';
+            }
 
-            skeleton.style.display = 'block';
-            img.style.display = 'none';
-            prevImg.style.display = 'none';
-            nextImg.style.display = 'none';
+            window.nextPage = function() {
+                if ((currentPage * booksPerPage) < books.length) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            };
 
-            const currentBook = books[currentIndex];
-            const prevBook = books[(currentIndex - 1 + books.length) % books.length];
-            const nextBook = books[(currentIndex + 1) % books.length];
+            window.prevPage = function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            };
 
-            document.getElementById('book-title').textContent = currentBook.title;
-            document.getElementById('book-authors').textContent = currentBook.authors;
-            document.getElementById('book-publisher').textContent = currentBook.publisher;
-            document.getElementById('book-year').textContent = currentBook.year;
-
-            fetchBookCover(currentBook.title).then(coverUrl => {
-                img.src = coverUrl;
-                skeleton.style.display = 'none';
-                img.style.display = 'block';
-            });
-
-            fetchBookCover(prevBook.title).then(coverUrl => {
-                prevImg.src = coverUrl;
-                prevImg.style.display = 'block';
-            });
-
-            fetchBookCover(nextBook.title).then(coverUrl => {
-                nextImg.src = coverUrl;
-                nextImg.style.display = 'block';
-            });
-        }
-
-        function prevBook() {
-            currentIndex = (currentIndex - 1 + books.length) % books.length;
-            updateBookDetails();
-        }
-
-        function nextBook() {
-            currentIndex = (currentIndex + 1) % books.length;
-            updateBookDetails();
-        }
-
-        // Initial update
-        updateBookDetails();
+            showPage(currentPage);
+        });
     </script>
 </body>
 

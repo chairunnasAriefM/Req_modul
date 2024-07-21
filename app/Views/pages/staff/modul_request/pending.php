@@ -14,6 +14,7 @@
                         <tr>
                             <th>Judul Modul</th>
                             <th>Tanggal Request</th>
+                            <th>Jumlah Cetak</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -22,15 +23,16 @@
                             <tr>
                                 <td><?= $modul->judul_modul ?></td>
                                 <td><?= $modul->tanggal_request ?></td>
+                                <td><?= $modul->jumlah_cetak ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>" title="Detail">
-                                        <i class="bi bi-eye-fill"></i>
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->id_request_modul ?>" title="Detail">
+                                        <i class="bi bi-eye-fill"></i> Detail
                                     </button>
-                                    <button type="button" class="btn btn-success" onclick="confirmAction('approve', <?= $modul->modul_id ?>)" title="Setuju">
-                                        <i class="bi bi-clipboard2-check"></i>
+                                    <button type="button" class="btn btn-success" onclick="confirmAction('approve', <?= $modul->id_request_modul ?>)" title="Setuju">
+                                        <i class="bi bi-clipboard2-check"></i> Terima
                                     </button>
-                                    <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= $modul->modul_id ?>)" title="Tolak">
-                                        <i class="bi bi-clipboard-x-fill"></i>
+                                    <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= $modul->id_request_modul ?>)" title="Tolak">
+                                        <i class="bi bi-clipboard-x-fill"></i> Tolak
                                     </button>
                                 </td>
                             </tr>
@@ -50,7 +52,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmAction(action, modul_id) {
+    function confirmAction(action, id_request_modul) {
         let actionText = action === 'approve' ? 'approve' : 'reject';
         Swal.fire({
             title: 'Apakah Anda yakin?',
@@ -63,7 +65,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 let status = action === 'approve' ? 'diterima' : 'ditolak';
-                fetch(`/dashboard/editStatus/${modul_id}/${status}`, {
+                fetch(`/dashboard/editStatus/${id_request_modul}/${status}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

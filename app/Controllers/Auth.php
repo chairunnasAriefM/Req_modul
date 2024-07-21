@@ -103,46 +103,57 @@ class Auth extends BaseController
     {
         $rules = [
             'nama' => 'required|min_length[3]|max_length[20]',
-            'email' => 'required|min_length[6]|max_length[50]|valid_email',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[civitas.email]',
             'password' => 'required|min_length[6]|max_length[200]',
         ];
 
         if ($this->validate($rules)) {
             $email = $this->request->getVar('email');
 
-            // validasi hunter key
-            $apiKey = '48f8f955515339e1f68fffa2bea9aec43254b16e';
-
-            $response = file_get_contents("https://api.hunter.io/v2/email-verifier?email={$email}&api_key={$apiKey}");
-            $result = json_decode($response, true);
-
-            if ($result['data']['status'] != 'valid') {
-                return redirect()->back()->with('msg', 'Email tidak valid.');
-            }
-
             $role = $this->determineRole($email);
 
             if ($role === false) {
-                return redirect()->back()->with('msg', 'Email bukan warga PCR');
+                return redirect()->back()->with('msg', 'Email bukan warga PCR')->withInput();
             }
 
-            $civitas = new CivitasModel();
-            $uuid = bin2hex(random_bytes(16));
             $data = [
-                'id_anggota' => $uuid,
+                'id_anggota' => '',
                 'nama' => $this->request->getVar('nama'),
                 'email' => $email,
-                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                'role' => $role
+                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT), // Hashing password
+                'is_dosen' => 0, // Set default value for is_dosen
             ];
 
-            $civitas->save($data);
-            return redirect()->to('/');
+            if ($this->civitas->save($data)) {
+                return redirect()->to('/login')->with('msg', 'Registrasi berhasil. Silakan login.');
+            } else {
+                return redirect()->back()->with('msg', 'Terjadi galat saat menyimpan data. Coba lagi.')->withInput();
+            }
         } else {
             $data['validation'] = $this->validator;
-            echo view('auth/registrasi', $data);
+            return view('auth/registrasi', $data);
         }
     }
+
+    private function generateUniqueIdAnggota($model, $maxAttempts = 5)
+    {
+        $attempts = 0;
+        do {
+            $id_anggota = random_int(1, 99999999999); // Generate random 11-digit integer
+            $exists = $model->where('id_anggota', $id_anggota)->first();
+            $attempts++;
+        } while ($exists && $attempts < $maxAttempts);
+
+        if ($exists) {
+            // If after max attempts a unique ID could not be generated, return false
+            return false;
+        }
+
+        return $id_anggota;
+    }
+
+
+
 
     private function determineRole($email)
     {
@@ -169,7 +180,7 @@ class Auth extends BaseController
             return redirect()->to('/login');
         }
 
-        // Cek di tabel civitas_
+        // Cek di tabel civitas
         $data = $this->civitas->where('email', $email)->first();
 
         if ($data) {
@@ -180,7 +191,7 @@ class Auth extends BaseController
                     'id_anggota' => $data->id_anggota,
                     'nama'       => $data->nama,
                     'email'      => $data->email,
-                    'is_dosen'   => (int)$data->is_dosen, // Konversi ke integer
+                    'is_dosen'   => (int)$data->is_dosen,
                     'logged_in'  => TRUE
                 ];
                 $session->set($ses_data);
@@ -189,7 +200,7 @@ class Auth extends BaseController
 
                 return redirect()->to('/');
             } else {
-                $session->setFlashdata('msg', 'Password atau username salah');
+                $session->setFlashdata('msg', 'Password salah');
                 return redirect()->to('/login');
             }
         }
@@ -198,13 +209,13 @@ class Auth extends BaseController
         $data = $this->staff->where('email', $email)->first();
 
         if ($data) {
-            $pass = $data->password;
+            $pass = $data->password; // Menggunakan sintaks objek
             $verify_pass = password_verify($password, $pass);
             if ($verify_pass) {
                 $ses_data = [
-                    'staff_id'   => $data->staff_id,
-                    'nama_staff' => $data->nama_staff,
-                    'email'      => $data->email,
+                    'staff_id'   => $data->staff_id,   // Menggunakan sintaks objek
+                    'nama_staff' => $data->nama_staff, // Menggunakan sintaks objek
+                    'email'      => $data->email,      // Menggunakan sintaks objek
                     'role'       => 'staff',
                     'logged_in'  => TRUE
                 ];
@@ -220,10 +231,22 @@ class Auth extends BaseController
             }
         }
 
-        $session->setFlashdata('msg', 'Password atau Email salah');
+        $session->setFlashdata('msg', 'Email tidak ditemukan');
         return redirect()->to('/login');
     }
 
+    public function rehashPasswords()
+    {
+        $model = new CivitasModel();
+        $users = $model->findAll();
+
+        foreach ($users as $user) {
+            $hashedPassword = password_hash($user['password'], PASSWORD_DEFAULT);
+            $model->update($user['id_anggota'], ['password' => $hashedPassword]);
+        }
+
+        echo "Password rehashed successfully.";
+    }
 
 
     // logout
@@ -246,7 +269,7 @@ class Auth extends BaseController
     {
         $rules = [
             'nama' => 'required|min_length[3]|max_length[20]',
-            'email' => 'required|min_length[6]|max_length[50]|valid_email',
+            'email' => 'required|min_length[6]|max_length[50]|valid_emailis_unique[civitas.email]',
             'password' => 'required|min_length[6]|max_length[200]',
         ];
 

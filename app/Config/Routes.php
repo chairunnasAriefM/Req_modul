@@ -10,9 +10,7 @@ $routes->get('forbidden',  function () {
     return view('errors/html/403');
 });
 
-$routes->get('/',   function () {
-    return view('pages/index');
-});
+$routes->get('/', 'home::index');
 // auth
 $routes->get('/login', 'Auth::index');
 $routes->get('/login/proses', 'Auth::proses');
@@ -23,13 +21,14 @@ $routes->post('/registrasi', 'Auth::registrasiProses');
 $routes->get('/registrasiStaff', 'Auth::registrasiStaff');
 $routes->post('/registrasiStaff', 'Auth::registrasiProsesStaff');
 
+// hash pass
+$routes->get('hash', 'Auth::rehashPasswords');
 
 
 // buku_request
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('buku_request', 'BukuRequest::index');
     $routes->post('buku_request', 'BukuRequest::store');
-
     $routes->get('historyBuku', 'BukuRequest::HistoryBuku');
 });
 
@@ -38,7 +37,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 $routes->group('', ['filter' => 'dosen'], function ($routes) {
     $routes->get('/modul_request', 'ModulRequest::index');
     $routes->post('/request_modul', 'ModulRequest::store');
-
+    $routes->post('modul-request/judul-modul', 'ModulRequest::getJudulModulByJurusanProdi');
     $routes->get('historyModul', 'ModulRequest::historyModul');
 });
 
@@ -61,9 +60,9 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
 
     /* start routes untuk request modul */
 
-    $routes->get('dashboard/pendingModul', 'ModulRequest::pendingModul');
-    $routes->get('dashboard/disetujuiModul', 'ModulRequest::disetujuiModul');
-    $routes->get('dashboard/prosesModul', 'ModulRequest::prosesModul');
+    $routes->get('dashboard/request/modul-pending', 'ModulRequest::pendingModul');
+    $routes->get('dashboard/request/modul-setuju', 'ModulRequest::disetujuiModul');
+    $routes->get('dashboard/request/modul-proses', 'ModulRequest::prosesModul');
 
     // ubah status
     $routes->post('/dashboard/editStatus/(:num)/(:segment)', 'ModulRequest::editStatus/$1/$2');
@@ -89,12 +88,12 @@ $routes->group('', ['filter' => 'staff'], function ($routes) {
     /* end routes untuk request modul */
 
     // routes untuk request Buku
-    $routes->get('dashboard/pendingBuku', 'BukuRequest::pendingBuku');
-    $routes->get('dashboard/disetujuiBuku', 'BukuRequest::disetujuiBuku');
-    $routes->get('dashboard/prosesBuku', 'BukuRequest::prosesBuku');
+    $routes->get('dashboard/request/buku-pending', 'Dashboard::pendingBuku');
+    $routes->get('dashboard/request/buku-setuju', 'Dashboard::disetujuiBuku');
+    $routes->get('dashboard/request/buku-proses', 'Dashboard::prosesBuku');
 
     // ubah status
-    $routes->post('/dashboard/editStatusBuku/(:num)/(:segment)', 'BukuRequest::editStatusBuku/$1/$2');
+    $routes->post('/dashboard/editStatusBuku/(:segment)/(:segment)', 'BukuRequest::editStatusBuku/$1/$2');
 
     // export to excel
     $routes->get('dashboard/export-buku', 'Dashboard::exportBukuToExcel');

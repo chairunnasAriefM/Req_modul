@@ -98,23 +98,23 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'pending') !== false ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'request/modul') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-journal-bookmark"></i>
                                 <span>Request Modul</span>
                             </a>
 
                             <ul class="submenu active">
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Pending</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/modul-pending' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/request/modul-pending') ?>" class="submenu-link">Pending</a>
                                 </li>
 
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/disetujuiModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('dashboard/disetujuiModul') ?>" class="submenu-link">Disetujui</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/modul-setuju' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/request/modul-setuju') ?>" class="submenu-link">Disetujui</a>
                                 </li>
 
-                                <li class="submenu-item <?= uri_string() == 'dashboard/prosesModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/prosesModul" class="submenu-link">Proses</a>
+                                <li class="submenu-item <?= uri_string() == 'dashboard/request/modul-proses' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/modul-proses" class="submenu-link">Proses</a>
                                 </li>
 
 
@@ -145,23 +145,23 @@
 
                         </li>
 
-                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'pending') !== false ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'request/buku') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book"></i>
                                 <span>Request Buku</span>
                             </a>
 
                             <ul class="submenu active">
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/pendingBuku" class="submenu-link">Pending</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/buku-pending' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/buku-pending" class="submenu-link">Pending</a>
                                 </li>
 
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/disetujuiBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/disetujuiBuku" class="submenu-link">Disetujui</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/buku-setuju' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/buku-setuju" class="submenu-link">Disetujui</a>
                                 </li>
 
-                                <li class="submenu-item <?= uri_string() == 'dashboard/prosesBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/prosesBuku" class="submenu-link">Proses</a>
+                                <li class="submenu-item <?= uri_string() == 'dashboard/request/buku-proses' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/buku-proses" class="submenu-link">Proses</a>
                                 </li>
 
                             </ul>
@@ -221,7 +221,7 @@
                                         <li>
                                             <h6 class="dropdown-header">Mail</h6>
                                         </li>
-                                        <li><a class="dropdown-item" href="https://mail.google.com/">Buka periode pengajuan</a></li>
+                                        <li><a class="dropdown-item" href="https://mail.google.com/mail/#inbox?compose=new" target="_blank">Buka periode pengajuan</a></li>
                                     </ul>
                                 </li>
                             </ul>

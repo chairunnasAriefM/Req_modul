@@ -15,6 +15,7 @@
                         <tr>
                             <th>Judul Modul</th>
                             <th>Tanggal Request</th>
+                            <th>Jumlah Cetak</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -23,11 +24,12 @@
                             <tr>
                                 <td><?= $modul->judul_modul ?></td>
                                 <td><?= $modul->tanggal_request ?></td>
+                                <td><?= $modul->jumlah_cetak ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>" title="Detail">
-                                        <i class="bi bi-eye-fill"></i>
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->id_request_modul ?>" title="Detail">
+                                        <i class="bi bi-eye-fill"></i> Detail
                                     </button>
-                                    <button type="button" class="btn btn-success" onclick="confirmAction(<?= $modul->modul_id ?>)">
+                                    <button type="button" class="btn btn-success" onclick="confirmAction(<?= $modul->id_request_modul ?>)">
                                         <i class="bi bi-gear-fill"></i> Jalankan Proses Eksekusi
                                     </button>
                                 </td>
@@ -48,7 +50,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmAction(modul_id) {
+    function confirmAction(id_request_modul) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Anda tidak bisa mengembalikan ini!",
@@ -56,10 +58,10 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proses eksekusi it!'
+            confirmButtonText: 'Ya, proses eksekusi ini!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`/dashboard/editStatus/${modul_id}/proses eksekusi`, {
+                fetch(`/dashboard/editStatus/${id_request_modul}/proses eksekusi`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

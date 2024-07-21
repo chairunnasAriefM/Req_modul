@@ -33,7 +33,7 @@ class ModulController extends BaseController
         $validation->setRules([
             'judul_modul' => 'required|min_length[3]|max_length[255]',
             'tahun_rilis' => 'required|integer|exact_length[4]',
-            'soft_file' => 'uploaded[soft_file]|mime_in[soft_file,application/pdf]|max_size[soft_file,2048]',
+            'soft_file' => 'uploaded[soft_file]|mime_in[soft_file,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]|max_size[soft_file,2048]',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
@@ -131,6 +131,4 @@ class ModulController extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => 'Data modul tidak ditemukan']);
         }
     }
-
-   
 }

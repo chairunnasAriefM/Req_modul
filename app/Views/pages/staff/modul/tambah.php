@@ -17,6 +17,7 @@
                     <div class="mb-3">
                         <label for="soft-file-horizontal" class="form-label">Soft File</label>
                         <input type="file" id="soft-file-horizontal" class="form-control" name="soft_file" placeholder="Soft File" required>
+                        <small>Type file : pdf,word</small>
                     </div>
                     <div class="mb-3">
                         <label for="tahun-rilis-horizontal" class="form-label">Tahun Rilis</label>

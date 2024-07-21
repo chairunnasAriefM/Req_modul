@@ -4,16 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\BukuRequestModel;
+use App\Models\ViewRequestBuku;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class BukuRequest extends BaseController
 {
-
     protected $buku;
+    protected $viewBuku;
 
     function __construct()
     {
         $this->buku = new BukuRequestModel();
+        $this->viewBuku = new ViewRequestBuku();
     }
 
     public function index()
@@ -24,7 +26,6 @@ class BukuRequest extends BaseController
     public function store()
     {
         $validationRules = [
-            // 'asal_prodi' => 'required|min_length[3]',
             'judul_buku' => 'required|min_length[3]',
             'jenis_buku' => 'required',
             'edisi_tahun' => 'required|numeric',
@@ -39,8 +40,19 @@ class BukuRequest extends BaseController
         }
 
         $buku_request = new BukuRequestModel();
+        $id_anggota = session()->get('id_anggota');
+        $judul_buku = $this->request->getPost('judul_buku');
+
+        // Cek apakah buku sudah pernah diminta oleh user yang sama
+        $existingRequest = $buku_request->where('id_anggota', $id_anggota)
+            ->where('judul_buku', $judul_buku)
+            ->first();
+
+        if ($existingRequest) {
+            return redirect()->back()->withInput()->with('error', 'Anda sudah pernah meminta buku ini.');
+        }
+
         $data = [
-            'asal_prodi' => $this->request->getPost('asal_prodi'),
             'judul_buku' => $this->request->getPost('judul_buku'),
             'jenis_buku' => $this->request->getPost('jenis_buku'),
             'edisi_tahun' => $this->request->getPost('edisi_tahun'),
@@ -48,10 +60,9 @@ class BukuRequest extends BaseController
             'penerbit' => $this->request->getPost('penerbit'),
             'link_beli' => $this->request->getPost('link_beli'),
             'perkiraan_harga' => $this->request->getPost('perkiraan_harga'),
-            'tanggal_request' => date("Y-m-d")
+            'tanggal_request' => date("Y-m-d"),
+            'id_anggota' => $id_anggota
         ];
-
-        $data['id_anggota_request'] = session()->get('id_anggota');
 
         $buku_request->save($data);
         return redirect()->to('/buku_request')->with('success', 'Berhasil Mengisi Form');
@@ -63,7 +74,7 @@ class BukuRequest extends BaseController
 
         $buku_request = new BukuRequestModel();
 
-        $buku_history = $buku_request->where('id_anggota_request', $id_session)->findAll();
+        $buku_history = $buku_request->where('id_anggota', $id_session)->findAll();
 
         return view('pages/regular/historyBuku', ['buku_history' => $buku_history]);
     }
@@ -71,29 +82,97 @@ class BukuRequest extends BaseController
     // staff dashboard buku
     public function pendingBuku()
     {
-        $pendingBuku = $this->buku->where('status', 'pending')->findAll();
+        $pendingBuku = $this->viewBuku->where('status', 'pending')->findAll();
         return view('pages/staff/buku_request/pending', ['pendingBuku' => $pendingBuku]);
     }
 
     public function disetujuiBuku()
     {
-        $disetujuiBuku = $this->buku->where('status', 'diterima')->findAll();
+        $disetujuiBuku = $this->viewBuku->where('status', 'diterima')->findAll();
         return view('pages/staff/buku_request/disetujui', ['disetujuiBuku' => $disetujuiBuku]);
     }
 
     public function prosesBuku()
     {
-        $pendingBuku = $this->buku->where('status', 'proses eksekusi')->findAll();
-        return view('pages/staff/buku_request/proses', ['prosesBuku' => $pendingBuku]);
+        $prosesBuku = $this->viewBuku->where('status', 'proses eksekusi')->findAll();
+        return view('pages/staff/buku_request/proses', ['prosesBuku' => $prosesBuku]);
     }
 
-    public function editStatusBuku($id_buku, $status)
+    public function editStatusBuku($judul_buku, $status)
     {
         try {
-            $this->buku->update($id_buku, ['status' => $status]);
-            return $this->response->setJSON(['status' => 'success']);
+            // Decode the book title from URL encoding
+            $judul_buku = urldecode($judul_buku);
+            log_message('info', "Mengubah status untuk buku: $judul_buku menjadi $status");
+
+            // Cari semua buku yang memiliki judul yang sama
+            $buku_list = $this->buku->where('judul_buku', $judul_buku)->findAll();
+
+            // Jika buku ditemukan, perbarui status semua buku yang memiliki judul tersebut
+            if ($buku_list) {
+                $addedToBuku = false;
+
+                foreach ($buku_list as $b) {
+                    $this->buku->update($b->id_request_buku, ['status' => $status]);
+                    log_message('info', "Status buku dengan ID: {$b->id_request_buku} telah diperbarui menjadi $status");
+
+                    // Tambahkan data ke tabel buku jika statusnya 'sudah dieksekusi' dan belum ditambahkan
+                    if ($status == 'sudah dieksekusi' && !$addedToBuku) {
+                        if (!$this->addToBuku($b)) {
+                            throw new \Exception('Gagal menambahkan data ke tabel buku');
+                        }
+                        log_message('info', "Data buku dengan ID: {$b->id_request_buku} telah ditambahkan ke tabel buku");
+                        $addedToBuku = true;
+                    }
+
+                    // Pindahkan data ke tabel arsip jika statusnya 'sudah dieksekusi' atau 'ditolak'
+                    if ($status == 'sudah dieksekusi' || $status == 'ditolak') {
+                        if (!$this->moveToArchive($b->id_request_buku)) {
+                            throw new \Exception('Gagal memindahkan data ke tabel arsip');
+                        }
+                        log_message('info', "Data buku dengan ID: {$b->id_request_buku} telah dipindahkan ke tabel arsip");
+                    }
+                }
+                return $this->response->setJSON(['status' => 'success']);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Buku tidak ditemukan']);
+            }
         } catch (\Exception $e) {
-            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+            log_message('error', $e->getMessage());
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Terjadi kesalahan dalam memperbarui status.']);
         }
+    }
+
+    protected function moveToArchive($id_request_buku)
+    {
+        // Dapatkan data request buku
+        $buku_request = $this->buku->find($id_request_buku);
+
+        if ($buku_request) {
+            // Pindahkan data ke tabel arsip
+            $db = \Config\Database::connect();
+            $builder = $db->table('arsip_request_buku');
+            if ($builder->insert((array)$buku_request)) {
+                // Hapus data dari tabel request_buku
+                return $this->buku->delete($id_request_buku);
+            }
+        }
+        return false;
+    }
+
+    protected function addToBuku($buku_request)
+    {
+        // Tambahkan data ke tabel buku
+        $db = \Config\Database::connect();
+        $builder = $db->table('buku');
+        $data = [
+            'judul_buku' => $buku_request->judul_buku,
+            'cover' => '', // Jika ada field cover, bisa diisi dengan data yang sesuai
+            'edisi_tahun' => $buku_request->edisi_tahun,
+            'penerbit' => $buku_request->penerbit,
+            'jenis_buku' => $buku_request->jenis_buku,
+            'pengarang' => $buku_request->pengarang
+        ];
+        return $builder->insert($data);
     }
 }
