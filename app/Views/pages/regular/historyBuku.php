@@ -1,11 +1,12 @@
-<?= $this->extend('layouts/LayoutDashboard.php') ?>
+<?= $this->extend('layouts/historyLayout.php') ?>
 
 <?= $this->section('content') ?>
+<!-- <h1>Buku Menunggu Persetujuan</h1> -->
 
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Data Buku Sedang Dalam Proses Eksekusi</h5>
+            <h5 class="card-title">Data Riwayat Pengajuan Buku Kamu</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -20,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($prosesBuku as $buku) : ?>
+                        <?php foreach ($buku_history as $buku) : ?>
                             <tr>
                                 <td><?= esc($buku->judul_buku) ?></td>
                                 <td><?= esc($buku->edisi_tahun) ?></td>
@@ -28,12 +29,8 @@
                                 <td><?= esc($buku->tanggal_request) ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>">
-                                            <i class="bi bi-eye-fill"></i> Detail
-                                        </button>
-                                        <button type="button" class="btn btn-success" onclick="confirmAction(<?= $buku->id_buku ?>)">
-                                            <i class="bi bi-check-circle-fill"></i> Selesaikan Proses
-                                        </button>
+                                        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#previewModal<?= esc($buku->id_buku) ?>" title="Detail">
+                                            <i class="bi bi-eye-fill"></i>
                                         </button>
                                     </div>
                                 </td>
@@ -50,14 +47,6 @@
                                         </div>
                                         <div class="modal-body">
                                             <form>
-                                                <div class="mb-3">
-                                                    <label for="id_buku_<?= esc($buku->id_buku) ?>" class="form-label">Buku ID</label>
-                                                    <input type="text" class="form-control" id="id_buku_<?= esc($buku->id_buku) ?>" value="<?= esc($buku->id_buku) ?>" readonly>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="id_anggota_request_<?= esc($buku->id_buku) ?>" class="form-label">ID Anggota Request</label>
-                                                    <input type="text" class="form-control" id="id_anggota_request_<?= esc($buku->id_buku) ?>" value="<?= esc($buku->id_anggota_request) ?>" readonly>
-                                                </div>
                                                 <div class="mb-3">
                                                     <label for="judul_buku_<?= esc($buku->id_buku) ?>" class="form-label">Judul Buku</label>
                                                     <input type="text" class="form-control" id="judul_buku_<?= esc($buku->id_buku) ?>" value="<?= esc($buku->judul_buku) ?>" readonly>
@@ -111,7 +100,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmAction(id_buku) {
+    function confirmAction(action, id_buku) {
+        let actionText = action === 'approve' ? 'approve' : 'reject';
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Anda tidak bisa mengembalikan ini!",
@@ -119,10 +109,11 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Selesaikan proses'
+            confirmButtonText: `Yes, ${actionText} it!`
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`/dashboard/editStatusBuku/${id_buku}/sudah dieksekusi`, {
+                let status = action === 'approve' ? 'diterima' : 'ditolak';
+                fetch(`/dashboard/editStatusBuku/${id_buku}/${status}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -139,14 +130,14 @@
                     } else {
                         Swal.fire(
                             'Error!',
-                            'Terjadi kesalahan dalam memperbarui status.',
+                            'Terjadi kesalahan: ' + data.message,
                             'error'
                         );
                     }
                 }).catch(error => {
                     Swal.fire(
                         'Error!',
-                        'Terjadi kesalahan dalam memperbarui status.',
+                        'Terjadi kesalahan: ' + error.message,
                         'error'
                     );
                 });
@@ -154,5 +145,6 @@
         });
     }
 </script>
+
 
 <?= $this->endSection() ?>

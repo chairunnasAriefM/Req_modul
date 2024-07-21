@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class ModulModel extends Model
 {
     protected $table            = 'modul';
-    protected $primaryKey       = 'modul_id';
+    protected $primaryKey       = 'id_modul';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;

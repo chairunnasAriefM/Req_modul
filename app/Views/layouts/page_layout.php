@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Req Modul</title>
+    <title>Book Fetch - <?= $this->renderSection('title') ?></title>
 
     <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= base_url('assets/css/form.css'); ?>">
@@ -25,7 +25,7 @@
             <ul>
                 <li> <a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
                 <li> <a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
-                <?php if (session()->get('role') == 'dosen') : ?>
+                <?php if (session()->get('is_dosen') == TRUE) : ?>
                     <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
                 <?php endif; ?>
             </ul>
@@ -58,8 +58,7 @@
         });
     </script>
 
-    <!-- Jquery dan Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Jquery dan swal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>

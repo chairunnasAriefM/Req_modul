@@ -4,21 +4,21 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CivitasAkademikModel extends Model
+class ViewRequestBuku extends Model
 {
-    protected $table            = 'civitas_akademik';
-    protected $primaryKey       = 'id_anggota';
-    protected $useAutoIncrement = false;
+    protected $table            = 'v_request_buku';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
-    protected $protectFields    = false;
-    protected $allowedFields    = [];
+    // protected $protectFields    = true;
+    // protected $allowedFields    = [];
 
-    protected bool $allowEmptyInserts = true;
-    protected bool $updateOnlyChanged = true;
+    // protected bool $allowEmptyInserts = false;
+    // protected bool $updateOnlyChanged = true;
 
-    protected array $casts = [];
-    protected array $castHandlers = [];
+    // protected array $casts = [];
+    // protected array $castHandlers = [];
 
     // // Dates
     // protected $useTimestamps = false;

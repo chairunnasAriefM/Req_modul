@@ -1,11 +1,10 @@
 <?= $this->extend('layouts/LayoutDashboard.php') ?>
 
 <?= $this->section('content') ?>
-
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Data Modul Menunggu Persetujuan</h5>
+            <h5 class="card-title">Data Modul Sedang Dalam Proses Eksekusi</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -14,23 +13,22 @@
                         <tr>
                             <th>Judul Modul</th>
                             <th>Tanggal Request</th>
+                            <th>Jumlah Cetak</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pendingModul as $modul) : ?>
+                        <?php foreach ($prosesModul as $modul) : ?>
                             <tr>
                                 <td><?= $modul->judul_modul ?></td>
                                 <td><?= $modul->tanggal_request ?></td>
+                                <td><?= $modul->jumlah_cetak ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>">
-                                        <i class="bi bi-eye-fill"></i>
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->id_request_modul ?>" title="Detail">
+                                        <i class="bi bi-eye-fill"></i> Detail
                                     </button>
-                                    <button type="button" class="btn btn-success" onclick="confirmAction('approve', <?= $modul->modul_id ?>)">
-                                        <i class="bi bi-clipboard2-check"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger" onclick="confirmAction('reject', <?= $modul->modul_id ?>)">
-                                        <i class="bi bi-clipboard-x-fill"></i>
+                                    <button type="button" class="btn btn-success" onclick="confirmAction(<?= $modul->id_request_modul ?>)">
+                                        <i class="bi bi-gear-fill"></i> Selesaikan eksekusi
                                     </button>
                                 </td>
                             </tr>
@@ -50,8 +48,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmAction(action, modul_id) {
-        let actionText = action === 'approve' ? 'approve' : 'reject';
+    function confirmAction(id_request_modul) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Anda tidak bisa mengembalikan ini!",
@@ -59,11 +56,10 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: `Yes, ${actionText} it!`
+            confirmButtonText: 'Yes, Selesaikan proses'
         }).then((result) => {
             if (result.isConfirmed) {
-                let status = action === 'approve' ? 'diterima' : 'ditolak';
-                fetch(`/dashboard/editStatus/${modul_id}/${status}`, {
+                fetch(`/dashboard/editStatus/${id_request_modul}/sudah dieksekusi`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -77,7 +73,19 @@
                         ).then(() => {
                             location.reload();
                         });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan dalam memperbarui status.',
+                            'error'
+                        );
                     }
+                }).catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        'Terjadi kesalahan dalam memperbarui status.',
+                        'error'
+                    );
                 });
             }
         });

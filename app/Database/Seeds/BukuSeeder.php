@@ -9,13 +9,13 @@ class BukuSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Factory::create();
+        $faker = Factory::create('id_ID');
 
         $data = [];
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $data[] = [
-                'judul_buku' => $faker->sentence(3),
+                'judul_buku' => $faker->sentence(1),
                 'jenis_buku' => $faker->randomElement(['Refrensi', 'Hobi']),
                 'edisi_tahun' => $faker->numberBetween(1990, 2024),
                 'pengarang' => $faker->name,
@@ -23,7 +23,8 @@ class BukuSeeder extends Seeder
                 'link_beli' => $faker->url,
                 'perkiraan_harga' => $faker->numberBetween(50000, 300000),
                 'tanggal_request' => $faker->date,
-                'id_anggota_request' => '1083701898753437'
+                'id_anggota_request' => '1083701898753437',
+                'asal_prodi' => 'Teknik Informatika'
             ];
         }
 

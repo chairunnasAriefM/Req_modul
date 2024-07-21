@@ -5,6 +5,7 @@ namespace App\Filters;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class DosenFilter implements FilterInterface
 {
@@ -31,8 +32,8 @@ class DosenFilter implements FilterInterface
         }
 
         // Periksa apakah peran pengguna adalah dosen
-        if (session()->get('role') !== 'dosen') {
-            return redirect()->to('/')->with('error', 'Anda tidak memiliki akses ke halaman ini');
+        if (session()->get('is_dosen') !== 1) {
+            return redirect()->to('/forbidden'); // Arahkan ke halaman 403
         }
     }
 

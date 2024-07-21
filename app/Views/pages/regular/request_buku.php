@@ -7,7 +7,7 @@
     <div class="form-container">
         <form id="modern-form" method="post" action="/buku_request">
             <h2>Request Buku</h2>
- 
+
             <div class="form-group">
                 <label for="jenis_buku">Jenis Buku</label>
                 <select name="jenis_buku" id="jenis_buku">
@@ -67,21 +67,6 @@
     </script>
 <?php endif; ?>
 
-
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const yearSelect = document.getElementById('yearSelect');
-        const currentYear = new Date().getFullYear();
-        const startYear = 2000; // atau tahun awal yang Anda inginkan
-
-        for (let year = startYear; year <= currentYear; year++) {
-            const option = document.createElement('option');
-            option.value = year;
-            option.textContent = year;
-            yearSelect.appendChild(option);
-        }
-    });
-</script> -->
 
 <script type="text/javascript">
     window.onload = function() {
