@@ -13,7 +13,7 @@
                     <thead>
                         <tr>
                             <th>Judul Modul</th>
-                            <th>Soft File</th>
+                            <th>Jurusan</th>
                             <th>Tahun Rilis</th>
                             <th>Aksi</th>
                         </tr>
@@ -22,7 +22,7 @@
                         <?php foreach ($BanyakModul as $modul) : ?>
                             <tr>
                                 <td><?= esc($modul->judul_modul) ?></td>
-                                <td><?= esc($modul->soft_file) ?></td>
+                                <td><?= esc($modul->jurusan) ?></td>
                                 <td><?= esc($modul->tahun_rilis) ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
@@ -58,6 +58,10 @@
                                                 <div class="mb-3">
                                                     <label for="judul_modul_<?= esc($modul->id_modul) ?>" class="form-label">Judul Modul</label>
                                                     <input type="text" class="form-control" id="judul_modul_<?= esc($modul->id_modul) ?>" value="<?= esc($modul->judul_modul) ?>" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="judul_modul_<?= esc($modul->id_modul) ?>" class="form-label">Jurusan</label>
+                                                    <input type="text" class="form-control" id="judul_modul_<?= esc($modul->id_modul) ?>" value="<?= esc($modul->jurusan) ?>" readonly>
                                                 </div>
                                                 <?php if (!empty($modul->soft_file)) : ?>
                                                     <div class="mb-3">

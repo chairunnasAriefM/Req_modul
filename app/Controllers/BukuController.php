@@ -15,15 +15,21 @@ class BukuController extends BaseController
         $this->buku = new BukuModel();
     }
 
+    public function show()
+    {
+        $tampil = $this->buku->findAll();
+        return view('pages/regular/daftar_buku', ['BanyakBuku' => $tampil]);
+    }
+
     public function index()
     {
         $tampil = $this->buku->findAll();
-        return view('pages\staff\buku\tampil.php', ['BanyakBuku' => $tampil]);
+        return view('pages/staff/buku/tampil.php', ['BanyakBuku' => $tampil]);
     }
 
     public function tambah()
     {
-        return view('pages\staff\buku\tambah.php');
+        return view('pages/staff/buku/tambah.php');
     }
 
     public function store()

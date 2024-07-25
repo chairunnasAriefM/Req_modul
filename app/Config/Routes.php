@@ -10,7 +10,8 @@ $routes->get('forbidden',  function () {
     return view('errors/html/403');
 });
 
-$routes->get('/', 'home::index');
+$routes->get('/', 'Home::index');
+$routes->get('/daftar-buku', 'BukuController::show');
 // auth
 $routes->get('/login', 'Auth::index');
 $routes->get('/login/proses', 'Auth::proses');

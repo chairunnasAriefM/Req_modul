@@ -107,10 +107,24 @@ class ModulRequest extends BaseController
     public function historyModul()
     {
         $id_session = session()->get('id_anggota');
-        $modul = new ModulModel();
-        $modul = $modul->where('id_anggota', $id_session)->findAll();
-        return view('pages/dosen/historyModul', ['modul_history' => $modul]);
+
+        // Connect to the database
+        $db = \Config\Database::connect();
+
+        // Build the query
+        $builder = $db->table('request_cetak_modul');
+        $builder->select('request_cetak_modul.id_request_modul, modul.judul_modul, request_cetak_modul.jumlah_cetak, request_cetak_modul.status, request_cetak_modul.soft_file, request_cetak_modul.tanggal_request, civitas.nama as nama_pemohon');
+        $builder->join('modul', 'request_cetak_modul.id_modul = modul.id_modul', 'left');
+        $builder->join('civitas', 'request_cetak_modul.id_anggota = civitas.id_anggota', 'left');
+        $builder->where('request_cetak_modul.id_anggota', $id_session);
+
+        // Execute the query and get the result
+        $modul_history = $builder->get()->getResult();
+
+        // Pass the result to the view
+        return view('pages/dosen/historyModul', ['modul_history' => $modul_history]);
     }
+
 
     // Staff dashboard area
     private function getModulRequestsByStatus($status)
@@ -158,15 +172,6 @@ class ModulRequest extends BaseController
                     // Perbarui soft_file di tabel modul
                     $this->modul->update($modul_id, ['soft_file' => $modul_request->soft_file]);
                     log_message('info', "Soft file modul dengan ID: $modul_id telah diperbarui");
-                }
-
-                // Jika status sudah dieksekusi atau ditolak, pindahkan data ke tabel arsip
-                if ($status == 'sudah dieksekusi' || $status == 'ditolak') {
-                    $result = $this->moveToArchive($modul_request);
-                    if (!$result) {
-                        throw new \Exception('Gagal memindahkan data ke tabel arsip');
-                    }
-                    log_message('info', "Data modul dengan ID: $modul_id telah dipindahkan ke tabel arsip");
                 }
 
                 return $this->response->setJSON(['status' => 'success']);

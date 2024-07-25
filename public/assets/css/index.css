@@ -27,6 +27,24 @@
   --normal-font-size: 1rem;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none;
+  /* Initially hidden */
+}
+
 /* Reset dan gaya dasar */
 * {
   box-sizing: border-box;
@@ -538,26 +556,32 @@ main {
 
 /* show book section */
 
+
 .container {
   width: 90%;
   margin: 20px auto;
   margin-top: -200px;
 }
+
+
 .books {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
 }
+
 .banner_wrapper {
   position: relative;
   overflow: hidden;
 }
+
 .banner {
   position: relative;
   width: 100%;
   height: 400px;
 }
+
 .banner img {
   position: absolute;
   top: 0;
@@ -567,10 +591,12 @@ main {
   object-fit: cover;
   border-radius: 12px 12px 0px 0px;
 }
+
 .card__wrapper {
   display: flex;
   flex-direction: row;
 }
+
 .card {
   display: flex;
   width: 300px;
@@ -580,28 +606,33 @@ main {
   justify-content: space-between;
   align-items: center;
 }
+
 .card__info {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 }
+
 .card__avatar {
   width: 35px;
   height: 35px;
   border-radius: 10px;
   object-fit: cover;
 }
+
 .card__info span {
   color: #fff;
   font-size: 16px;
   font-weight: 500;
 }
+
 .card__info p {
   color: #919191;
   font-size: 13px;
   font-weight: 400;
 }
+
 button {
   padding: 5px 10px;
   border-radius: 10px;
@@ -613,12 +644,15 @@ button {
   cursor: pointer;
   transition: 0.3s all ease;
 }
+
 button:hover {
   opacity: 0.8;
 }
+
 button:active {
   transform: scale(0.9);
 }
+
 .banner_wrapper {
   display: none;
 }
@@ -723,7 +757,22 @@ button:active {
   .swiper-button-prev {
     left: -1rem;
   }
+
   .swiper-button-next {
     right: -1rem;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .container {
+    width: 90%;
+    margin: 20px auto;
+    margin-top: 200px;
+  }
+
+
+
+  .footer {
+    margin-top: 150px;
   }
 }

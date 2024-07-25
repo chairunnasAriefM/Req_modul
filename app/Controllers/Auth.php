@@ -105,10 +105,21 @@ class Auth extends BaseController
             'nama' => 'required|min_length[3]|max_length[20]',
             'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[civitas.email]',
             'password' => 'required|min_length[6]|max_length[200]',
+            'asal_prodi' => 'required'
         ];
 
         if ($this->validate($rules)) {
             $email = $this->request->getVar('email');
+
+            // validasi hunter key
+            $apiKey = '48f8f955515339e1f68fffa2bea9aec43254b16e';
+
+            $response = file_get_contents("https://api.hunter.io/v2/email-verifier?email={$email}&api_key={$apiKey}");
+            $result = json_decode($response, true);
+
+            if ($result['data']['status'] != 'valid') {
+                return redirect()->back()->with('msg', 'Email tidak valid.');
+            }
 
             $role = $this->determineRole($email);
 
@@ -119,13 +130,14 @@ class Auth extends BaseController
             $data = [
                 'id_anggota' => '',
                 'nama' => $this->request->getVar('nama'),
+                'asal_prodi' => $this->request->getVar('asal_prodi'),
                 'email' => $email,
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT), // Hashing password
                 'is_dosen' => 0, // Set default value for is_dosen
             ];
 
             if ($this->civitas->save($data)) {
-                return redirect()->to('/login')->with('msg', 'Registrasi berhasil. Silakan login.');
+                return redirect()->to('/login')->with('success', 'Registrasi berhasil. Silakan login.');
             } else {
                 return redirect()->back()->with('msg', 'Terjadi galat saat menyimpan data. Coba lagi.')->withInput();
             }
@@ -134,26 +146,6 @@ class Auth extends BaseController
             return view('auth/registrasi', $data);
         }
     }
-
-    private function generateUniqueIdAnggota($model, $maxAttempts = 5)
-    {
-        $attempts = 0;
-        do {
-            $id_anggota = random_int(1, 99999999999); // Generate random 11-digit integer
-            $exists = $model->where('id_anggota', $id_anggota)->first();
-            $attempts++;
-        } while ($exists && $attempts < $maxAttempts);
-
-        if ($exists) {
-            // If after max attempts a unique ID could not be generated, return false
-            return false;
-        }
-
-        return $id_anggota;
-    }
-
-
-
 
     private function determineRole($email)
     {
@@ -200,7 +192,7 @@ class Auth extends BaseController
 
                 return redirect()->to('/');
             } else {
-                $session->setFlashdata('msg', 'Password salah');
+                $session->setFlashdata('msg', 'Password atau email salah');
                 return redirect()->to('/login');
             }
         }
@@ -231,7 +223,7 @@ class Auth extends BaseController
             }
         }
 
-        $session->setFlashdata('msg', 'Email tidak ditemukan');
+        $session->setFlashdata('msg', 'Password atau email salah');
         return redirect()->to('/login');
     }
 
@@ -241,8 +233,8 @@ class Auth extends BaseController
         $users = $model->findAll();
 
         foreach ($users as $user) {
-            $hashedPassword = password_hash($user['password'], PASSWORD_DEFAULT);
-            $model->update($user['id_anggota'], ['password' => $hashedPassword]);
+            $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
+            $model->update($user->id_anggota, ['password' => $hashedPassword]);
         }
 
         echo "Password rehashed successfully.";
@@ -267,37 +259,59 @@ class Auth extends BaseController
 
     public function tambahDosen()
     {
+        // Define validation rules
         $rules = [
             'nama' => 'required|min_length[3]|max_length[20]',
-            'email' => 'required|min_length[6]|max_length[50]|valid_emailis_unique[civitas.email]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[civitas.email]',
             'password' => 'required|min_length[6]|max_length[200]',
+            'asal_prodi' => 'required'
         ];
 
+        // Check if the form data passes validation
         if ($this->validate($rules)) {
             $email = $this->request->getVar('email');
             $role = $this->determineRole($email);
 
+            // If the email is not from PCR, redirect back with an error message
             if ($role === false) {
-                return redirect()->back()->with('msg', 'Email bukan warga PCR');
+                return redirect()->back()->withInput()->with('msg', 'Email bukan warga PCR');
             }
 
+            // Create a new CivitasModel instance
             $civitas = new CivitasModel();
-            $uuid = bin2hex(random_bytes(16));
+
+            // Prepare data for insertion
             $data = [
-                'id_anggota' => $uuid,
+                'id_anggota' => '',
                 'nama' => $this->request->getVar('nama'),
+                'asal_prodi' => $this->request->getVar('asal_prodi'),
                 'email' => $email,
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
                 'is_dosen' => TRUE
             ];
 
-            $civitas->save($data);
-            return redirect()->to('/dashboard/tambahDosen')->with('swal', 'Data berhasil Ditambah');
+            // Debugging: Log the data array
+            log_message('debug', 'Data to be inserted: ' . print_r($data, true));
+
+            // Save the new dosen data to the database
+            if ($civitas->save($data)) {
+                // Debugging: Log a success message
+                log_message('debug', 'Data successfully saved.');
+                // Redirect to the tambahDosen page with a success message
+                return redirect()->to('/dashboard/tambahDosen')->with('swal', 'Data berhasil Ditambah');
+            } else {
+                // Debugging: Log an error message
+                log_message('error', 'Failed to save data: ' . print_r($civitas->errors(), true));
+                // Redirect back with an error message
+                return redirect()->back()->withInput()->with('msg', 'Gagal menyimpan data');
+            }
         } else {
+            // If validation fails, pass validation errors to the view
             $data['validation'] = $this->validator;
-            echo view('pages/staff/dosen/tambahDosen.php', $data);
+            echo view('pages/staff/dosen/tambahDosen', $data);
         }
     }
+
 
     // update dosen
     public function updateDosen()

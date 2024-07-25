@@ -13,6 +13,7 @@
                     <thead>
                         <tr>
                             <th>Judul Modul</th>
+                            <th>Status</th>
                             <th>Tanggal Request</th>
                             <th>Aksi</th>
                         </tr>
@@ -21,60 +22,69 @@
                         <?php foreach ($modul_history as $modul) : ?>
                             <tr>
                                 <td><?= $modul->judul_modul ?></td>
+                                <td><?= $modul->status ?></td>
                                 <td><?= $modul->tanggal_request ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->modul_id ?>" title="Detail">
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewModal<?= $modul->id_request_modul ?>" title="Detail">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
                                 </td>
                             </tr>
 
                             <!-- include modal -->
-                            <div class="modal fade text-left" id="previewModal<?= $modul->modul_id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?= $modul->modul_id ?>" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel<?= $modul->modul_id ?>">Preview Modul</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="mb-3">
-                                                    <label for="judul_modul_<?= $modul->modul_id ?>" class="form-label">Judul Modul</label>
-                                                    <input type="text" class="form-control" id="judul_modul_<?= $modul->modul_id ?>" value="<?= $modul->judul_modul ?>" readonly>
-                                                </div>
-                                                <?php if (!empty($modul->soft_file)) : ?>
+                            <!-- Display the modals -->
+                            <?php foreach ($modul_history as $modul) : ?>
+                                <div class="modal fade text-left" id="previewModal<?= $modul->id_request_modul ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?= $modul->id_request_modul ?>" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel<?= $modul->id_request_modul ?>">Preview Modul</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
                                                     <div class="mb-3">
-                                                        <label for="soft_file_<?= $modul->modul_id ?>" class="form-label">Soft File</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" id="soft_file_<?= $modul->modul_id ?>" value="<?= $modul->soft_file ?>" readonly>
-                                                            <a href="<?= base_url('uploads/' . $modul->soft_file) ?>" class="btn btn-primary" target="_blank"><i class="bi bi-eye-fill"></i> Lihat PDF</a>
-                                                        </div>
+                                                        <label for="judul_modul_<?= $modul->id_request_modul ?>" class="form-label">Judul Modul</label>
+                                                        <input type="text" class="form-control" id="judul_modul_<?= $modul->id_request_modul ?>" value="<?= $modul->judul_modul ?>" readonly>
                                                     </div>
-                                                <?php endif; ?>
-                                                <div class="mb-3">
-                                                    <label for="jumlah_cetak_<?= $modul->modul_id ?>" class="form-label">Jumlah Cetak</label>
-                                                    <input type="text" class="form-control" id="jumlah_cetak_<?= $modul->modul_id ?>" value="<?= $modul->jumlah_cetak ?>" readonly>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="status_<?= $modul->modul_id ?>" class="form-label">Status</label>
-                                                    <input type="text" class="form-control" id="status_<?= $modul->modul_id ?>" value="<?= $modul->status ?>" readonly>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="tanggal_request_<?= $modul->modul_id ?>" class="form-label">Tanggal Request</label>
-                                                    <input type="text" class="form-control" id="tanggal_request_<?= $modul->modul_id ?>" value="<?= $modul->tanggal_request ?>" readonly>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Close</span>
-                                            </button>
+                                                    <?php if (!empty($modul->soft_file)) : ?>
+                                                        <div class="mb-3">
+                                                            <label for="soft_file_<?= $modul->id_request_modul ?>" class="form-label">Soft File</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" id="soft_file_<?= $modul->id_request_modul ?>" value="<?= $modul->soft_file ?>" readonly>
+                                                                <a href="<?= base_url('uploads/' . $modul->soft_file) ?>" class="btn btn-primary" target="_blank"><i class="bi bi-eye-fill"></i> Lihat PDF</a>
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <div class="mb-3">
+                                                        <label for="jumlah_cetak_<?= $modul->id_request_modul ?>" class="form-label">Jumlah Cetak</label>
+                                                        <input type="text" class="form-control" id="jumlah_cetak_<?= $modul->id_request_modul ?>" value="<?= $modul->jumlah_cetak ?>" readonly>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="status_<?= $modul->id_request_modul ?>" class="form-label">Status</label>
+                                                        <input type="text" class="form-control" id="status_<?= $modul->id_request_modul ?>" value="<?= $modul->status ?>" readonly>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="tanggal_request_<?= $modul->id_request_modul ?>" class="form-label">Tanggal Request</label>
+                                                        <input type="text" class="form-control" id="tanggal_request_<?= $modul->id_request_modul ?>" value="<?= $modul->tanggal_request ?>" readonly>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="nama_pemohon_<?= $modul->id_request_modul ?>" class="form-label">Nama Pemohon</label>
+                                                        <input type="text" class="form-control" id="nama_pemohon_<?= $modul->id_request_modul ?>" value="<?= $modul->nama_pemohon ?>" readonly>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Close</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
+
 
                         <?php endforeach; ?>
                     </tbody>
@@ -86,7 +96,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmAction(action, modul_id) {
+    function confirmAction(action, id_request_modul) {
         let actionText = action === 'approve' ? 'approve' : 'reject';
         Swal.fire({
             title: 'Apakah Anda yakin?',
@@ -99,7 +109,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 let status = action === 'approve' ? 'diterima' : 'ditolak';
-                fetch(`/dashboard/editStatus/${modul_id}/${status}`, {
+                fetch(`/dashboard/editStatus/${id_request_modul}/${status}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

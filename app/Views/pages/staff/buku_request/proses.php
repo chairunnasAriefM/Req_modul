@@ -12,9 +12,7 @@
                 <table class="table" id="table1">
                     <thead>
                         <tr>
-                            <th>Jenis Buku</th>
                             <th>Judul Buku</th>
-                            <th>Penerbit</th>
                             <th>Pengarang</th>
                             <th>Perkiraan Harga</th>
                             <th>Total Request</th>
@@ -25,9 +23,7 @@
                         <?php foreach ($prosesBuku as $buku) : ?>
                             <?php $encodedJudulBuku = md5($buku->judul_buku); ?>
                             <tr>
-                                <td><?= esc($buku->jenis_buku) ?></td>
                                 <td><?= esc($buku->judul_buku) ?></td>
-                                <td><?= esc($buku->penerbit) ?></td>
                                 <td><?= esc($buku->pengarang) ?></td>
                                 <td><?= esc($buku->perkiraan_harga) ?></td>
                                 <td><?= esc($buku->total_requests) ?></td>

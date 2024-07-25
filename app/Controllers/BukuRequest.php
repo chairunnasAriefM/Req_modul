@@ -5,17 +5,20 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\BukuRequestModel;
 use App\Models\ViewRequestBuku;
+use App\Models\BukuModel; // Tambahkan model Buku
 use CodeIgniter\HTTP\ResponseInterface;
 
 class BukuRequest extends BaseController
 {
-    protected $buku;
+    protected $bukuRequest;
     protected $viewBuku;
+    protected $buku;
 
     function __construct()
     {
-        $this->buku = new BukuRequestModel();
+        $this->bukuRequest = new BukuRequestModel();
         $this->viewBuku = new ViewRequestBuku();
+        $this->buku = new BukuModel(); // Inisialisasi model Buku
     }
 
     public function index()
@@ -39,12 +42,17 @@ class BukuRequest extends BaseController
             return redirect()->back()->withInput()->with('validation', \Config\Services::validation());
         }
 
-        $buku_request = new BukuRequestModel();
-        $id_anggota = session()->get('id_anggota');
         $judul_buku = $this->request->getPost('judul_buku');
+        $id_anggota = session()->get('id_anggota');
+
+        // Cek apakah judul buku sudah ada di tabel buku
+        $existingBook = $this->buku->where('judul_buku', $judul_buku)->first();
+        if ($existingBook) {
+            return redirect()->back()->withInput()->with('error', 'Buku sudah terdapat di perpustakaan.');
+        }
 
         // Cek apakah buku sudah pernah diminta oleh user yang sama
-        $existingRequest = $buku_request->where('id_anggota', $id_anggota)
+        $existingRequest = $this->bukuRequest->where('id_anggota', $id_anggota)
             ->where('judul_buku', $judul_buku)
             ->first();
 
@@ -64,7 +72,7 @@ class BukuRequest extends BaseController
             'id_anggota' => $id_anggota
         ];
 
-        $buku_request->save($data);
+        $this->bukuRequest->save($data);
         return redirect()->to('/buku_request')->with('success', 'Berhasil Mengisi Form');
     }
 
@@ -106,14 +114,14 @@ class BukuRequest extends BaseController
             log_message('info', "Mengubah status untuk buku: $judul_buku menjadi $status");
 
             // Cari semua buku yang memiliki judul yang sama
-            $buku_list = $this->buku->where('judul_buku', $judul_buku)->findAll();
+            $buku_list = $this->bukuRequest->where('judul_buku', $judul_buku)->findAll();
 
             // Jika buku ditemukan, perbarui status semua buku yang memiliki judul tersebut
             if ($buku_list) {
                 $addedToBuku = false;
 
                 foreach ($buku_list as $b) {
-                    $this->buku->update($b->id_request_buku, ['status' => $status]);
+                    $this->bukuRequest->update($b->id_request_buku, ['status' => $status]);
                     log_message('info', "Status buku dengan ID: {$b->id_request_buku} telah diperbarui menjadi $status");
 
                     // Tambahkan data ke tabel buku jika statusnya 'sudah dieksekusi' dan belum ditambahkan
@@ -146,7 +154,7 @@ class BukuRequest extends BaseController
     protected function moveToArchive($id_request_buku)
     {
         // Dapatkan data request buku
-        $buku_request = $this->buku->find($id_request_buku);
+        $buku_request = $this->bukuRequest->find($id_request_buku);
 
         if ($buku_request) {
             // Pindahkan data ke tabel arsip
@@ -154,7 +162,7 @@ class BukuRequest extends BaseController
             $builder = $db->table('arsip_request_buku');
             if ($builder->insert((array)$buku_request)) {
                 // Hapus data dari tabel request_buku
-                return $this->buku->delete($id_request_buku);
+                return $this->bukuRequest->delete($id_request_buku);
             }
         }
         return false;

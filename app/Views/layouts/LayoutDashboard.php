@@ -101,7 +101,7 @@
                         <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'request/modul') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-journal-bookmark"></i>
-                                <span>Request Modul</span>
+                                <span>Cetak Modul</span>
                             </a>
 
                             <ul class="submenu active">
@@ -148,7 +148,7 @@
                         <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'request/buku') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book"></i>
-                                <span>Request Buku</span>
+                                <span>Pengajuan Buku</span>
                             </a>
 
                             <ul class="submenu active">
@@ -244,13 +244,9 @@
                                     <li>
                                         <h6 class="dropdown-header">Hello, <?= esc(session()->get('nama_staff')) ?></h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
                                     <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                    <li><a id="logout-link" class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -345,6 +341,27 @@
                 confirmButtonText: 'OK'
             });
         }
+    </script>
+
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan keluar dari akun!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, logout!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url() ?>logout';
+                }
+            });
+        });
     </script>
 
 

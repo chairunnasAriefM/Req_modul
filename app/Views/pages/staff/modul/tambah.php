@@ -15,6 +15,18 @@
                         <input type="text" id="judul-modul-horizontal" class="form-control" name="judul_modul" placeholder="Judul Modul" required>
                     </div>
                     <div class="mb-3">
+                        <label for="judul-modul-horizontal" class="form-label">Jurusan</label>
+                        <fieldset class="form-group">
+                            <select class="form-select" id="basicSelect" name="jurusan">
+                                <option value="">Pilih Jurusan</option>
+                                <option value="Teknologi Informasi">Teknologi Informasi</option>
+                                <option value="Teknologi Industri">Teknologi Industri</option>
+                                <option value="Bisnis dan Komunikasi">Jurusan Bisnis dan Komunikasi</option>
+                            </select>
+                        </fieldset>
+                        <!-- <input type="text" id="judul-modul-horizontal" class="form-control" name="jurusan" placeholder="Jurusan" required> -->
+                    </div>
+                    <div class="mb-3">
                         <label for="soft-file-horizontal" class="form-label">Soft File</label>
                         <input type="file" id="soft-file-horizontal" class="form-control" name="soft_file" placeholder="Soft File" required>
                         <small>Type file : pdf,word</small>

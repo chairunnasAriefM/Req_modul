@@ -63,8 +63,8 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item <?= uri_string() == 'historyHome' ? 'active' : '' ?> ">
-                            <a href="<?= base_url() ?>historyHome" class='sidebar-link'>
+                        <li class="sidebar-item <?= uri_string() == '' ? 'active' : '' ?> ">
+                            <a href="<?= base_url() ?>" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Home</span>
                             </a>
@@ -73,15 +73,14 @@
                         <?php if (session()->get('is_dosen') == TRUE) : ?>
                             <li class="sidebar-item <?= uri_string() == 'historyModul' ? 'active' : '' ?> ">
                                 <a href="<?= base_url() ?>historyModul" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
-                                    <span>Modul</span>
+                                    <i class="bi bi-journal"></i> <span>Modul</span>
                                 </a>
                             </li>
                         <?php endif; ?>
 
                         <li class="sidebar-item <?= uri_string() == 'historyBuku' ? 'active' : '' ?> ">
                             <a href="<?= base_url() ?>historyBuku" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
+                                <i class="bi bi-book"></i>
                                 <span>Buku</span>
                             </a>
                         </li>
@@ -126,13 +125,9 @@
                                     <li>
                                         <h6 class="dropdown-header">Hello, <?= esc(session()->get('nama')) ?></h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
                                     <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                    <li><a class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout" onclick="confirmLogout(event)"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -178,6 +173,27 @@
         var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+    </script>
+
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); // Mencegah link default action
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan keluar dari sistem!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, keluar!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url('logout') ?>'; // Redirect ke URL logout
+                }
+            });
+        }
     </script>
 
 

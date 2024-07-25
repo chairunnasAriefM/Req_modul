@@ -35,6 +35,10 @@
     margin-top: 0;
 }
 
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+ 
+}
+
 .form-group h2 {
     margin-bottom: 30px;
     font-size: 24px;

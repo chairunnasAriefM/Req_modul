@@ -17,7 +17,7 @@
         <?php endif; ?>
 
         <form action="<?= base_url('/registrasi') ?>" method="post">
-        <?= csrf_field() ?>
+            <?= csrf_field() ?>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" name="email" placeholder="Email" value="<?= old('email') ?>" required>
@@ -26,6 +26,11 @@
             <div class="form-group">
                 <label for="nama">Nama</label>
                 <input type="text" name="nama" placeholder="Nama" value="<?= old('nama') ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="asal_prodi">Asal Prodi</label>
+                <input type="text" name="asal_prodi" placeholder="Asal Prodi" value="<?= old('prodi') ?>" required>
             </div>
 
             <div class="form-group">

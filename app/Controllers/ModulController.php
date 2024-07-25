@@ -18,12 +18,12 @@ class ModulController extends BaseController
     public function index()
     {
         $modul = $this->modul->findAll();
-        return view('pages\staff\modul\tampil.php', ['BanyakModul' => $modul]);
+        return view('pages/staff/modul/tampil.php', ['BanyakModul' => $modul]);
     }
 
     public function tambah()
     {
-        return view('pages\staff\modul\tambah.php');
+        return view('pages/staff/modul/tambah.php');
     }
 
     public function store()
@@ -32,6 +32,7 @@ class ModulController extends BaseController
 
         $validation->setRules([
             'judul_modul' => 'required|min_length[3]|max_length[255]',
+            'jurusan' => 'required|min_length[3]|max_length[255]',
             'tahun_rilis' => 'required|integer|exact_length[4]',
             'soft_file' => 'uploaded[soft_file]|mime_in[soft_file,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]|max_size[soft_file,2048]',
         ]);
@@ -43,6 +44,7 @@ class ModulController extends BaseController
         $file = $this->request->getFile('soft_file');
         $data = [
             'judul_modul' => $this->request->getPost('judul_modul'),
+            'jurusan' => $this->request->getPost('jurusan'),
             'tahun_rilis' => $this->request->getPost('tahun_rilis'),
         ];
 
@@ -91,8 +93,8 @@ class ModulController extends BaseController
             $data['soft_file'] = $file->getName();
 
             // Hapus file lama
-            if ($modul && file_exists(WRITEPATH . 'uploads/' . $modul->soft_file)) {
-                unlink(WRITEPATH . 'uploads/' . $modul->soft_file);
+            if ($modul && file_exists(WRITEPATH . 'uploads/modul/' . $modul->soft_file)) {
+                unlink(WRITEPATH . 'uploads/modul/' . $modul->soft_file);
             }
         }
 
@@ -117,8 +119,8 @@ class ModulController extends BaseController
 
         if ($modul) {
             // Hapus file soft_file jika ada
-            if (file_exists(WRITEPATH . 'uploads/' . $modul->soft_file)) {
-                unlink(WRITEPATH . 'uploads/' . $modul->soft_file);
+            if (file_exists(WRITEPATH . 'uploads/modul/' . $modul->soft_file)) {
+                unlink(WRITEPATH . 'uploads/modul/' . $modul->soft_file);
             }
 
             // Hapus data modul dari database

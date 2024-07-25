@@ -21,6 +21,14 @@
 
     <!-- Bootstrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -32,11 +40,11 @@
         <nav>
             <ul class="navbar-menu" id="nav">
                 <li><a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
-                <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Kontak</a></li>
-                <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Daftar Buku</a></li>
-                <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
+                <li><a href="#kontak" class="">Kontak</a></li>
+                <li><a href="<?= base_url('') ?>daftar-buku" class="<?= uri_string() == 'daftar-buku' ? 'active' : '' ?>">Daftar Buku</a></li>
+                <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Pengajuan Buku</a></li>
                 <?php if (session()->get('is_dosen') == TRUE) : ?>
-                    <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
+                    <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Cetak Modul</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -49,8 +57,11 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-content" id="myDropdown">
-                        <a href="<?= base_url() ?>historyBuku" class="history"><i class="bi bi-clock-history"></i> Cek History</a>
-                        <a href="<?= base_url('logout') ?>" class="logout" style="color: white;"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                        <?php if (session()->get('staff_id')) : ?>
+                            <a href="<?= base_url() ?>dashboard" class="history"><i class="bi bi-floppy"></i> Dashboard</a>
+                        <?php endif ?>
+                        <a href="<?= base_url() ?>historyBuku" class="history"><i class="bi bi-clock-history"></i> Cek Riwayat</a>
+                        <a href="#" class="logout" style="color: white;" onclick="confirmLogout(event)"><i class="bi bi-box-arrow-left"></i> Logout</a>
                     </div>
                 </div>
             <?php endif; ?>
@@ -65,6 +76,8 @@
     <aside class="sidebar">
         <ul>
             <li><a href="<?= base_url('') ?>" class="<?= uri_string() == '' ? 'active' : '' ?>">Home</a></li>
+            <li><a href="#kontak" class="">Kontak</a></li>
+            <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Daftar Buku</a></li>
             <li><a href="<?= base_url('') ?>buku_request" class="<?= uri_string() == 'buku_request' ? 'active' : '' ?>">Request Buku</a></li>
             <?php if (session()->get('is_dosen') == TRUE) : ?>
                 <li> <a href="<?= base_url('') ?>modul_request" class="<?= uri_string() == 'modul_request' ? 'active' : '' ?>">Request Modul</a></li>
@@ -72,7 +85,7 @@
             <?php if (!session()->get('logged_in')) : ?>
                 <li><a href="<?= base_url(); ?>registrasi">Sign in</a></li>
             <?php else : ?>
-                <li><a href="<?= base_url(); ?>logout">Logout</a></li>
+                <li><a href="<?= base_url(); ?>logout" onclick="confirmLogout(event)">>Logout</a></li>
             <?php endif; ?>
         </ul>
     </aside>
@@ -116,24 +129,25 @@
                                         <p>Pengarang: <?= $buku->pengarang ?></p>
                                     </div>
                                 </div>
-                                <button onclick="window.location.href='/buku/detail/'">Lihat Detail</button>
+                                <!-- <button onclick="window.location.href='/buku/detail/'">Lihat Detail</button> -->
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="pagination">
+            <!-- <div class="pagination">
                 <button id="prev" onclick="prevPage()">Previous</button>
                 <button id="next" onclick="nextPage()">Next</button>
-            </div>
+            </div> -->
         </div>
+
 
 
 
     </main>
 
     <!-- footer -->
-    <footer class="footer">
+    <footer class="footer" id="kontak">
         <div id="footer">
             <div class="waktu-layanan">
                 <h4>Waktu Layanan Perpustakaan</h4>
@@ -148,6 +162,8 @@
             </div>
         </div>
     </footer>
+
+    <button class="scroll-to-top" id="scrollToTopBtn">Top</button>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -187,6 +203,41 @@
 
             showPage(currentPage);
         });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi ScrollReveal dengan opsi reset
+            ScrollReveal().reveal('.banner_wrapper', {
+                origin: 'bottom',
+                distance: '50px',
+                duration: 1000,
+                easing: 'ease-in-out',
+                interval: 100,
+                reset: true
+            });
+        });
+    </script>
+
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); // Mencegah link default action
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan keluar dari sistem!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, keluar!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url('logout') ?>'; // Redirect ke URL logout
+                }
+            });
+        }
     </script>
 </body>
 

@@ -27,6 +27,16 @@
         </script>
     <?php endif; ?>
 
+    <?php if (session()->getFlashdata('success')) : ?>
+        <script>
+            Swal.fire({
+                title: "Berhasil!",
+                text: "<?= session()->getFlashdata('success'); ?>",
+                icon: "success"
+            });
+        </script>
+    <?php endif; ?>
+
     <?php if (isset($validation) && $validation->getErrors()) : ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
