@@ -8,7 +8,7 @@
 
 @media screen and (min-width: 1024px) and (max-width: 1440px) {
     .form-section {
-        margin-top: 300px;
+        margin-top: 400px;
         padding-bottom: 50px;
     }
 }
@@ -33,6 +33,10 @@
     max-width: 500px;
     width: 100%;
     margin-top: 0;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+ 
 }
 
 .form-group h2 {

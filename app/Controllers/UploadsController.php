@@ -9,7 +9,7 @@ class UploadsController extends Controller
 {
     public function index($filename)
     {
-        $filePath = WRITEPATH . 'uploads/' . $filename;
+        $filePath = WRITEPATH . 'uploads/modul/' . $filename;
 
         if (!file_exists($filePath)) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException($filename);

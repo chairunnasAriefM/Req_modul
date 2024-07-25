@@ -27,6 +27,8 @@
     <!-- font awesome -->
     <link rel="stylesheet" href="<?= base_url('assets2/extensions/@fortawesome/fontawesome-free/css/all.min.css') ?>">
 
+    <!-- swal2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -78,25 +80,42 @@
                         </li>
 
                         <!-- modul side bar -->
-                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'modul') !== false ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), '-modul') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-journal-bookmark"></i>
                                 <span>Modul</span>
                             </a>
 
                             <ul class="submenu active">
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('dashboard/pendingModul') ?>" class="submenu-link">Pending</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tampil-modul' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/tampil-modul') ?>" class="submenu-link">Data Modul</a>
                                 </li>
 
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/disetujuiModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('dashboard/disetujuiModul') ?>" class="submenu-link">Disetujui</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tambah-modul' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/tambah-modul') ?>" class="submenu-link">Tambah</a>
                                 </li>
 
-                                <li class="submenu-item <?= uri_string() == 'dashboard/prosesModul' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/prosesModul" class="submenu-link">Proses</a>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'request/modul') !== false ? 'active' : '' ?>">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-journal-bookmark"></i>
+                                <span>Cetak Modul</span>
+                            </a>
+
+                            <ul class="submenu active">
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/modul-pending' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/request/modul-pending') ?>" class="submenu-link">Pending</a>
                                 </li>
 
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/modul-setuju' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('dashboard/request/modul-setuju') ?>" class="submenu-link">Disetujui</a>
+                                </li>
+
+                                <li class="submenu-item <?= uri_string() == 'dashboard/request/modul-proses' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/modul-proses" class="submenu-link">Proses</a>
+                                </li>
 
 
                             </ul>
@@ -107,23 +126,42 @@
                         <!-- end sidebar modul -->
 
                         <!-- start sidebar Buku -->
-                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'buku') !== false ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), '-buku') !== false ? 'active' : '' ?>">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book"></i>
                                 <span>Buku</span>
                             </a>
 
                             <ul class="submenu active">
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/pendingBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/pendingBuku" class="submenu-link">Pending</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tampil-buku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tampil-buku" class="submenu-link">Data Buku</a>
                                 </li>
 
-                                <li class="submenu-item  <?= uri_string() == 'dashboard/disetujuiBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/disetujuiBuku" class="submenu-link">Disetujui</a>
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tambah-buku' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tambah-buku" class="submenu-link">Tambah</a>
                                 </li>
 
-                                <li class="submenu-item <?= uri_string() == 'dashboard/prosesBuku' ? 'active' : '' ?> ">
-                                    <a href="<?= base_url('') ?>dashboard/prosesBuku" class="submenu-link">Proses</a>
+                            </ul>
+
+                        </li>
+
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'request/buku') !== false ? 'active' : '' ?>">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-book"></i>
+                                <span>Pengajuan Buku</span>
+                            </a>
+
+                            <ul class="submenu active">
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/buku-pending' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/buku-pending" class="submenu-link">Pending</a>
+                                </li>
+
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/request/buku-setuju' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/buku-setuju" class="submenu-link">Disetujui</a>
+                                </li>
+
+                                <li class="submenu-item <?= uri_string() == 'dashboard/request/buku-proses' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/request/buku-proses" class="submenu-link">Proses</a>
                                 </li>
 
                             </ul>
@@ -131,6 +169,28 @@
                         </li>
 
                         <!-- end sidebar Buku -->
+
+                        <!-- start sidebar Dosen -->
+                        <li class="sidebar-item has-sub  <?= stripos(uri_string(), 'dosen') !== false ? 'active' : '' ?>">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-lines-fill"></i>
+                                <span>Dosen</span>
+                            </a>
+
+                            <ul class="submenu active">
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tampilDosen' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tampilDosen" class="submenu-link">Data Dosen</a>
+                                </li>
+
+                                <li class="submenu-item  <?= uri_string() == 'dashboard/tambahDosen' ? 'active' : '' ?> ">
+                                    <a href="<?= base_url('') ?>dashboard/tambahDosen" class="submenu-link">Tambah Dosen</a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <!-- end sidebar Dosen -->
 
 
                     </ul>
@@ -161,7 +221,7 @@
                                         <li>
                                             <h6 class="dropdown-header">Mail</h6>
                                         </li>
-                                        <li><a class="dropdown-item" href="https://mail.google.com/">Buka periode pengajuan</a></li>
+                                        <li><a class="dropdown-item" href="https://mail.google.com/mail/#inbox?compose=new" target="_blank">Buka periode pengajuan</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -184,13 +244,9 @@
                                     <li>
                                         <h6 class="dropdown-header">Hello, <?= esc(session()->get('nama_staff')) ?></h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
                                     <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                    <li><a id="logout-link" class="dropdown-item text-bg-danger" href="<?= base_url() ?>logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -237,6 +293,77 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <?php if (isset($validation) && $validation->getErrors()) : ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "Gagal",
+                    html: "<?= implode('<br>', $validation->getErrors()) ?>",
+                    icon: "error"
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('errors')) : ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "Gagal",
+                    html: "<?= implode('<br>', session()->getFlashdata('errors')) ?>",
+                    icon: "error"
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+
+    <?php if (session()->getFlashdata('msg')) : ?>
+        <script>
+            Swal.fire({
+                title: "Terjadi Galat!",
+                text: "<?= session()->getFlashdata('msg'); ?>",
+                icon: "error"
+            });
+        </script>
+    <?php endif; ?>
+
+    <script>
+        if ('<?= session()->get('swal') ?>') {
+            Swal.fire({
+                title: 'Success!',
+                text: '<?= session()->get('swal') ?>',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
+
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan keluar dari akun!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, logout!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url() ?>logout';
+                }
+            });
+        });
+    </script>
+
 
 
 </body>

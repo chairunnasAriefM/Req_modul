@@ -6,17 +6,31 @@
     <div class="flex-item-left">
         <h3>Registrasi Akun</h3>
 
+        <?php if (session()->getFlashdata('msg')) : ?>
+            <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
+        <?php endif; ?>
 
+        <?php if (isset($validation)) : ?>
+            <div class="alert alert-danger">
+                <?= $validation->listErrors() ?>
+            </div>
+        <?php endif; ?>
 
         <form action="<?= base_url('/registrasi') ?>" method="post">
+            <?= csrf_field() ?>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" value="<?= old('email') ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="nama">Nama</label>
-                <input type="text" name="nama" placeholder="Nama" required>
+                <input type="text" name="nama" placeholder="Nama" value="<?= old('nama') ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="asal_prodi">Asal Prodi</label>
+                <input type="text" name="asal_prodi" placeholder="Asal Prodi" value="<?= old('prodi') ?>" required>
             </div>
 
             <div class="form-group">
